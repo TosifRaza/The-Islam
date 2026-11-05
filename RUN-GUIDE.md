@@ -1,7 +1,7 @@
 # IKP Platform — Run Guide
 ## How to run in Android Studio + How to run on your phone
 
-*Applies to: source snapshot `0.5.0-m5-fix5` (commit `6a65b3e`, content-identical to verified commit `4b48c84`) and APK `ikp-app-debug-phone-usb-0.5.0-m5-fix5.apk` (versionCode 8).*
+*Applies to: source snapshot `0.5.0-m5-fix6` (this repo, see `git log`) and APK `ikp-app-debug-phone-usb-0.5.0-m5-fix6.apk` (versionCode 9). fix6 = fix5 + a splash double-navigation crash fix (SplashFragment), found and resolved during our emulator E2E re-verification.*
 
 ---
 
@@ -16,7 +16,7 @@
 | A backend | running on your computer on port 8080 | see Part C — or skip it, the app shows an offline banner but does not crash |
 
 ### A2. Steps
-1. **Unzip** `ikp-platform-source-0.5.0-m5-fix5.zip` anywhere (path without spaces is safest).
+1. **Unzip** `ikp-platform-source-0.5.0-m5-fix6.zip` anywhere (path without spaces is safest).
 2. Launch Android Studio → **Open** → select the **`platform-dev/android`** folder (NOT the repo root — the Android project root is the `android/` subfolder).
 3. Wait for **Gradle sync** to finish (first sync downloads dependencies — a few minutes; Gradle 8.9 + AGP 8.5.2 are downloaded automatically by the wrapper).
    - If your network is slow/blocked, create the file `~/.gradle/init.gradle` (Linux/macOS) or `C:\Users\<you>\.gradle\init.gradle` (Windows) with a mirror:
@@ -44,7 +44,7 @@
 
 ## Part B — Run the app on your phone (prebuilt APK)
 
-The shipped **`ikp-app-debug-phone-usb-0.5.0-m5-fix5.apk`** is built with the API URL `http://127.0.0.1:8080/`, which works over **USB** using adb's port-forwarding (`adb reverse`). This is a debug build for development/testing.
+The shipped **`ikp-app-debug-phone-usb-0.5.0-m5-fix6.apk`** is built with the API URL `http://127.0.0.1:8080/`, which works over **USB** using adb's port-forwarding (`adb reverse`). This is a debug build for development/testing.
 
 ### B1. One-time phone setup (OnePlus CPH2585 / any Android 8+)
 1. **Settings → About device → Version → tap "Build number" 7 times** → Developer options unlocked.
@@ -60,7 +60,7 @@ Follow **Part C** and keep it running. Verify: open `http://127.0.0.1:8080/actua
 
 ### B3. Install and connect (every session)
 ```bash
-adb install -r ikp-app-debug-phone-usb-0.5.0-m5-fix5.apk   # install/update the app
+adb install -r ikp-app-debug-phone-usb-0.5.0-m5-fix6.apk   # install/update the app
 adb reverse tcp:8080 tcp:8080                              # phone's localhost:8080 -> your computer's 8080
 ```
 4. Launch **IKP** from the launcher.

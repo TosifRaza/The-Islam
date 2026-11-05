@@ -13,8 +13,8 @@ android {
         applicationId "com.ikp.dev.app"
         minSdk 24
         targetSdk 34
-        versionCode 8
-        versionName "0.5.0-m5-fix5"
+        versionCode 9
+        versionName "0.5.0-m5-fix6"
 
         // M3: API base URL. Emulator default is the Android loopback alias for
         // the developer host. NEVER hardcode a production endpoint here — the

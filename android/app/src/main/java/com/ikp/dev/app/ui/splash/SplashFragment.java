@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.ikp.dev.app.R;
@@ -23,6 +24,10 @@ public final class SplashFragment extends Fragment {
 
     private SplashViewModel viewModel;
 
+    /** fix6: consume-once latch — a sticky/stale navigation LiveData event must
+     * never trigger a second navigate() after the splash already routed. */
+    private boolean navigationHandled;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -35,23 +40,35 @@ public final class SplashFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         viewModel.navigation().observe(getViewLifecycleOwner(), next -> {
-            if (next == null) {
+            if (next == null || navigationHandled) {
                 return;
             }
+            // fix6: only navigate while we are still the current destination.
+            // A delayed event dispatched after the router already moved on
+            // (e.g. splash -> login done) used to crash with
+            // IllegalArgumentException: action not found from loginFragment.
+            NavController nav;
+            try {
+                nav = NavHostFragment.findNavController(this);
+            } catch (IllegalStateException detached) {
+                return; // view no longer attached to a NavHost — stale event
+            }
+            if (nav.getCurrentDestination() == null
+                    || nav.getCurrentDestination().getId() != R.id.splashFragment) {
+                return;
+            }
+            navigationHandled = true;
             switch (next) {
                 case ONBOARDING:
-                    NavHostFragment.findNavController(this)
-                            .navigate(R.id.action_splash_to_onboarding);
+                    nav.navigate(R.id.action_splash_to_onboarding);
                     break;
                 case LOGIN:
-                    NavHostFragment.findNavController(this)
-                            .navigate(R.id.action_splash_to_login);
+                    nav.navigate(R.id.action_splash_to_login);
                     break;
                 case HOME_OFFLINE:
                 case HOME:
                 default:
-                    NavHostFragment.findNavController(this)
-                            .navigate(R.id.action_splash_to_home);
+                    nav.navigate(R.id.action_splash_to_home);
                     break;
             }
         });
