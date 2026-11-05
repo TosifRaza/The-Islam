@@ -1,0 +1,30 @@
+{
+  "sourceRegisterId": "SR-08",
+  "sourceName": "Jami' at-Tirmidhi (fawazahmed0/hadith-api v1)",
+  "sourceUrl": "https://github.com/fawazahmed0/hadith-api",
+  "licence": "The Unlicense (public domain dedication)",
+  "collectionCode": "tirmidhi",
+  "editions": {
+    "ara": {
+      "sha256": "408028cd56329ed78edbe3ad443beb96b58e16c3e5bd49f9bc7b0eac77c8820f",
+      "bytes": 7120806,
+      "hadithCount": 3998,
+      "sectionCount": 50,
+      "gradeEntries": 13812
+    },
+    "eng": {
+      "sha256": "f64f1a5e6f2614e164e3b10138412af322d3959011bf84d67f428f79b3858afb",
+      "bytes": 3124797,
+      "hadithCount": 3998,
+      "sectionCount": 50,
+      "gradeEntries": 13812
+    },
+    "urd": {
+      "sha256": "e9e8b32660a8a9c4e25c6c344149e8c9429e1aa90e2d5414029b9727ffb53006",
+      "bytes": 5751781,
+      "hadithCount": 3998,
+      "sectionCount": 50,
+      "gradeEntries": 13812
+    }
+  }
+}

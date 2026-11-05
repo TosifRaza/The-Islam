@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Hindi — RENDERING/RTL-readiness proof subset only (Devanagari).
+         NOT a declared launch language (OD-02 controls the final list). -->
+    <string name="nav_home">होम</string>
+    <string name="nav_library">लाइब्रेरी</string>
+    <string name="nav_academy">अकादमी</string>
+    <string name="nav_research">रिसर्च</string>
+    <string name="nav_assistant">असिस्टेंट</string>
+    <string name="nav_profile">प्रोफ़ाइल</string>
+    <string name="state_loading">लोड हो रहा है…</string>
+    <string name="state_offline_title">आप ऑफ़लाइन हैं</string>
+    <string name="login_title">वापसी पर स्वागत है</string>
+    <string name="email_label">ईमेल</string>
+    <string name="password_label">पासवर्ड</string>
+    <string name="library_title">लाइब्रेरी</string>
+    <string name="profile_title">प्रोफ़ाइल</string>
+</resources>

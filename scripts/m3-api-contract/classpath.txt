@@ -1,0 +1,7 @@
+/home/z/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.11.0/6ca8c6caf842271f3232e075519fe04081ef7069/retrofit-2.11.0.jar
+/home/z/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.11.0/9d1fe9d1662de0548e08e293041140a8e4026f81/converter-gson-2.11.0.jar
+/home/z/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.11.0/527175ca6d81050b53bdd4c457a6d6e017626b0e/gson-2.11.0.jar
+/home/z/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/4.12.0/2f4525d4a200e97e1b87449c2cd9bd2e25b7e8cd/okhttp-4.12.0.jar
+/home/z/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio-jvm/3.6.0/5600569133b7bdefe1daf9ec7f4abeb6d13e1786/okio-jvm-3.6.0.jar
+/home/z/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.9.20/e58b4816ac517e9cc5df1db051120c63d4cde669/kotlin-stdlib-1.9.20.jar
+/home/z/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation-jvm/1.8.0/b8a16fe526014b7941c1debaccaf9c5153692dbb/annotation-jvm-1.8.0.jar

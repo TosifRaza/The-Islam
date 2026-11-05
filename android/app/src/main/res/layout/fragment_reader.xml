@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="?android:attr/colorBackground">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical">
+        <ImageButton android:id="@+id/btn_back" android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_back" android:src="@drawable/ic_arrow_back" />
+        <TextView android:id="@+id/tv_title" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content" android:maxLines="1" android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
+        <ImageButton android:id="@+id/btn_font" android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/reader_font_cd" android:src="@drawable/ic_settings" />
+        <ImageButton android:id="@+id/btn_theme" android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/reader_theme_cd" android:src="@drawable/ic_settings" />
+    </LinearLayout>
+    <TextView android:id="@+id/state_text" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:padding="@dimen/space_md"
+        android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
+    <ImageView android:id="@+id/pdf_page" android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="1" android:visibility="gone"
+        android:contentDescription="@string/reader_pdf_cd" />
+    <WebView android:id="@+id/epub_web" android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="1" android:visibility="gone" />
+    <TextView android:id="@+id/tv_pdf_search_note" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:padding="@dimen/space_sm"
+        android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+        android:textColor="@color/text_secondary" android:visibility="gone" />
+    <LinearLayout android:id="@+id/pdf_controls" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="horizontal"
+        android:gravity="center" android:visibility="gone">
+        <Button android:id="@+id/btn_prev" style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/reader_prev" />
+        <TextView android:id="@+id/tv_page_number" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textAppearance="@style/TextAppearance.IKP.LabelSmall" />
+        <Button android:id="@+id/btn_next" style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/reader_next" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/epub_controls" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="horizontal"
+        android:gravity="center" android:visibility="gone">
+        <Button android:id="@+id/btn_toc" style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/reader_toc" />
+        <Button android:id="@+id/btn_epub_search" style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/reader_search_title" />
+        <TextView android:id="@+id/tv_section" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textAppearance="@style/TextAppearance.IKP.LabelSmall" />
+    </LinearLayout>
+</LinearLayout>

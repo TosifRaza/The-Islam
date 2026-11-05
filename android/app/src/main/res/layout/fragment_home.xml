@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Emerald header band -->
+        <LinearLayout
+            android:id="@+id/home_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/emerald_deep"
+            android:orientation="vertical"
+            android:padding="@dimen/space_lg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_greeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/greeting_salam"
+                android:textAppearance="@style/TextAppearance.IKP.HeadlineMedium"
+                android:textColor="@color/ivory" />
+
+            <TextView
+                android:id="@+id/tv_hijri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xxs"
+                android:text="@string/home_hijri_unavailable"
+                android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                android:textColor="@color/gold" />
+
+            <!-- Search entry -->
+            <LinearLayout
+                android:id="@+id/search_entry"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/touch_target_min"
+                android:layout_marginTop="@dimen/space_md"
+                android:background="@drawable/bg_search_field"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/space_md"
+                android:paddingEnd="@dimen/space_md"
+                android:contentDescription="@string/cd_search">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:text="@string/home_search_hint"
+                    android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+
+            <!-- Quick shortcuts: prayer / qibla / tasbih (M4 destinations) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_prayer">
+                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_star" android:importantForAccessibility="no" />
+                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_prayer" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_qibla">
+                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_star" android:importantForAccessibility="no" />
+                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_qibla" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_tasbih">
+                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_star" android:importantForAccessibility="no" />
+                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_tasbih" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_duas">
+                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_book" android:importantForAccessibility="no" />
+                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_duas" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_quran">
+                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_book" android:importantForAccessibility="no" />
+                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_quran" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_hadith">
+                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_book" android:importantForAccessibility="no" />
+                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_hadith" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- M4: daily content (published records only; hidden until loaded) -->
+            <LinearLayout
+                android:id="@+id/daily_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_daily_ayah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
+                    android:textColor="@color/ivory" />
+
+                <TextView
+                    android:id="@+id/tv_daily_ayah_attr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                    android:textColor="@color/gold" />
+
+                <TextView
+                    android:id="@+id/tv_daily_hadith"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
+                    android:textColor="@color/ivory" />
+
+                <TextView
+                    android:id="@+id/tv_daily_hadith_attr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                    android:textColor="@color/gold" />
+
+                <TextView
+                    android:id="@+id/tv_daily_reminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:textAppearance="@style/TextAppearance.IKP.BodySmall"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tv_daily_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                    android:textColor="@color/gold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/home_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_header">
+
+            <com.ikp.dev.app.ui.common.StateView
+                android:id="@+id/home_state"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/space_lg" />
+
+            <LinearLayout
+                android:id="@+id/home_sections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_lg"
+                android:visibility="gone">
+
+                <!-- Today: Ayah / Hadith / Reminder (M4 content — honest states) -->
+                <TextView style="@style/SectionHeader"
+                    android:text="@string/home_section_today" />
+
+                <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_ayah_of_day"
+                            android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
+                            android:textColor="@color/emerald_deep" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xs"
+                            android:text="@string/home_content_unavailable"
+                            android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+                        <View style="@style/Divider" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_hadith_of_day"
+                            android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
+                            android:textColor="@color/emerald_deep" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xs"
+                            android:text="@string/home_content_unavailable"
+                            android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Continue learning -->
+                <TextView style="@style/SectionHeader"
+                    android:text="@string/home_continue_learning" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_continue"
+                    style="@style/Widget.IKP.Card">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_continue_empty"
+                        android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Popular subjects (real API) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView style="@style/SectionHeaderFlexible"
+                        android:text="@string/home_popular_subjects" />
+                    <Button
+                        android:id="@+id/btn_subjects_all"
+                        style="@style/Widget.IKP.Button.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_view_all" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_subjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/space_md"
+                    android:paddingEnd="@dimen/space_md"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <!-- Recommended books (real API) -->
+                <TextView style="@style/SectionHeader"
+                    android:text="@string/home_recommended_books" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_books"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/space_md"
+                    android:paddingEnd="@dimen/space_md"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

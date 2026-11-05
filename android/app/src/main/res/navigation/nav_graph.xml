@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- ============ Startup flow (no bottom bar) ============ -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.ikp.dev.app.ui.splash.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash"
+        xmlns:tools="http://schemas.android.com/tools">
+        <action
+            android:id="@+id/action_splash_to_onboarding"
+            app:destination="@id/onboardingFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.ikp.dev.app.ui.onboarding.OnboardingFragment"
+        android:label="Onboarding">
+        <action
+            android:id="@+id/action_onboarding_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/onboardingFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_onboarding_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/onboardingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.ikp.dev.app.ui.auth.LoginFragment"
+        android:label="Sign in">
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_login_to_forgot"
+            app:destination="@id/forgotFragment" />
+    </fragment>
+
+    <!-- Honest "capability not yet in backend" screen (registration, password reset) -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.ikp.dev.app.ui.auth.UnavailableFragment"
+        android:label="Register">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="register" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotFragment"
+        android:name="com.ikp.dev.app.ui.auth.UnavailableFragment"
+        android:label="Reset password">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="forgot" />
+    </fragment>
+
+    <!-- Global action: session expired → login (used from anywhere) -->
+    <action
+        android:id="@+id/action_global_session_expired"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
+
+    <!-- Global actions: cross-tab navigation (home search → books, rails → detail) -->
+    <action
+        android:id="@+id/action_global_books"
+        app:destination="@id/booksFragment" />
+    <action
+        android:id="@+id/action_global_book_detail"
+        app:destination="@id/bookDetailFragment" />
+
+    <!-- ============ Six primary sections (bottom bar visible) ============ -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ikp.dev.app.ui.home.HomeFragment"
+        android:label="@string/nav_home" />
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.ikp.dev.app.ui.library.LibraryFragment"
+        android:label="@string/nav_library">
+        <action
+            android:id="@+id/action_library_to_books"
+            app:destination="@id/booksFragment" />
+        <action
+            android:id="@+id/action_library_to_book_detail"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/academyFragment"
+        android:name="com.ikp.dev.app.ui.academy.AcademyFragment"
+        android:label="@string/nav_academy" />
+
+    <fragment
+        android:id="@+id/researchFragment"
+        android:name="com.ikp.dev.app.ui.research.ResearchFragment"
+        android:label="@string/nav_research" />
+
+    <fragment
+        android:id="@+id/assistantFragment"
+        android:name="com.ikp.dev.app.ui.assistant.AssistantFragment"
+        android:label="@string/nav_assistant" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ikp.dev.app.ui.profile.ProfileFragment"
+        android:label="@string/nav_profile">
+        <action
+            android:id="@+id/action_profile_to_settings"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profile_to_sessions"
+            app:destination="@id/sessionsFragment" />
+        <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <!-- ============ Nested destinations ============ -->
+    <fragment
+        android:id="@+id/booksFragment"
+        android:name="com.ikp.dev.app.ui.library.BooksFragment"
+        android:label="Books">
+        <argument
+            android:name="subjectSlug"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="subjectName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="query"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_books_to_detail"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookDetailFragment"
+        android:name="com.ikp.dev.app.ui.library.BookDetailFragment"
+        android:label="Book detail">
+        <argument
+            android:name="bookId"
+            app:argType="string" />
+        <deepLink
+            android:id="@+id/deep_link_book"
+            app:uri="ikp://library/book/{bookId}" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ikp.dev.app.ui.profile.SettingsFragment"
+        android:label="@string/settings_title" />
+
+    <fragment
+        android:id="@+id/sessionsFragment"
+        android:name="com.ikp.dev.app.ui.profile.SessionsFragment"
+        android:label="@string/sessions_title" />
+
+    <!-- ============ M4 knowledge modules (nested; no bottom bar) ============ -->
+    <fragment
+        android:id="@+id/dictionaryFragment"
+        android:name="com.ikp.dev.app.ui.dictionary.DictionaryFragment"
+        android:label="@string/dictionary_title" />
+    <fragment
+        android:id="@+id/duasFragment"
+        android:name="com.ikp.dev.app.ui.duas.DuasFragment"
+        android:label="@string/duas_title" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.ikp.dev.app.ui.calendar.CalendarFragment"
+        android:label="@string/calendar_title" />
+    <fragment
+        android:id="@+id/utilitiesFragment"
+        android:name="com.ikp.dev.app.ui.utilities.UtilitiesFragment"
+        android:label="@string/utilities_title" />
+    <fragment
+        android:id="@+id/prayerTimesFragment"
+        android:name="com.ikp.dev.app.ui.utilities.PrayerTimesFragment"
+        android:label="@string/prayer_title" />
+    <fragment
+        android:id="@+id/qiblaFragment"
+        android:name="com.ikp.dev.app.ui.utilities.QiblaFragment"
+        android:label="@string/qibla_title" />
+    <fragment
+        android:id="@+id/tasbihFragment"
+        android:name="com.ikp.dev.app.ui.utilities.TasbihFragment"
+        android:label="@string/tasbih_title" />
+    <fragment
+        android:id="@+id/readerFragment"
+        android:name="com.ikp.dev.app.ui.reader.ReaderFragment"
+        android:label="Reader">
+        <argument android:name="mode" app:argType="string" android:defaultValue="platform" />
+        <argument android:name="bookId" app:argType="string" />
+        <argument android:name="format" app:argType="string" android:defaultValue="pdf" />
+        <argument android:name="title" app:argType="string" android:defaultValue="" />
+        <argument android:name="textSearchable" app:argType="boolean" android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalLibraryFragment"
+        android:name="com.ikp.dev.app.ui.personal.PersonalLibraryFragment"
+        android:label="@string/personal_title" />
+    <action android:id="@+id/action_global_dictionary" app:destination="@id/dictionaryFragment" />
+    <action android:id="@+id/action_global_duas" app:destination="@id/duasFragment" />
+    <action android:id="@+id/action_global_calendar" app:destination="@id/calendarFragment" />
+    <action android:id="@+id/action_global_utilities" app:destination="@id/utilitiesFragment" />
+    <action android:id="@+id/action_global_personal_library" app:destination="@id/personalLibraryFragment" />
+
+    <fragment android:id="@+id/surahListFragment"
+        android:name="com.ikp.dev.app.ui.quran.SurahListFragment"
+        android:label="@string/quran_title" />
+    <fragment android:id="@+id/quranReaderFragment"
+        android:name="com.ikp.dev.app.ui.quran.QuranReaderFragment" android:label="@string/quran_title">
+        <argument android:name="surahId" app:argType="integer" android:defaultValue="1" />
+    </fragment>
+    <fragment android:id="@+id/hadithCollectionsFragment"
+        android:name="com.ikp.dev.app.ui.hadith.HadithCollectionsFragment"
+        android:label="@string/hadith_title" />
+    <fragment android:id="@+id/hadithBooksFragment"
+        android:name="com.ikp.dev.app.ui.hadith.HadithBooksFragment" android:label="@string/hadith_title">
+        <argument android:name="collectionCode" app:argType="string" />
+        <argument android:name="collectionName" app:argType="string" android:defaultValue="" />
+    </fragment>
+    <fragment android:id="@+id/hadithReaderFragment"
+        android:name="com.ikp.dev.app.ui.hadith.HadithReaderFragment" android:label="@string/hadith_title">
+        <argument android:name="bookId" app:argType="long" />
+        <argument android:name="bookName" app:argType="string" android:defaultValue="" />
+        <argument android:name="collectionCode" app:argType="string" android:defaultValue="" />
+    </fragment>
+    <fragment android:id="@+id/globalSearchFragment"
+        android:name="com.ikp.dev.app.ui.search.GlobalSearchFragment" android:label="@string/search_title">
+        <argument android:name="query" app:argType="string" app:nullable="true" android:defaultValue="@null" />
+    </fragment>
+    <action android:id="@+id/action_global_quran_surahs" app:destination="@id/surahListFragment" />
+    <action android:id="@+id/action_global_hadith_collections" app:destination="@id/hadithCollectionsFragment" />
+    <action android:id="@+id/action_global_search" app:destination="@id/globalSearchFragment" />
+
+    <!-- ============ M5 learning & research (nested; no bottom bar) ============ -->
+    <fragment
+        android:id="@+id/courseDetailFragment"
+        android:name="com.ikp.dev.app.ui.academy.CourseDetailFragment"
+        android:label="@string/academy_title">
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizzesFragment"
+        android:name="com.ikp.dev.app.ui.learning.QuizzesFragment"
+        android:label="@string/academy_quizzes" />
+    <fragment
+        android:id="@+id/quizAttemptFragment"
+        android:name="com.ikp.dev.app.ui.learning.QuizAttemptFragment"
+        android:label="@string/academy_quizzes">
+        <argument
+            android:name="quizId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashcardsFragment"
+        android:name="com.ikp.dev.app.ui.learning.FlashcardsFragment"
+        android:label="@string/academy_flashcards" />
+    <fragment
+        android:id="@+id/flashcardPracticeFragment"
+        android:name="com.ikp.dev.app.ui.learning.FlashcardPracticeFragment"
+        android:label="@string/academy_flashcards">
+        <argument
+            android:name="deckId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="deckTitle"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/researchArticleFragment"
+        android:name="com.ikp.dev.app.ui.research.ResearchArticleFragment"
+        android:label="@string/research_title">
+        <argument
+            android:name="articleId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/scholarDetailFragment"
+        android:name="com.ikp.dev.app.ui.research.ScholarDetailFragment"
+        android:label="@string/research_scholars">
+        <argument
+            android:name="scholarId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/fatwaDetailFragment"
+        android:name="com.ikp.dev.app.ui.research.FatwaDetailFragment"
+        android:label="@string/research_fatwas">
+        <argument
+            android:name="fatwaId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+</navigation>

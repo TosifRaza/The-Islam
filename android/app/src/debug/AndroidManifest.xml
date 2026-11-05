@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- DEBUG-ONLY overlay: allows cleartext to the local development backend
+     (emulator host 10.0.2.2 / LAN device testing). The release manifest keeps
+     cleartext disabled — production API must be HTTPS. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:usesCleartextTraffic="true" />
+</manifest>

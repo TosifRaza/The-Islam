@@ -1,0 +1,30 @@
+{
+  "sourceRegisterId": "SR-08",
+  "sourceName": "Sahih Muslim (fawazahmed0/hadith-api v1)",
+  "sourceUrl": "https://github.com/fawazahmed0/hadith-api",
+  "licence": "The Unlicense (public domain dedication)",
+  "collectionCode": "muslim",
+  "editions": {
+    "ara": {
+      "sha256": "194073b24090c5368e4d14a3f55c9e0ef144c7437bd7e5aa83aa4d2bc54a8ea0",
+      "bytes": 8685140,
+      "hadithCount": 7563,
+      "sectionCount": 57,
+      "gradeEntries": 0
+    },
+    "eng": {
+      "sha256": "2ef51a2a1980fb91e395fbf1580cc9c9413297f54bb8cad271e1499417299488",
+      "bytes": 4296152,
+      "hadithCount": 7563,
+      "sectionCount": 57,
+      "gradeEntries": 0
+    },
+    "urd": {
+      "sha256": "5fb1f4c4a97a3ee282768ed48d7d97bc9dbc4223ac218307449849c1f7a09049",
+      "bytes": 7657637,
+      "hadithCount": 7564,
+      "sectionCount": 57,
+      "gradeEntries": 0
+    }
+  }
+}

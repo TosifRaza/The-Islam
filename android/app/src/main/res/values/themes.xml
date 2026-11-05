@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============ IKP light theme (Material 3, DayNight parent) ============ -->
+    <style name="Theme.IKP" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Brand -->
+        <item name="colorPrimary">@color/emerald_deep</item>
+        <item name="colorOnPrimary">@color/text_on_emerald</item>
+        <item name="colorPrimaryContainer">@color/emerald_tint_container</item>
+        <item name="colorOnPrimaryContainer">@color/emerald_deep_dark</item>
+        <item name="colorSecondary">@color/gold</item>
+        <item name="colorOnSecondary">@color/text_on_gold</item>
+        <item name="colorSecondaryContainer">@color/gold_soft_container</item>
+        <item name="colorOnSecondaryContainer">@color/warning_gold_text</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+
+        <!-- Surfaces -->
+        <item name="colorSurface">@color/ivory_elevated</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorSurfaceVariant">@color/surface_dim</item>
+        <item name="android:colorBackground">@color/ivory</item>
+        <item name="colorOutline">@color/outline_strong</item>
+
+        <!-- Chrome -->
+        <item name="android:statusBarColor">@color/emerald_deep</item>
+        <item name="android:navigationBarColor">@color/bottom_bar_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Defaults -->
+        <item name="materialCardViewStyle">@style/Widget.IKP.Card</item>
+        <item name="textInputStyle">@style/Widget.IKP.TextInput</item>
+    </style>
+
+    <!-- Splash theme (SplashScreen API; post-splash falls through to Theme.IKP) -->
+    <style name="Theme.IKP.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_mark</item>
+        <item name="postSplashScreenTheme">@style/Theme.IKP</item>
+    </style>
+</resources>

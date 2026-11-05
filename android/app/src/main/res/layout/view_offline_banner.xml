@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reusable offline banner, shown/hidden by MainActivity via NetworkMonitor. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@color/banner_offline_background"
+    android:paddingStart="@dimen/space_md"
+    android:paddingEnd="@dimen/space_md"
+    android:paddingTop="@dimen/space_xs"
+    android:paddingBottom="@dimen/space_xs">
+
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_offline"
+        app:tint="@color/gold"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/space_sm"
+        android:text="@string/state_offline_title"
+        android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+        android:textColor="@color/ivory" />
+</LinearLayout>

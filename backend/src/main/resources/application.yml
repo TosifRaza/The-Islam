@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: ikp-backend
+  datasource:
+    url: ${IKP_DB_URL:jdbc:postgresql://localhost:5432/ikp}
+    username: ${IKP_DB_USER:ikp}
+    password: ${IKP_DB_PASSWORD:ikp}
+  flyway:
+    enabled: true
+    # Approved migration policy (docs/04-database-design.md §7, testing Option A):
+    # forward-only versioned SQL in per-module folders + repeatable seeds; no undo.
+    locations:
+      - classpath:db/migration/identity
+      - classpath:db/migration/content
+    validate-on-migrate: true
+    out-of-order: false
+  jpa:
+    hibernate:
+      # Flyway is the single schema authority (approved policy) — Hibernate never
+      # creates or alters schema.
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+
+app:
+  api:
+    base-path: /api/v1
+  security:
+    # Dev-only default secret; production supplies IKP_JWT_SECRET via the secret
+    # manager (docs/07-security-plan.md §2 — no credentials in the repository).
+    jwt-secret: ${IKP_JWT_SECRET:dev-only-secret-change-me-0123456789abcdef0123456789abcdef}
+    access-token-minutes: 15
+    refresh-token-days: 30
+    # Simple fixed-window limiter for credential endpoints (RATE-001).
+    login-rate-limit: 10
+    login-rate-window-seconds: 300
+  storage:
+    # Development object-storage configuration: private local filesystem buckets
+    # with quarantine/content separation. S3-compatible storage arrives with the
+    # approved production phase (OD-06) behind the same StorageService interface.
+    root: ${IKP_STORAGE_ROOT:./data/storage}
+    download-url-minutes: 15
+  upload:
+    max-bytes: ${IKP_UPLOAD_MAX_BYTES:209715200}        # 200 MB cap (OD-06 dev posture)
+    quota-bytes-per-user: ${IKP_UPLOAD_QUOTA_BYTES:2147483648}  # 2 GB rolling quota
+  content:
+    # M4 controlled imports: server-side directory holding source files + manifests.
+    import-dir: ${IKP_IMPORT_DIR:/home/z/my-project/imports}
+    # Licensing gate: when false, ALL fixture-labelled rows (is_fixture=true) are
+    # withheld from every serving path (used to prove the production posture).
+    allow-fixtures: ${IKP_ALLOW_FIXTURES:true}

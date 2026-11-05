@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ================= App ================= -->
+    <string name="app_name" translatable="false">IKP</string>
+    <string name="app_name_display">Islamic Knowledge Platform</string>
+    <!-- OD-01 (gate G-1): display name is provisional until the branding freeze. -->
+
+    <!-- ================= Common ================= -->
+    <string name="action_ok">OK</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_close">Close</string>
+    <string name="action_back">Back</string>
+    <string name="action_next">Next</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_get_started">Get started</string>
+    <string name="action_view_all">View all</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_learn_more">Learn more</string>
+
+    <!-- ================= Bottom navigation (six primary sections) ================= -->
+    <string name="nav_home">Home</string>
+    <string name="nav_library">Library</string>
+    <string name="nav_academy">Academy</string>
+    <string name="nav_research">Research</string>
+    <string name="nav_assistant">Assistant</string>
+    <string name="nav_profile">Profile</string>
+    <string name="cd_nav_home">Home section</string>
+    <string name="cd_nav_library">Library section</string>
+    <string name="cd_nav_academy">Academy section</string>
+    <string name="cd_nav_research">Research section</string>
+    <string name="cd_nav_assistant">AI Assistant section</string>
+    <string name="cd_nav_profile">Profile section</string>
+    <string name="cd_tab_selected">%1$s tab selected</string>
+
+    <!-- ================= Splash / onboarding ================= -->
+    <string name="splash_tagline">Knowledge, preserved and organised</string>
+    <string name="onboarding_title_1">A trusted Islamic library</string>
+    <string name="onboarding_body_1">Browse curated subjects — Quran and Tafsir, Hadith, Fiqh, Aqeedah and classical works — reviewed through a structured editorial and scholarly workflow.</string>
+    <string name="onboarding_title_2">Learn at your pace</string>
+    <string name="onboarding_body_2">The Academy brings structured courses and progressive learning. Your reading progress stays in sync across your sessions.</string>
+    <string name="onboarding_title_3">Research with integrity</string>
+    <string name="onboarding_body_3">AI-assisted research with transparent citations is prepared for this platform — religious answers are always reviewed before publication.</string>
+    <string name="onboarding_permissions_title">A note on permissions</string>
+    <string name="onboarding_permissions_body">The app currently needs network access only. Features such as prayer times may later request location — you can deny optional permissions and still browse all core content.</string>
+    <string name="onboarding_continue">Continue</string>
+
+    <!-- ================= Authentication ================= -->
+    <string name="login_title">Welcome back</string>
+    <string name="login_subtitle">Sign in to continue your learning</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="device_name_label">Device name (optional)</string>
+    <string name="login_button">Sign in</string>
+    <string name="login_loading">Signing you in…</string>
+    <string name="forgot_password_link">Forgot password?</string>
+    <string name="register_link">New here? Create an account</string>
+    <string name="register_title">Create an account</string>
+    <string name="register_unavailable_title">Registration is not open yet</string>
+    <string name="register_unavailable_body">Account registration is not yet available in the backend service (planned with the approved authentication rollout). You can still browse as a guest, or sign in if you already have an account.</string>
+    <string name="forgot_title">Reset your password</string>
+    <string name="forgot_unavailable_title">Password reset is not available yet</string>
+    <string name="forgot_unavailable_body">The password reset service is not yet enabled by the backend. Please contact support for account recovery.</string>
+    <string name="auth_invalid_email">Enter a valid email address</string>
+    <string name="auth_invalid_password">Password must be at least 8 characters</string>
+    <string name="auth_session_expired_title">Session expired</string>
+    <string name="auth_session_expired_body">Your session has expired. Please sign in again to continue.</string>
+    <string name="logout_confirm_title">Sign out?</string>
+    <string name="logout_confirm_body">Your session on this device will be revoked. Downloaded files stay on this device.</string>
+    <string name="logout_confirm_action">Sign out</string>
+
+    <!-- ================= States ================= -->
+    <string name="state_loading">Loading…</string>
+    <string name="state_empty_title">Nothing here yet</string>
+    <string name="state_empty_body">Content will appear here once it is published.</string>
+    <string name="state_error_title">Something went wrong</string>
+    <string name="state_error_body">We could not complete your request. Please try again.</string>
+    <string name="state_offline_title">You are offline</string>
+    <string name="state_offline_body">Check your connection. Previously loaded content is shown where available.</string>
+    <string name="state_permission_denied_title">Access restricted</string>
+    <string name="state_permission_denied_body">Your account does not have permission for this action.</string>
+
+    <!-- ================= Home ================= -->
+    <string name="greeting_salam">As-salamu alaykum</string>
+    <string name="home_search_hint">Search the library…</string>
+    <string name="home_section_today">Today</string>
+    <string name="home_ayah_of_day">Ayah of the Day</string>
+    <string name="home_hadith_of_day">Hadith of the Day</string>
+    <string name="home_daily_reminder">Daily Islamic Reminder</string>
+    <string name="home_content_unavailable">This daily content service is not connected yet. It will be enabled with the content modules — no placeholder verses are shown.</string>
+    <string name="home_hijri_unavailable">Hijri date service not connected yet</string>
+    <string name="home_continue_learning">Continue learning</string>
+    <string name="home_recently_read">Recently read</string>
+    <string name="home_recommended_books">Recommended books</string>
+    <string name="home_popular_subjects">Popular subjects</string>
+    <string name="home_continue_empty">No reading progress yet. Open the Library to start reading.</string>
+    <string name="shortcut_prayer">Prayer times</string>
+    <string name="shortcut_qibla">Qibla</string>
+    <string name="shortcut_tasbih">Tasbih</string>
+    <string name="shortcut_coming_m4">Arriving with the content modules (M4)</string>
+
+    <!-- ================= Library ================= -->
+    <string name="library_title">Library</string>
+    <string name="library_search_hint">Search books by title or author</string>
+    <string name="library_categories">Subjects &amp; categories</string>
+    <string name="library_recently_viewed">Recently viewed</string>
+    <string name="library_all_books">Browse all books</string>
+    <string name="subject_books_title">%1$s</string>
+    <string name="books_title_generic">Books</string>
+    <string name="book_titles_count">%1$d titles</string>
+    <string name="book_download_allowed">Download available</string>
+    <string name="book_download_not_allowed">Viewing only — downloads not permitted for this title</string>
+    <string name="book_download_action">Download</string>
+    <string name="book_downloading">Preparing download…</string>
+    <string name="book_download_failed">Download could not be started</string>
+    <string name="book_authors_label">Author(s)</string>
+    <string name="book_language_label">Language</string>
+    <string name="book_publisher_label">Publisher</string>
+    <string name="book_edition_label">Edition</string>
+    <string name="book_year_label">Publication year</string>
+    <string name="book_pages_label">Pages</string>
+    <string name="book_formats_label">Available formats</string>
+    <string name="book_copyright_label">Copyright</string>
+    <string name="book_desc_label">About this book</string>
+    <string name="language_ar">Arabic</string>
+    <string name="language_en">English</string>
+    <string name="language_ur">Urdu</string>
+    <string name="language_hi">Hindi</string>
+
+    <!-- ================= Academy (foundation) ================= -->
+    <string name="academy_title">Academy</string>
+    <string name="academy_foundation_body">Course discovery, enrolment and lesson delivery are planned for the Academy milestone (M5). This foundation prepares the navigation, layout and data plumbing — no courses are shown yet, so nothing here pretends to be live.</string>
+    <string name="academy_my_courses">My courses</string>
+    <string name="academy_discovery">Discover courses</string>
+    <string name="academy_continue">Continue learning</string>
+    <string name="coming_m5">Courses arrive with the Academy milestone (M5)</string>
+
+    <!-- ================= Research (foundation) ================= -->
+    <string name="research_title">Research</string>
+    <string name="research_foundation_body">Research search, subject browsing and saved-research storage are prepared here. The AI research subsystem with verifiable citations is delivered in a later milestone (M6) — until then no generated answers or citations are shown.</string>
+    <string name="research_search_hint">Search research (coming soon)</string>
+    <string name="research_featured">Featured research</string>
+    <string name="research_saved">Saved research</string>
+    <string name="coming_m6">The AI research capability arrives with milestone M6</string>
+
+    <!-- ================= M5 learning & research (live) ================= -->
+    <string name="academy_catalogue">Course catalogue</string>
+    <string name="academy_credentials_fmt">Instructor (admin-verified): %1$s</string>
+    <string name="academy_enrol">Enrol in course</string>
+    <string name="academy_enrolled">Enrolled — progress tracking is on</string>
+    <string name="academy_flashcards">Flashcards</string>
+    <string name="academy_mark_done">Mark lesson done</string>
+    <string name="academy_progress_fmt">%1$d/%2$d lessons · %3$d%% (%4$s)</string>
+    <string name="academy_quizzes">Quizzes</string>
+    <string name="academy_signin_hint">Sign in to enrol, track progress and take quizzes — browsing stays open to guests.</string>
+    <string name="cancel">Cancel</string>
+    <string name="deck_admin">Admin decks</string>
+    <string name="deck_cards_hint">One card per line: front = back</string>
+    <string name="deck_create">Create deck</string>
+    <string name="deck_my">My decks</string>
+    <string name="deck_new">New personal deck</string>
+    <string name="deck_next">Next</string>
+    <string name="deck_prev">Previous</string>
+    <string name="deck_progress_fmt">Card %1$d of %2$d</string>
+    <string name="deck_reveal">Reveal answer</string>
+    <string name="deck_title">Deck title</string>
+    <string name="fatwa_disclaimer">Fatwas are published only after qualified scholar review. This answer is informational, not a personal ruling — consult a qualified scholar for your situation.</string>
+    <string name="fatwa_title">Fatwa directory</string>
+    <string name="quiz_correct">Correct</string>
+    <string name="quiz_failed_fmt">Below the pass mark (%1$d%%) — review the explanations and try again</string>
+    <string name="quiz_passed_fmt">Passed (pass mark %1$d%%)</string>
+    <string name="quiz_score_fmt">Score: %1$d%%</string>
+    <string name="quiz_submit">Submit answers</string>
+    <string name="quiz_time_limit_fmt">Time limit: %1$d s</string>
+    <string name="quiz_wrong">Incorrect</string>
+    <string name="research_articles">Articles</string>
+    <string name="research_citations">Citations</string>
+    <string name="research_fatwa_search">Search published fatwas…</string>
+    <string name="research_fatwas">Fatwas</string>
+    <string name="research_note">Add note</string>
+    <string name="research_save">Save</string>
+    <string name="research_scholars">Scholars</string>
+    <string name="signin_required">Sign in to continue</string>
+
+    <!-- ================= AI Assistant (foundation) ================= -->
+    <string name="assistant_title">AI Assistant</string>
+    <string name="assistant_foundation_body">This is the interface foundation for the AI research assistant. Conversations and answers are delivered with the approved RAG subsystem (M6) — until then the assistant cannot answer questions, and no unapproved AI service is connected.</string>
+    <string name="assistant_conversations">Conversations</string>
+    <string name="assistant_new_question">New research question</string>
+    <string name="assistant_message_hint">Ask a research question…</string>
+    <string name="assistant_send">Send</string>
+    <string name="assistant_input_disabled">The assistant is not connected yet</string>
+    <string name="assistant_citations_label">Citations</string>
+    <string name="assistant_sources_label">Sources</string>
+    <string name="assistant_empty_conversations">No conversations yet</string>
+    <string name="assistant_unavailable_banner">AI answers require the approved research subsystem (M6)</string>
+
+    <!-- ================= Profile & settings ================= -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_sign_in_prompt">Sign in to sync your learning and manage your account</string>
+    <string name="profile_guest_badge">Guest</string>
+    <string name="profile_email_label">Email</string>
+    <string name="profile_status_label">Account status</string>
+    <string name="profile_member_since">Member since %1$s</string>
+    <string name="profile_learning_summary">Learning summary</string>
+    <string name="profile_learning_summary_empty">Learning statistics connect with the Academy milestone (M5).</string>
+    <string name="profile_reading_summary">Reading summary</string>
+    <string name="profile_reading_summary_empty">Reading statistics connect with the reader modules (M4+).</string>
+    <string name="profile_account_settings">Account settings</string>
+    <string name="profile_sessions">Devices &amp; sessions</string>
+    <string name="profile_logout">Sign out</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_personal_info">Personal information</string>
+    <string name="settings_personal_info_note">Profile fields are shown from your account. Editing them requires the profile-update API, which the backend has not published yet — nothing is editable in-app until it exists.</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_note">Interface language preference. The final launch-language list is a pending product decision (OD-02); switching here applies immediately on this device.</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_system">Follow system</string>
+    <string name="settings_reader">Reader preferences</string>
+    <string name="settings_reader_note">Reader themes and typography controls arrive with the reading modules (M4+).</string>
+    <string name="settings_notifications">Notification preferences</string>
+    <string name="settings_notifications_note">Notification controls arrive with the corresponding backend services.</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_privacy_note">Privacy controls are prepared here and activated as the related services launch.</string>
+    <string name="settings_account">Account</string>
+    <string name="settings_data_export">Request data export</string>
+    <string name="settings_data_export_note">Data export is not yet offered by the backend.</string>
+    <string name="settings_delete_account">Delete account</string>
+    <string name="settings_delete_account_note">Account deletion is not yet offered by the backend. The deletion is only ever claimed when the backend confirms it.</string>
+    <string name="sessions_title">Devices &amp; sessions</string>
+    <string name="sessions_current_badge">This device</string>
+    <string name="sessions_revoke">Revoke</string>
+    <string name="sessions_revoke_confirm_title">Revoke this session?</string>
+    <string name="sessions_revoke_confirm_body">The device will be signed out. You cannot revoke the session you are currently using from here — sign out instead.</string>
+    <string name="sessions_empty">No other active sessions</string>
+    <string name="cd_session_device">Session device</string>
+    <string name="cd_book_cover">Book cover</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_settings">Settings</string>
+    <string name="cd_back">Navigate back</string>
+    <string name="cd_download">Download book file</string>
+
+    <!-- ================= Error mapping (stable backend codes) ================= -->
+    <string name="error_network">Network unavailable. Check your connection and try again.</string>
+    <string name="error_timeout">The request timed out. Please try again.</string>
+    <string name="error_server">A server error occurred. Please try again later.</string>
+    <string name="error_auth">Your session is no longer valid. Please sign in again.</string>
+    <string name="error_forbidden">You do not have permission to perform this action.</string>
+    <string name="error_not_found">The requested content was not found.</string>
+    <string name="error_validation">Some information is invalid. Please review and try again.</string>
+    <string name="error_rate_limited">Too many attempts. Please wait a few minutes and try again.</string>
+    <string name="error_credentials">Incorrect email or password.</string>
+    <string name="error_account_suspended">This account is suspended. Contact support.</string>
+    <string name="error_unknown">An unexpected error occurred. Please try again.</string>
+    <string name="error_code_suffix">(%1$s)</string>
+    <!-- M4: Quran / Hadith / search -->
+    <string name="quran_title">Quran</string>
+    <string name="quran_filter_hint">Filter surahs</string>
+    <string name="quran_surah_title">%1$s · %2$s</string>
+    <string name="quran_surah_meta">%1$s · %2$d ayahs</string>
+    <string name="revelation_makki">Makki</string>
+    <string name="revelation_madani">Madani</string>
+    <string name="quran_ayah_number">%1$d:%2$d</string>
+    <string name="quran_choose_translation">Translation</string>
+    <string name="quran_audio_unavailable">Recitation audio is not available yet — no licensed recitation has been imported.</string>
+    <string name="fixture_badge">Development fixture</string>
+    <string name="hadith_title">Hadith</string>
+    <string name="hadith_collection_meta">%1$d hadiths · %2$d books</string>
+    <string name="hadith_qa_pending">Scholarly review pending</string>
+    <string name="hadith_book_number">Book %1$d</string>
+    <string name="hadith_book_meta">%1$d hadiths</string>
+    <string name="hadith_item_number">No. %1$d</string>
+    <string name="hadith_grading_not_recorded">Grading: not recorded in the imported dataset</string>
+    <string name="hadith_grading_line">Graded by %1$s: %2$s — source: %3$s</string>
+    <string name="hadith_numbering_note">Numbering: %1$s</string>
+    <string name="search_title">Search</string>
+    <string name="search_group_quran">Quran</string>
+    <string name="search_group_hadith">Hadith</string>
+    <string name="search_group_books">Books</string>
+    <string name="search_group_authors">Authors</string>
+    <string name="search_group_subjects">Subjects</string>
+    <string name="search_group_duas">Duas</string>
+    <string name="search_group_dictionary">Dictionary</string>
+    <string name="search_group_research">Research</string>
+    <string name="search_group_courses">Courses</string>
+    <string name="search_group_lessons">Lessons</string>
+    <string name="search_group_scholars">Scholars</string>
+    <string name="search_group_fatwas">Fatwas</string>
+    <string name="search_no_results_group">No results — content arrives in a later milestone.</string>
+    <!-- M4: dictionary / duas / calendar -->
+    <string name="dictionary_title">Arabic Dictionary</string>
+    <string name="dictionary_hint">Look up an Arabic word</string>
+    <string name="dictionary_recent">Recent: %1$s</string>
+    <string name="duas_title">Duas</string>
+    <string name="duas_all">All</string>
+    <string name="dua_audio_unavailable">Audio not available</string>
+    <string name="calendar_title">Islamic Calendar</string>
+    <string name="calendar_today">Hijri %1$d / %2$d / %3$d AH · %4$s · %5$s</string>
+    <string name="calendar_calculated">Calculated date (not a confirmed sighting)</string>
+    <string name="calendar_confirmed">Adjusted by local confirmation</string>
+    <string name="calendar_offset_title">Confirmed date adjustment (days)</string>
+    <string name="calendar_event_meta">%1$d/%2$d AH</string>
+    <string name="calendar_reminders_note">Reminders arrive with the notifications milestone.</string>
+    <!-- M4: utilities -->
+    <string name="utilities_title">Utilities</string>
+    <string name="prayer_title">Prayer Times</string>
+    <string name="prayer_city">City</string>
+    <string name="prayer_use_city">Use city</string>
+    <string name="prayer_use_manual">Use coordinates</string>
+    <string name="prayer_use_device">Use device location</string>
+    <string name="prayer_lat">Latitude</string>
+    <string name="prayer_lon">Longitude</string>
+    <string name="prayer_invalid_coords">Enter valid numeric coordinates.</string>
+    <string name="prayer_method">Calculation method</string>
+    <string name="prayer_fajr">Fajr</string>
+    <string name="prayer_sunrise">Sunrise</string>
+    <string name="prayer_dhuhr">Dhuhr</string>
+    <string name="prayer_asr">Asr</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isha">Isha</string>
+    <string name="prayer_permission_denied">Location permission denied or unavailable — using presets and manual entry.</string>
+    <string name="prayer_notifications_note">Local prayer reminders arrive with the notifications milestone.</string>
+    <string name="qibla_title">Qibla</string>
+    <string name="qibla_bearing">Qibla bearing: %.1f°</string>
+    <string name="qibla_calibrate_hint">Move the phone in a figure-eight to calibrate the compass.</string>
+    <string name="qibla_needs_calibration">Low compass accuracy — please calibrate.</string>
+    <string name="qibla_no_location">Set your location in Prayer Times first; the bearing will appear here.</string>
+    <string name="tasbih_title">Tasbih</string>
+    <string name="tasbih_count_cd">Tap to count, long-press to reset</string>
+    <string name="tasbih_daily_total">Today: %1$d</string>
+    <string name="tasbih_new_counter">New counter</string>
+    <string name="tasbih_label_hint">Label</string>
+    <string name="action_search">Search</string>
+    <!-- M4: reader -->
+    <string name="reader_prev">Prev</string>
+    <string name="reader_next">Next</string>
+    <string name="reader_page_of">Page %1$d of %2$d</string>
+    <string name="reader_section_of">Section %1$d of %2$d</string>
+    <string name="reader_toc">Contents</string>
+    <string name="reader_search_title">Search</string>
+    <string name="reader_search_hint">Search inside this book (EPUB)</string>
+    <string name="reader_search_results">Results</string>
+    <string name="reader_pdf_search_unavailable">Search within PDF files is not supported in this release.</string>
+    <string name="reader_open_failed">Could not open the file. Try again later.</string>
+    <string name="reader_font_cd">Text size</string>
+    <string name="reader_theme_cd">Reading theme</string>
+    <string name="reader_pdf_cd">PDF page</string>
+    <!-- M4: personal library + shared -->
+    <string name="retry">Retry</string>
+    <string name="action_share">Share</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="copied">Copied</string>
+    
+    <string name="state_empty">Nothing here yet.</string>
+    <string name="state_error_offline">Could not load. Check your connection and try again.</string>
+    <string name="cd_bookmark">Bookmark</string>
+    <string name="cd_copy">Copy</string>
+    <string name="cd_share">Share</string>
+    <string name="shortcut_duas">Duas</string>
+    <string name="shortcut_quran">Quran</string>
+    <string name="shortcut_hadith">Hadith</string>
+    <string name="home_hijri_date">Hijri %1$d / %2$d / %3$d AH</string>
+    <!-- M4: personal library -->
+    <string name="personal_title">My Library (Private)</string>
+    <string name="personal_privacy_note">Only you can see your uploads. They are never published to the platform library.</string>
+    <string name="personal_upload_title">Add book</string>
+    <string name="personal_edit_title">Edit book details</string>
+    <string name="personal_delete_title">Delete book</string>
+    <string name="personal_delete_message">Delete "%s" from your private library? This cannot be undone.</string>
+    <string name="personal_action_edit">Edit details</string>
+    <string name="personal_action_delete">Delete</string>
+    <string name="personal_action_add_to_collection">Add to collection</string>
+    <string name="personal_new_collection">New collection</string>
+    <string name="personal_collection_name_hint">Collection name</string>
+    <string name="personal_no_collections">No collections yet</string>
+    <string name="personal_searchable_badge">Text layer detected</string>
+    <string name="personal_unknown_author">Unknown author</string>
+    <string name="personal_empty_body">Upload a personal PDF or EPUB to read it privately in the app.</string>
+    <string name="personal_requires_login">Sign in to see your private library.</string>
+    <string name="personal_field_title">Title</string>
+    <string name="personal_field_author">Author</string>
+    <string name="personal_field_description">Description</string>
+    <string name="ok">OK</string>
+    <string name="cd_more_actions">More actions</string>
+    <string name="action_upload">Upload</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+</resources>

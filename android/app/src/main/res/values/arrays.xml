@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="prayer_cities">
+        <item>Makkah</item>
+        <item>Madinah</item>
+        <item>Jerusalem</item>
+        <item>Istanbul</item>
+        <item>Cairo</item>
+        <item>Karachi</item>
+        <item>Delhi</item>
+        <item>Jakarta</item>
+        <item>London</item>
+        <item>New York</item>
+    </string-array>
+    <string-array name="prayer_methods">
+        <item>Muslim World League</item>
+        <item>Egyptian General Authority</item>
+        <item>Umm al-Qura</item>
+        <item>Karachi</item>
+        <item>Dubai</item>
+        <item>North America (ISNA)</item>
+        <item>Kuwait</item>
+        <item>Qatar</item>
+        <item>Moonsighting Committee</item>
+    </string-array>
+</resources>

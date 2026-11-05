@@ -1,0 +1,30 @@
+{
+  "sourceRegisterId": "SR-08",
+  "sourceName": "Sunan Abu Dawud (fawazahmed0/hadith-api v1)",
+  "sourceUrl": "https://github.com/fawazahmed0/hadith-api",
+  "licence": "The Unlicense (public domain dedication)",
+  "collectionCode": "abudawud",
+  "editions": {
+    "ara": {
+      "sha256": "216139c5f40a8147e700d62ffa3b5b2fe45d0e034f86941a193c598c10056189",
+      "bytes": 7345422,
+      "hadithCount": 5274,
+      "sectionCount": 44,
+      "gradeEntries": 18818
+    },
+    "eng": {
+      "sha256": "f6bcf73ad96d2f28296232e201e12963e7b3dd5325572fb88365edbbfb0ecd40",
+      "bytes": 4311308,
+      "hadithCount": 5274,
+      "sectionCount": 44,
+      "gradeEntries": 18818
+    },
+    "urd": {
+      "sha256": "44b23f53065a4e4e8128f76aebaf129292410ad323897a8eeb4c5f82fceaa8bd",
+      "bytes": 6068981,
+      "hadithCount": 5274,
+      "sectionCount": 44,
+      "gradeEntries": 18818
+    }
+  }
+}

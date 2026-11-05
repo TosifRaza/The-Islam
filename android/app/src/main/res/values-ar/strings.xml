@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Arabic core strings (M3 RTL/multilingual foundation).
+         The FINAL UI language list is controlled by OD-02 — this file proves
+         RTL readiness and Arabic layout; it does not declare Arabic final. -->
+    <string name="splash_tagline">معرفة محفوظة ومنظمة</string>
+    <string name="onboarding_title_1">مكتبة إسلامية موثوقة</string>
+    <string name="onboarding_body_1">تصفح المحاور المنسقة — القرآن والتفسير، الحديث، الفقه، العقيدة والمؤلفات التراثية — عبر مسار تحريري وعلمي منظم.</string>
+    <string name="onboarding_title_2">تعلَّم على وتيرتك</string>
+    <string name="onboarding_body_2">تجلب الأكاديمية دورات منظمة وتعلمًا متدرجًا، ويبقى تقدم القراءة متزامنًا عبر جلساتك.</string>
+    <string name="onboarding_title_3">بحث بنزاهة</string>
+    <string name="onboarding_body_3">البحث بمساعدة الذكاء الاصطناعي مع استشهادات شفافة مهيأ في هذه المنصة — ولا يُنشر أي محتوى ديني دون مراجعة.</string>
+    <string name="onboarding_permissions_title">ملاحظة حول الأذونات</string>
+    <string name="onboarding_permissions_body">يحتاج التطبيق حاليًا إلى صلاحية الشبكة فقط. ميزات مثل مواقيت الصلاة قد تطلب الموقع لاحقًا — يمكنك رفض الأذونات الاختيارية والاستمرار في تصفح المحتوى.</string>
+    <string name="onboarding_continue">متابعة</string>
+    <string name="action_get_started">ابدأ الآن</string>
+    <string name="action_skip">تخطي</string>
+    <string name="action_retry">إعادة المحاولة</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="action_ok">حسنًا</string>
+    <string name="action_close">إغلاق</string>
+    <string name="action_sign_in">تسجيل الدخول</string>
+    <string name="action_view_all">عرض الكل</string>
+
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_library">المكتبة</string>
+    <string name="nav_academy">الأكاديمية</string>
+    <string name="nav_research">البحوث</string>
+    <string name="nav_assistant">المساعد</string>
+    <string name="nav_profile">حسابي</string>
+
+    <string name="login_title">أهلًا بعودتك</string>
+    <string name="login_subtitle">سجّل الدخول لمتابعة تعلمك</string>
+    <string name="email_label">البريد الإلكتروني</string>
+    <string name="password_label">كلمة المرور</string>
+    <string name="device_name_label">اسم الجهاز (اختياري)</string>
+    <string name="login_button">تسجيل الدخول</string>
+    <string name="login_loading">جارٍ تسجيل الدخول…</string>
+    <string name="forgot_password_link">نسيت كلمة المرور؟</string>
+    <string name="register_link">جديد هنا؟ أنشئ حسابًا</string>
+    <string name="register_unavailable_title">التسجيل غير متاح بعد</string>
+    <string name="register_unavailable_body">إنشاء الحسابات غير متاح في الخدمة الخلفية بعد. يمكنك التصفح كزائر أو تسجيل الدخول إن كان لديك حساب.</string>
+    <string name="forgot_unavailable_title">استعادة كلمة المرور غير متاحة بعد</string>
+    <string name="forgot_unavailable_body">خدمة استعادة كلمة المرور غير مفعلة بعد. تواصل مع الدعم لاستعادة الحساب.</string>
+    <string name="auth_session_expired_title">انتهت الجلسة</string>
+    <string name="auth_session_expired_body">انتهت صلاحية جلستك. سجّل الدخول من جديد للمتابعة.</string>
+    <string name="logout_confirm_title">تسجيل الخروج؟</string>
+    <string name="logout_confirm_body">سيتم إبطال جلستك على هذا الجهاز. تبقى الملفات التي نزلتها على الجهاز.</string>
+    <string name="logout_confirm_action">خروج</string>
+
+    <string name="state_loading">جارٍ التحميل…</string>
+    <string name="state_empty_title">لا يوجد محتوى بعد</string>
+    <string name="state_empty_body">سيظهر المحتوى هنا بعد نشره.</string>
+    <string name="state_error_title">حدث خطأ ما</string>
+    <string name="state_error_body">لم نتمكن من إتمام طلبك. حاول مرة أخرى.</string>
+    <string name="state_offline_title">أنت غير متصل</string>
+    <string name="state_offline_body">تحقق من اتصالك. يُعرض المحتوى المخزن سابقًا حيثما توفر.</string>
+    <string name="state_permission_denied_title">الوصول مقيّد</string>
+    <string name="state_permission_denied_body">حسابك لا يملك صلاحية تنفيذ هذا الإجراء.</string>
+
+    <string name="greeting_salam">السلام عليكم</string>
+    <string name="home_search_hint">ابحث في المكتبة…</string>
+    <string name="home_section_today">اليوم</string>
+    <string name="home_ayah_of_day">آية اليوم</string>
+    <string name="home_hadith_of_day">حديث اليوم</string>
+    <string name="home_daily_reminder">التذكير اليومي</string>
+    <string name="home_content_unavailable">خدمة المحتوى اليومي غير متصلة بعد، وسيتم تفعيلها مع وحدات المحتوى — لا تُعرض أي آيات أو أحاديث بديلة.</string>
+    <string name="home_hijri_unavailable">خدمة التاريخ الهجري غير متصلة بعد</string>
+    <string name="home_continue_learning">أكمل التعلم</string>
+    <string name="home_recently_read">قرأته مؤخرًا</string>
+    <string name="home_recommended_books">كتب موصى بها</string>
+    <string name="home_popular_subjects">محاور مميزة</string>
+    <string name="home_continue_empty">لا يوجد تقدم قراءة بعد. افتح المكتبة لتبدأ القراءة.</string>
+    <string name="shortcut_prayer">مواقيت الصلاة</string>
+    <string name="shortcut_qibla">اتجاه القبلة</string>
+    <string name="shortcut_tasbih">المسبحة</string>
+    <string name="shortcut_coming_m4">تصل مع وحدات المحتوى (المرحلة الرابعة)</string>
+
+    <string name="library_title">المكتبة</string>
+    <string name="library_search_hint">ابحث عن كتاب أو مؤلف</string>
+    <string name="library_categories">المحاور والتصنيفات</string>
+    <string name="library_recently_viewed">شوهد مؤخرًا</string>
+    <string name="library_all_books">تصفح كل الكتب</string>
+    <string name="book_titles_count">%1$d عنوانًا</string>
+    <string name="book_download_allowed">التنزيل متاح</string>
+    <string name="book_download_not_allowed">للعرض فقط — التنزيل غير مسموح لهذا الكتاب</string>
+    <string name="book_download_action">تنزيل</string>
+    <string name="language_ar">العربية</string>
+    <string name="language_en">الإنجليزية</string>
+    <string name="language_ur">الأردية</string>
+    <string name="language_hi">الهندية</string>
+
+    <string name="profile_title">حسابي</string>
+    <string name="profile_sign_in_prompt">سجّل الدخول لمزامنة تعلمك وإدارة حسابك</string>
+    <string name="profile_guest_badge">زائر</string>
+    <string name="profile_logout">تسجيل الخروج</string>
+    <string name="sessions_title">الأجهزة والجلسات</string>
+    <string name="sessions_current_badge">هذا الجهاز</string>
+    <string name="sessions_revoke">إبطال</string>
+    <string name="sessions_empty">لا توجد جلسات نشطة أخرى</string>
+
+    <!-- ================= M5 core subset ================= -->
+    <string name="academy_quizzes">الاختبارات</string>
+    <string name="academy_flashcards">البطاقات التعليمية</string>
+    <string name="academy_enrol">التسجيل في الدورة</string>
+    <string name="academy_enrolled">تم التسجيل — تم تفعيل تتبع التقدم</string>
+    <string name="academy_mark_done">تحديد الدرس كمكتمل</string>
+    <string name="research_articles">المقالات</string>
+    <string name="research_scholars">العلماء</string>
+    <string name="research_fatwas">الفتاوى</string>
+    <string name="research_fatwa_search">ابحث في الفتاوى المنشورة…</string>
+    <string name="research_save">حفظ</string>
+    <string name="research_note">إضافة ملاحظة</string>
+    <string name="quiz_submit">إرسال الإجابات</string>
+    <string name="quiz_correct">صحيح</string>
+    <string name="quiz_wrong">خطأ</string>
+    <string name="deck_reveal">كشف الإجابة</string>
+    <string name="deck_next">التالي</string>
+    <string name="deck_prev">السابق</string>
+    <string name="deck_my">بطاقاتي</string>
+    <string name="deck_admin">بطاقات المشرف</string>
+    <string name="fatwa_disclaimer">لا تُنشر الفتاوى إلا بعد مراجعة عالم مؤهل. هذه الإجابة معلوماتية وليست حكمًا شخصيًا — استشر عالمًا مؤهلاً لحالتك.</string>
+    <string name="signin_required">سجّل الدخول للمتابعة</string>
+    <string name="cancel">إلغاء</string>
+</resources>

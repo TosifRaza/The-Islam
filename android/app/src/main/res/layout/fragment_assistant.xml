@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:layout_marginTop="@dimen/space_md"
+        android:text="@string/assistant_title"
+        android:textAppearance="@style/TextAppearance.IKP.HeadlineMedium" />
+
+    <!-- Honest status banner: the RAG subsystem is not connected at M3 -->
+    <TextView
+        android:id="@+id/assistant_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_md"
+        android:padding="@dimen/space_sm"
+        android:background="@drawable/bg_banner_gold"
+        android:text="@string/assistant_unavailable_banner"
+        android:textAppearance="@style/TextAppearance.IKP.BodySmall"
+        android:textColor="@color/warning_gold_text"
+        android:contentDescription="@string/assistant_unavailable_banner" />
+
+    <com.ikp.dev.app.ui.common.StateView
+        android:id="@+id/assistant_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/assistant_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView style="@style/SectionHeader" android:text="@string/assistant_conversations" />
+        <TextView
+            android:id="@+id/assistant_empty_conversations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md"
+            android:text="@string/assistant_empty_conversations"
+            android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+
+        <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+
+        <!-- Chat composer: message bubbles land with M6; input disabled honestly -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/space_md">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.IKP.TextInput"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="@string/assistant_message_hint"
+                android:enabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_assistant_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:enabled="false"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_send"
+                style="@style/Widget.IKP.Button.Primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_sm"
+                android:enabled="false"
+                android:text="@string/assistant_send" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

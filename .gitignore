@@ -1,0 +1,20 @@
+# Build artifacts (regenerable)
+node_modules/
+dist/
+build/
+target/
+.gradle/
+local.properties
+*.apk.idsig
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs / local
+*.log
+.DS_Store

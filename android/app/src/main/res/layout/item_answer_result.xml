@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One graded answer in the result view (visible only to the owner). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/space_sm">
+
+    <TextView
+        android:id="@+id/tv_result_prompt"
+        style="@style/TextAppearance.IKP.BodyLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_result_verdict"
+        style="@style/TextAppearance.IKP.BodySecondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp" />
+
+    <TextView
+        android:id="@+id/tv_result_explanation"
+        style="@style/TextAppearance.IKP.BodySecondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp" />
+</LinearLayout>

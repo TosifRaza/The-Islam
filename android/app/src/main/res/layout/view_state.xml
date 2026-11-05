@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reusable state frame: loading / empty / error(+offline) modes, switched
+     programmatically by StateView. Used by every significant screen (§19). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/state_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/emerald_deep"
+        android:contentDescription="@string/state_loading" />
+
+    <LinearLayout
+        android:id="@+id/state_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/space_xl"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_empty_box"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:id="@+id/state_empty_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:text="@string/state_empty_title"
+            android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/state_empty_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:text="@string/state_empty_body"
+            android:textAppearance="@style/TextAppearance.IKP.BodySecondary"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/state_empty_action"
+            style="@style/Widget.IKP.Button.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/state_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/space_xl"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_error"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:id="@+id/state_error_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:text="@string/state_error_title"
+            android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/state_error_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:text="@string/state_error_body"
+            android:textAppearance="@style/TextAppearance.IKP.BodySecondary"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/state_error_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xxs"
+            android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+            android:visibility="gone"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/state_error_retry"
+            style="@style/Widget.IKP.Button.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:text="@string/action_retry" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:paddingStart="@dimen/space_md" android:paddingEnd="@dimen/space_md"
+    android:paddingTop="@dimen/space_sm" android:paddingBottom="@dimen/space_sm"
+    android:minHeight="@dimen/touch_target_min" android:background="?attr/selectableItemBackground">
+    <TextView android:id="@+id/tv_group_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:textAppearance="@style/TextAppearance.IKP.TitleMedium" android:textColor="@color/gold" />
+</LinearLayout>

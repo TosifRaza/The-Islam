@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_lg">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/emerald_deep"
+            android:padding="@dimen/space_lg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_profile_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nav_profile"
+                        android:textAppearance="@style/TextAppearance.IKP.HeadlineSmall"
+                        android:textColor="@color/ivory" />
+
+                    <TextView
+                        android:id="@+id/tv_guest_badge"
+                        style="@style/Widget.IKP.StatusPill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/gold"
+                        android:text="@string/profile_guest_badge"
+                        android:textColor="@color/text_on_gold"
+                        android:visibility="gone" />
+
+                    <ImageButton
+                        android:id="@+id/btn_settings"
+                        style="@style/TouchBack"
+                        android:src="@drawable/ic_settings"
+                        android:contentDescription="@string/cd_settings" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_profile_prompt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:text="@string/profile_sign_in_prompt"
+                    android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
+                    android:textColor="@color/gold" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <com.ikp.dev.app.ui.common.StateView
+            android:id="@+id/profile_state"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:visibility="gone" />
+
+        <!-- Signed-in identity block -->
+        <LinearLayout
+            android:id="@+id/profile_identity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+                android:layout_margin="@dimen/space_md">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/email_label" />
+                        <TextView android:id="@+id/tv_profile_email" style="@style/DetailValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/profile_status_label" />
+                        <TextView android:id="@+id/tv_profile_status" style="@style/DetailValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:id="@+id/key_member_since" android:text="@string/profile_member_since" />
+                        <TextView android:id="@+id/tv_member_since" style="@style/DetailValue" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView style="@style/SectionHeader" android:text="@string/profile_learning_summary" />
+            <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+                android:layout_marginStart="@dimen/space_md"
+                android:layout_marginEnd="@dimen/space_md">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_learning_summary_empty"
+                    android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView style="@style/SectionHeader" android:text="@string/profile_reading_summary" />
+            <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+                android:layout_marginStart="@dimen/space_md"
+                android:layout_marginEnd="@dimen/space_md">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_reading_summary_empty"
+                    android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Account actions (guest-visible: sign in; member: sessions/logout) -->
+        <TextView style="@style/SectionHeader" android:text="@string/profile_account_settings" />
+
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/row_sessions"
+                    style="@style/SettingsRow">
+                    <ImageView style="@style/SettingsRowIcon" android:src="@drawable/ic_device"
+                        android:importantForAccessibility="no" />
+                    <TextView style="@style/SettingsRowLabel" android:text="@string/profile_sessions" />
+                    <ImageView style="@style/SettingsRowChevron" android:src="@drawable/ic_chevron_right"
+                        android:importantForAccessibility="no" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/row_sign_in"
+                    style="@style/SettingsRow">
+                    <ImageView style="@style/SettingsRowIcon" android:src="@drawable/ic_nav_profile"
+                        android:importantForAccessibility="no" />
+                    <TextView style="@style/SettingsRowLabel" android:text="@string/action_sign_in" />
+                    <ImageView style="@style/SettingsRowChevron" android:src="@drawable/ic_chevron_right"
+                        android:importantForAccessibility="no" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/row_logout"
+                    style="@style/SettingsRow">
+                    <ImageView style="@style/SettingsRowIcon" android:src="@drawable/ic_logout"
+                        android:importantForAccessibility="no" />
+                    <TextView style="@style/SettingsRowLabel" android:text="@string/profile_logout" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

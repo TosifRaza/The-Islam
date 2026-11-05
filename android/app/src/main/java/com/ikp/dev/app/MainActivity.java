@@ -1,0 +1,163 @@
+package com.ikp.dev.app;
+
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.splashscreen.SplashScreen;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.ikp.dev.app.core.common.NetworkMonitor;
+import com.ikp.dev.app.core.security.SessionManager;
+import com.ikp.dev.app.di.ServiceLocator;
+import com.ikp.dev.app.ui.auth.AuthViewModel;
+import com.ikp.dev.app.ui.splash.SplashViewModel;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Single-activity host (Navigation Component, prompt §5/§6):
+ * - SplashScreen API gate; destination decided by SplashViewModel;
+ * - custom six-section bottom bar (BottomNavigationView caps at five items);
+ * - tab switches preserve per-section state (saveState/restoreState);
+ * - offline banner driven by NetworkMonitor;
+ * - protected destinations/actions react to session expiry globally.
+ */
+public final class MainActivity extends AppCompatActivity {
+
+    private NavController navController;
+    private android.widget.LinearLayout bottomBar;
+    private final Map<Integer, android.view.View> tabByDestination = new HashMap<>();
+    private final Map<android.view.View, Integer> destinationByTab = new HashMap<>();
+    private SessionManager sessionManager;
+    private NetworkMonitor networkMonitor;
+    private androidx.lifecycle.Observer<Boolean> offlineObserver;
+    private androidx.lifecycle.Observer<SessionManager.SessionEvent> sessionObserver;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen splash = SplashScreen.installSplashScreen(this);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        sessionManager = ServiceLocator.sessionManager();
+        networkMonitor = ServiceLocator.networkMonitor();
+
+        NavHostFragment host = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host);
+        if (host == null) {
+            finish();
+            return;
+        }
+        navController = host.getNavController();
+        splash.setKeepOnScreenCondition(() -> false); // SplashFragment owns flow
+
+        bottomBar = findViewById(R.id.bottom_bar);
+        bindTabs();
+        observeDestinations();
+        observeOffline();
+        observeSession();
+    }
+
+    private void bindTabs() {
+        tabByDestination.put(R.id.homeFragment, findViewById(R.id.btn_home));
+        tabByDestination.put(R.id.libraryFragment, findViewById(R.id.btn_library));
+        tabByDestination.put(R.id.academyFragment, findViewById(R.id.btn_academy));
+        tabByDestination.put(R.id.researchFragment, findViewById(R.id.btn_research));
+        tabByDestination.put(R.id.assistantFragment, findViewById(R.id.btn_assistant));
+        tabByDestination.put(R.id.profileFragment, findViewById(R.id.btn_profile));
+
+        for (Map.Entry<Integer, android.view.View> e : tabByDestination.entrySet()) {
+            android.view.View tab = e.getValue();
+            destinationByTab.put(tab, e.getKey());
+            tab.setOnClickListener(v -> navigateToTab(e.getKey()));
+        }
+    }
+
+    private void navigateToTab(int destinationId) {
+        Integer current = null;
+        for (Map.Entry<Integer, android.view.View> e : tabByDestination.entrySet()) {
+            if (e.getValue().isSelected()) {
+                current = e.getKey();
+                break;
+            }
+        }
+        if (current != null && current == destinationId) {
+            return; // reselect: no-op (state stays)
+        }
+        NavOptions options = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(R.id.homeFragment, true, true) // saveState of popped tabs
+                .build();
+        navController.navigate(destinationId, null, options);
+    }
+
+    private void observeDestinations() {
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int id = destination.getId();
+            boolean topLevel = tabByDestination.containsKey(id);
+            bottomBar.setVisibility(topLevel ? android.view.View.VISIBLE : android.view.View.GONE);
+            for (Map.Entry<Integer, android.view.View> e : tabByDestination.entrySet()) {
+                boolean selected = e.getKey() == id;
+                e.getValue().setSelected(selected);
+                e.getValue().setActivated(selected);
+            }
+        });
+    }
+
+    private void observeOffline() {
+        offlineObserver = online -> {
+            android.view.View banner = findViewById(R.id.offline_banner);
+            if (banner != null) {
+                banner.setVisibility(Boolean.TRUE.equals(online)
+                        ? android.view.View.GONE : android.view.View.VISIBLE);
+            }
+        };
+        networkMonitor.observe(this, offlineObserver);
+    }
+
+    private void observeSession() {
+        sessionObserver = event -> {
+            if (event != null && event.state == SessionManager.AuthState.EXPIRED) {
+                // Return the user to a secure state with an explanation.
+                if (navController.getCurrentDestination() != null
+                        && navController.getCurrentDestination().getId() != R.id.loginFragment) {
+                    showSessionExpiredDialog();
+                    try {
+                        navController.navigate(R.id.action_global_session_expired);
+                    } catch (IllegalArgumentException ignored) {
+                        // already navigating
+                    }
+                }
+            }
+        };
+        sessionManager.state().observe(this, sessionObserver);
+    }
+
+    private void showSessionExpiredDialog() {
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.auth_session_expired_title)
+                .setMessage(R.string.auth_session_expired_body)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+    }
+
+    /** Toast-free logout confirmation shared by Profile screen (reusable). */
+    public static void confirmLogout(android.content.Context context, Runnable onConfirm) {
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(context)
+                .setTitle(R.string.logout_confirm_title)
+                .setMessage(R.string.logout_confirm_body)
+                .setNegativeButton(R.string.action_cancel, null)
+                .setPositiveButton(R.string.logout_confirm_action, (d, w) -> onConfirm.run())
+                .show();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp() || super.onSupportNavigateUp();
+    }
+}

@@ -1,0 +1,436 @@
+./
+  .env.example (156 bytes)
+  .gitignore (332 bytes)
+  Makefile (4,657 bytes)
+  README.md (7,517 bytes)
+  docker-compose.yml (1,111 bytes)
+  .github/
+    workflows/
+      ci.yml (3,503 bytes)
+  admin/
+    Dockerfile (379 bytes)
+    index.html (324 bytes)
+    nginx.conf (439 bytes)
+    package-lock.json (142,378 bytes)
+    package.json (932 bytes)
+    postcss.config.js (80 bytes)
+    tailwind.config.js (382 bytes)
+    tsconfig.app.json (509 bytes)
+    tsconfig.app.tsbuildinfo (1,028 bytes)
+    tsconfig.json (119 bytes)
+    tsconfig.node.json (296 bytes)
+    tsconfig.node.tsbuildinfo (47 bytes)
+    vite.config.ts (531 bytes)
+    src/
+      App.tsx (5,830 bytes)
+      index.css (59 bytes)
+      main.tsx (318 bytes)
+      test-setup.ts (42 bytes)
+      api/
+        client.ts (5,712 bytes)
+        health.ts (519 bytes)
+        types.ts (5,078 bytes)
+      auth/
+        AuthContext.tsx (3,273 bytes)
+      components/
+        HealthBadge.test.tsx (1,129 bytes)
+        HealthBadge.tsx (1,413 bytes)
+        ui.tsx (10,010 bytes)
+      features/
+        audit/
+          AuditPage.tsx (5,981 bytes)
+        auth/
+          LoginPage.tsx (4,138 bytes)
+        books/
+          BookDetailPage.tsx (10,662 bytes)
+          BookFormPage.tsx (14,263 bytes)
+          BooksPage.tsx (9,155 bytes)
+        dashboard/
+          DashboardPage.tsx (8,236 bytes)
+        profile/
+          ProfilePage.tsx (4,540 bytes)
+        review/
+          FatwasPage.tsx (17,965 bytes)
+          ReviewQueuePage.tsx (4,295 bytes)
+        subjects/
+          SubjectsPage.tsx (12,418 bytes)
+        uploads/
+          FilesPage.tsx (9,866 bytes)
+        users/
+          UserDetailPage.tsx (9,953 bytes)
+          UsersPage.tsx (10,023 bytes)
+      layouts/
+        AdminLayout.tsx (6,185 bytes)
+      pages/
+      routes/
+        ProtectedRoute.tsx (1,199 bytes)
+      test/
+        auth.test.tsx (3,749 bytes)
+        books-review-audit.test.tsx (7,586 bytes)
+        dashboard.test.tsx (2,961 bytes)
+        helpers.tsx (6,977 bytes)
+        users-subjects.test.tsx (4,682 bytes)
+  android/
+    README.md (9,597 bytes)
+    build.gradle (137 bytes)
+    gradle.properties (109 bytes)
+    gradlew (8,762 bytes)
+    gradlew.bat (2,966 bytes)
+    settings.gradle (264 bytes)
+    app/
+      build.gradle (3,705 bytes)
+      proguard-rules.pro (1,250 bytes)
+      src/
+        androidTest/
+          java/
+            com/
+              ikp/
+                dev/
+                  app/
+        debug/
+          AndroidManifest.xml (393 bytes)
+        main/
+          AndroidManifest.xml (2,186 bytes)
+          java/
+            com/
+              ikp/
+                dev/
+                  app/
+                    core/
+                      common/
+                      database/
+                      error/
+                      navigation/
+                      network/
+                      security/
+                      workers/
+                    data/
+                      local/
+                        dao/
+                        entity/
+                      mapper/
+                      remote/
+                        dto/
+                      repository/
+                    di/
+                    domain/
+                      model/
+                    ui/
+                      academy/
+                      assistant/
+                      auth/
+                      common/
+                      home/
+                      library/
+                      onboarding/
+                      profile/
+                      research/
+                      splash/
+          res/
+            color/
+              bottom_bar_icon_tint.xml (230 bytes)
+              bottom_bar_label_tint.xml (230 bytes)
+              input_stroke.xml (207 bytes)
+              nav_item_tint.xml (209 bytes)
+            drawable/
+              bg_banner_gold.xml (234 bytes)
+              bg_book_cover.xml (306 bytes)
+              bg_category_badge.xml (192 bytes)
+              bg_dot_active.xml (230 bytes)
+              bg_dot_inactive.xml (240 bytes)
+              bg_search_field.xml (334 bytes)
+              ic_arrow_back.xml (315 bytes)
+              ic_book.xml (378 bytes)
+              ic_chevron_right.xml (316 bytes)
+              ic_delete.xml (332 bytes)
+              ic_device.xml (447 bytes)
+              ic_download.xml (294 bytes)
+              ic_empty_box.xml (412 bytes)
+              ic_error.xml (352 bytes)
+              ic_launcher_foreground.xml (547 bytes)
+              ic_logout.xml (391 bytes)
+              ic_nav_academy.xml (364 bytes)
+              ic_nav_assistant.xml (480 bytes)
+              ic_nav_home.xml (399 bytes)
+              ic_nav_library.xml (814 bytes)
+              ic_nav_profile.xml (389 bytes)
+              ic_nav_research.xml (512 bytes)
+              ic_offline.xml (518 bytes)
+              ic_search.xml (508 bytes)
+              ic_settings.xml (489 bytes)
+              ic_splash_mark.xml (547 bytes)
+              ic_star.xml (335 bytes)
+              ic_verified.xml (441 bytes)
+              state_card_pressed.xml (269 bytes)
+            layout/
+              activity_main.xml (4,942 bytes)
+              fragment_academy.xml (4,073 bytes)
+              fragment_assistant.xml (3,882 bytes)
+              fragment_book_detail.xml (7,952 bytes)
+              fragment_books.xml (3,240 bytes)
+              fragment_home.xml (10,670 bytes)
+              fragment_library.xml (5,392 bytes)
+              fragment_login.xml (5,338 bytes)
+              fragment_onboarding.xml (2,012 bytes)
+              fragment_profile.xml (8,427 bytes)
+              fragment_research.xml (4,327 bytes)
+              fragment_sessions.xml (1,810 bytes)
+              fragment_settings.xml (9,224 bytes)
+              fragment_splash.xml (1,144 bytes)
+              fragment_unavailable.xml (1,721 bytes)
+              item_book_card.xml (1,705 bytes)
+              item_book_row.xml (2,415 bytes)
+              item_onboarding_page.xml (1,520 bytes)
+              item_session.xml (2,830 bytes)
+              item_subject_card.xml (2,305 bytes)
+              view_offline_banner.xml (1,215 bytes)
+              view_state.xml (4,337 bytes)
+            menu/
+            mipmap-anydpi-v26/
+              ic_launcher.xml (258 bytes)
+            mipmap-hdpi/
+              ic_launcher.png (622 bytes)
+            mipmap-mdpi/
+              ic_launcher.png (397 bytes)
+            mipmap-xhdpi/
+              ic_launcher.png (785 bytes)
+            mipmap-xxhdpi/
+              ic_launcher.png (1,184 bytes)
+            mipmap-xxxhdpi/
+              ic_launcher.png (1,631 bytes)
+            navigation/
+              nav_graph.xml (7,054 bytes)
+            values/
+              colors.xml (2,308 bytes)
+              dimens.xml (1,108 bytes)
+              strings.xml (16,039 bytes)
+              styles.xml (10,824 bytes)
+              themes.xml (2,229 bytes)
+              type.xml (3,221 bytes)
+            values-ar/
+              strings.xml (8,292 bytes)
+            values-hi/
+              strings.xml (1,101 bytes)
+            values-night/
+              themes.xml (1,567 bytes)
+            values-ur/
+              strings.xml (957 bytes)
+        test/
+          java/
+            com/
+              ikp/
+                dev/
+                  app/
+    gradle/
+      wrapper/
+        gradle-wrapper.jar (43,504 bytes)
+        gradle-wrapper.properties (250 bytes)
+    test-lib/
+      hamcrest-core-1.3.jar (45,024 bytes)
+      junit-4.13.2.jar (384,581 bytes)
+  backend/
+    Dockerfile (471 bytes)
+    pom.xml (3,452 bytes)
+    data/
+      storage/
+    db/
+      migration/
+        README.md (1,186 bytes)
+    src/
+      main/
+        java/
+          app/
+            ikp/
+              backend/
+                BackendApplication.java (636 bytes)
+                audit/
+                  AuditAdminController.java (3,717 bytes)
+                  AuditLog.java (2,189 bytes)
+                  AuditLogRepository.java (1,858 bytes)
+                  AuditService.java (4,923 bytes)
+                auth/
+                  AuthController.java (4,087 bytes)
+                  AuthService.java (8,729 bytes)
+                  JwtService.java (3,107 bytes)
+                  LoginRateLimiter.java (1,479 bytes)
+                  SecurityPrincipal.java (1,905 bytes)
+                  TokenAuthenticationFilter.java (3,146 bytes)
+                  dto/
+                book/
+                  AdminAuthorController.java (3,728 bytes)
+                  AdminBookController.java (5,240 bytes)
+                  Author.java (1,480 bytes)
+                  AuthorRepository.java (271 bytes)
+                  Book.java (6,684 bytes)
+                  BookAuthor.java (1,820 bytes)
+                  BookFile.java (1,798 bytes)
+                  BookRepository.java (2,299 bytes)
+                  BookService.java (12,046 bytes)
+                  PublicLibraryController.java (7,332 bytes)
+                  dto/
+                common/
+                  ApiException.java (1,401 bytes)
+                  GlobalExceptionHandler.java (4,583 bytes)
+                  Pages.java (1,095 bytes)
+                config/
+                  DevDataSeeder.java (3,424 bytes)
+                  OpenApiConfig.java (3,032 bytes)
+                  SecurityConfig.java (5,531 bytes)
+                dashboard/
+                  DashboardController.java (1,615 bytes)
+                  DashboardService.java (5,840 bytes)
+                dto/
+                fatwa/
+                  Fatwa.java (5,254 bytes)
+                  FatwaAdminController.java (10,684 bytes)
+                  FatwaRepository.java (342 bytes)
+                  FatwaService.java (10,729 bytes)
+                  dto/
+                storage/
+                  AdminFileController.java (4,642 bytes)
+                  DownloadTokenService.java (2,807 bytes)
+                  LocalStorageService.java (4,285 bytes)
+                  MediaAsset.java (3,346 bytes)
+                  MediaAssetRepository.java (1,631 bytes)
+                  MediaFileController.java (3,008 bytes)
+                  MediaService.java (7,786 bytes)
+                  Scanner.java (617 bytes)
+                  StorageService.java (904 bytes)
+                  TestOnlyScanner.java (3,257 bytes)
+                  dto/
+                subject/
+                  Subject.java (2,581 bytes)
+                  SubjectAdminController.java (5,641 bytes)
+                  SubjectMapper.java (490 bytes)
+                  SubjectPublicController.java (1,713 bytes)
+                  SubjectRepository.java (446 bytes)
+                  SubjectService.java (6,569 bytes)
+                  dto/
+                user/
+                  AccountDeletionRequest.java (2,085 bytes)
+                  AccountDeletionRequestRepository.java (304 bytes)
+                  AdminUserController.java (5,444 bytes)
+                  AdminUserService.java (10,280 bytes)
+                  Permission.java (637 bytes)
+                  RefreshToken.java (1,753 bytes)
+                  RefreshTokenRepository.java (956 bytes)
+                  Role.java (963 bytes)
+                  RoleRepository.java (236 bytes)
+                  User.java (3,056 bytes)
+                  UserRepository.java (2,235 bytes)
+                  dto/
+                web/
+                  HealthController.java (1,578 bytes)
+                workflow/
+                  ContentReviewRecord.java (2,015 bytes)
+                  ContentReviewRecordRepository.java (552 bytes)
+                  ContentVersion.java (2,129 bytes)
+                  ContentVersionRepository.java (516 bytes)
+                  WorkflowController.java (9,046 bytes)
+                  WorkflowService.java (12,063 bytes)
+        resources/
+          application.yml (2,073 bytes)
+          db/
+            migration/
+              content/
+                R__seed_library_categories.sql (3,121 bytes)
+                R__seed_reference_licences.sql (1,619 bytes)
+                V2__content_spine.sql (3,960 bytes)
+                V4__admin_cms.sql (8,499 bytes)
+              identity/
+                R__seed_roles_permissions.sql (3,095 bytes)
+                R__user_admin_role_grants.sql (3,154 bytes)
+                V1__identity_and_access.sql (3,397 bytes)
+                V3__rbac_expansion.sql (2,559 bytes)
+      test/
+        java/
+          app/
+            ikp/
+              backend/
+                auth/
+                  RbacIntegrationTest.java (5,524 bytes)
+                book/
+                  BookWorkflowIntegrationTest.java (17,301 bytes)
+                dashboard/
+                  DashboardAuditIntegrationTest.java (8,475 bytes)
+                fatwa/
+                  FatwaSecurityIntegrationTest.java (12,264 bytes)
+                migration/
+                  FlywayMigrationTest.java (8,515 bytes)
+                storage/
+                  MediaUploadIntegrationTest.java (7,752 bytes)
+                subject/
+                  SubjectCmsIntegrationTest.java (7,102 bytes)
+                support/
+                  IntegrationTestBase.java (6,097 bytes)
+                  SharedPostgres.java (859 bytes)
+                user/
+                web/
+                  HealthEndpointTest.java (2,717 bytes)
+  docs-m1/
+    corrective-changelog.md (9,087 bytes)
+    m1-evidence.md (9,603 bytes)
+    phase2-source-register.csv (5,974 bytes)
+    phase2-source-register.md (12,782 bytes)
+    tech-stack-version-review.md (7,274 bytes)
+    evidence/
+      admin-build.log (378 bytes)
+      admin-npm-ci.log (448 bytes)
+      admin-vitest.log (340 bytes)
+      android-gradle-build-attempt1-central429.log (54,766 bytes)
+      android-gradle-build-attempt2-applicationid-fix-pending.log (1,554 bytes)
+      android-gradle-build-attempt3-central429-initgap.log (2,957 bytes)
+      android-gradle-build-clean.log (2,289 bytes)
+      android-gradle-build.log (2,749 bytes)
+      android-jvm-test.log (643 bytes)
+      backend-mvn-test.log (25,658 bytes)
+      native-stack-smoke.log (1,182 bytes)
+      source-register-check.log (1,552 bytes)
+  docs-m2/
+    14-feature-tracker-v1.1.xlsx (49,368 bytes)
+    m2-api-change-summary.md (6,983 bytes)
+    m2-changelog.md (3,397 bytes)
+    m2-database-migration-summary.md (4,717 bytes)
+    m2-e2e-stack-smoke.log (2,544 bytes)
+    m2-implementation-report.md (8,913 bytes)
+    m2-inspection-report.md (10,980 bytes)
+    m2-test-evidence.md (8,082 bytes)
+    evidence/
+  docs-m3/
+    m3-api-integration-report.md (4,880 bytes)
+    m3-auth-integration-report.md (4,098 bytes)
+    m3-backend-compatibility.md (2,641 bytes)
+    m3-database-room-summary.md (2,403 bytes)
+    m3-device-testing-report.md (3,215 bytes)
+    m3-implementation-report.md (7,940 bytes)
+    m3-inspection-report.md (9,840 bytes)
+    m3-navigation-verification.md (3,900 bytes)
+    m3-test-evidence.md (4,718 bytes)
+    m3-workmanager-foundation.md (2,016 bytes)
+    evidence/
+      api-contract-harness.log (1,182 bytes)
+      jvm-test-summary.txt (2,262 bytes)
+      postgres-run.log (4,418 bytes)
+  scripts/
+    JdbcRun.java (1,233 bytes)
+    compose-smoke.sh (3,942 bytes)
+    stack-smoke-native.sh (7,601 bytes)
+    verify_source_register.py (4,817 bytes)
+    m3-api-contract/
+      ApiContractHarness.java (11,138 bytes)
+      classpath.txt (1,005 bytes)
+      run-m3-integration.sh (3,916 bytes)
+      classes/
+        ApiContractHarness.class (12,905 bytes)
+        com/
+          ikp/
+            dev/
+              app/
+                core/
+                  network/
+                data/
+                  mapper/
+                  remote/
+                    dto/
+                domain/
+                  model/

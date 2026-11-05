@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- M3 foundation: network access + connectivity awareness only.
+         Feature permissions (location for prayer times, notifications, storage
+         for downloads) are added phase by phase with their features (M4+). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".IkpApplication"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.IKP.Splash"
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <!-- Per-app language persistence (AppCompat 1.6+); OD-02 gates the
+             final language list — this only stores the user's in-app choice. -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Deep-link foundation (M3): app-links to the Library book detail
+                 destination; verified/expanded in later milestones. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="ikp" android:host="library" android:pathPrefix="/book" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

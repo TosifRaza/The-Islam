@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="@dimen/space_md" android:minHeight="@dimen/touch_target_min"
+    android:background="?attr/selectableItemBackground">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+        <TextView android:id="@+id/text_title" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content" android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
+            android:maxLines="2" android:ellipsize="end" />
+        <TextView android:id="@+id/chip_format" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:background="@drawable/bg_category_badge"
+            android:paddingStart="@dimen/space_xs" android:paddingEnd="@dimen/space_xs"
+            android:textAppearance="@style/TextAppearance.IKP.LabelSmall" />
+        <ImageButton android:id="@+id/button_more" android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_more_actions" android:src="@drawable/ic_chevron_right" />
+    </LinearLayout>
+    <TextView android:id="@+id/text_author" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.IKP.LabelSmall" android:textColor="@color/text_secondary" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/text_searchable" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/personal_searchable_badge" android:textAppearance="@style/TextAppearance.IKP.LabelSmall" android:visibility="gone" />
+        <TextView android:id="@+id/text_size" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_sm" android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+            android:textColor="@color/text_secondary" />
+    </LinearLayout>
+</LinearLayout>

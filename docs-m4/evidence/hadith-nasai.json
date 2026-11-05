@@ -1,0 +1,30 @@
+{
+  "sourceRegisterId": "SR-08",
+  "sourceName": "Sunan an-Nasa'i (fawazahmed0/hadith-api v1)",
+  "sourceUrl": "https://github.com/fawazahmed0/hadith-api",
+  "licence": "The Unlicense (public domain dedication)",
+  "collectionCode": "nasai",
+  "editions": {
+    "ara": {
+      "sha256": "c705983c19bb089c87cd6531aff609bd94d862183ed0859115b0ff991826a956",
+      "bytes": 7152291,
+      "hadithCount": 5765,
+      "sectionCount": 52,
+      "gradeEntries": 17045
+    },
+    "eng": {
+      "sha256": "4f2aaca4229b96210fdaa887915c69ba99dda8726816856cc8660e996b6b3a1f",
+      "bytes": 4033923,
+      "hadithCount": 5765,
+      "sectionCount": 52,
+      "gradeEntries": 17045
+    },
+    "urd": {
+      "sha256": "20259f08c643c56a8274416f21591ff880c685f4fa3e5712275750cca15bc5ae",
+      "bytes": 4672980,
+      "hadithCount": 5765,
+      "sectionCount": 52,
+      "gradeEntries": 17045
+    }
+  }
+}

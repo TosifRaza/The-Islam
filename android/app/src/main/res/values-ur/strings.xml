@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Urdu — RENDERING proof subset only (Perso-Arabic script, RTL).
+         NOT a declared launch language (OD-02 controls the final list). -->
+    <string name="nav_home">ہوم</string>
+    <string name="nav_library">لائبریری</string>
+    <string name="nav_academy">اکادمی</string>
+    <string name="nav_research">تحقیق</string>
+    <string name="nav_assistant">اسسٹنٹ</string>
+    <string name="nav_profile">پروفائل</string>
+    <string name="state_loading">لوڈ ہو رہا ہے…</string>
+    <string name="state_offline_title">آپ آف لائن ہیں</string>
+    <string name="login_title">خوش آمدید</string>
+    <string name="email_label">ای میل</string>
+    <string name="password_label">پاس ورڈ</string>
+    <string name="library_title">لائبریری</string>
+    <string name="profile_title">پروفائل</string>
+</resources>

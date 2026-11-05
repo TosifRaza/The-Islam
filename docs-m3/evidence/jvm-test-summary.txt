@@ -1,0 +1,33 @@
+TEST-com.ikp.dev.app.AuthValidationTest.xml: tests=3 failures=0 errors=0 time=0.008s
+  - com.ikp.dev.app.AuthValidationTest.acceptsValidEmails
+  - com.ikp.dev.app.AuthValidationTest.rejectsInvalidEmails
+  - com.ikp.dev.app.AuthValidationTest.passwordMustBeAtLeastEightChars
+TEST-com.ikp.dev.app.CoreLogicTest.xml: tests=19 failures=0 errors=0 time=0.191s
+  - com.ikp.dev.app.CoreLogicTest.validatedSessionGoesHome
+  - com.ikp.dev.app.CoreLogicTest.parsesProblemJsonWithStableCode
+  - com.ikp.dev.app.CoreLogicTest.backoffIsExponentialAndCapped
+  - com.ikp.dev.app.CoreLogicTest.meResponseMapsAllProfileFields
+  - com.ikp.dev.app.CoreLogicTest.noSessionGoesToLogin
+  - com.ikp.dev.app.CoreLogicTest.positionSixNeverArrivesFromPublicApi
+  - com.ikp.dev.app.CoreLogicTest.maxAttemptsIsFinite
+  - com.ikp.dev.app.CoreLogicTest.syncEnqueueOnlyWhenPendingOpsExist
+  - com.ikp.dev.app.CoreLogicTest.timeoutAndOfflineThrowablesMapLocally
+  - com.ikp.dev.app.CoreLogicTest.parsesLoginEnvelopeWithCamelCaseAndSnakeAlternates
+  - com.ikp.dev.app.CoreLogicTest.parsesBooksEnvelopeWithCursorMeta
+  - com.ikp.dev.app.CoreLogicTest.bookRowMappingDefaultsDownloadAllowedToFalse
+  - com.ikp.dev.app.CoreLogicTest.firstRunGoesToOnboarding
+  - com.ikp.dev.app.CoreLogicTest.mapsKnownCodesToUserMessages
+  - com.ikp.dev.app.CoreLogicTest.mapsStatusWhenNoCode
+  - com.ikp.dev.app.CoreLogicTest.subjectMappingPreservesStableSlugAndPosition
+  - com.ikp.dev.app.CoreLogicTest.offlineSavedSessionNeverShowsAuthenticatedScreen
+  - com.ikp.dev.app.CoreLogicTest.rejectsNonProblemJson
+  - com.ikp.dev.app.CoreLogicTest.queryKeyIsStableAndCaseInsensitive
+TEST-com.ikp.dev.app.TokenRefreshTest.xml: tests=3 failures=0 errors=0 time=0.748s
+  - com.ikp.dev.app.TokenRefreshTest.failedRefreshClearsSessionAndAbortsRequest
+  - com.ikp.dev.app.TokenRefreshTest.successfulRefreshRotatesAndPersistsNewPair
+  - com.ikp.dev.app.TokenRefreshTest.concurrent401sTriggerExactlyOneRefresh
+TEST-com.ikp.dev.app.VersionInfoTest.xml: tests=3 failures=0 errors=0 time=0.003s
+  - com.ikp.dev.app.VersionInfoTest.rejectsNonPositiveVersionCode
+  - com.ikp.dev.app.VersionInfoTest.rejectsEmptyVersionName
+  - com.ikp.dev.app.VersionInfoTest.displayFormatsVersionMilestoneAndCode
+TOTAL: tests=28 failures=0 errors=0

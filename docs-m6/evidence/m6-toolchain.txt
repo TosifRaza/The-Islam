@@ -1,0 +1,27 @@
+=== date ===
+Wed Nov  4 06:50:33 UTC 2026
+=== java (fulljdk) ===
+openjdk version "21.0.13" 2026-10-20
+OpenJDK Runtime Environment (build 21.0.13+9-1-deb13u2-Debian)
+OpenJDK 64-Bit Server VM (build 21.0.13+9-1-deb13u2-Debian, mixed mode, sharing)
+javac 21.0.13
+jlink fulljdk: ls: cannot access '/home/z/my-project/tools/fulljdk/bin/jlink': No such file or directory
+jlink jdk17: /home/z/my-project/tools/jdk17/bin/jlink
+=== maven ===
+Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)
+Java version: 21.0.13, vendor: Debian, runtime: /home/z/my-project/tools/fulljdk
+=== node/npm ===
+v24.22.2
+11.19.1
+=== gradle ===
+Gradle 8.9
+=== android sdk ===
+/home/z/my-project/tools/android-sdk/build-tools/:
+34.0.0
+
+/home/z/my-project/tools/android-sdk/platforms/:
+android-34
+=== postgres ===
+pg_ctl: server is running (PID: 1790)
+/home/z/my-project/tools/pgbin/bin/postgres "-D" "/home/z/my-project/tools/pgdata"
+port: 54329 (postgresql.conf)

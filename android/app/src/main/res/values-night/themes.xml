@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============ IKP dark theme (same brand hues, adjusted surfaces) ============ -->
+    <style name="Theme.IKP" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorOnPrimary">@color/text_on_gold</item>
+        <item name="colorPrimaryContainer">@color/emerald_deep</item>
+        <item name="colorOnPrimaryContainer">@color/ivory</item>
+        <item name="colorSecondary">@color/gold</item>
+        <item name="colorOnSecondary">@color/text_on_gold</item>
+        <item name="colorSecondaryContainer">#3A331C</item>
+        <item name="colorOnSecondaryContainer">@color/gold_soft_container</item>
+        <item name="colorError">#F2B8B5</item>
+        <item name="colorOnError">#601410</item>
+        <item name="colorErrorContainer">#8C1D18</item>
+
+        <item name="colorSurface">#182420</item>
+        <item name="colorOnSurface">@color/ivory</item>
+        <item name="colorOnSurfaceVariant">#AEBBB4</item>
+        <item name="colorSurfaceVariant">#22302B</item>
+        <item name="android:colorBackground">#101915</item>
+        <item name="colorOutline">#4C5A53</item>
+
+        <item name="android:statusBarColor">#0C1613</item>
+        <item name="android:navigationBarColor">#182420</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="materialCardViewStyle">@style/Widget.IKP.Card</item>
+        <item name="textInputStyle">@style/Widget.IKP.TextInput</item>
+    </style>
+</resources>

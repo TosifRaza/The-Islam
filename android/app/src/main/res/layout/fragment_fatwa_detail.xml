@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fatwa detail (M5): published rulings only, with reviewing scholar and
+     dates; a standing disclaimer separates rulings from AI answers (M6). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_md">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/TouchBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_back" />
+
+        <TextView
+            style="@style/TextAppearance.IKP.HeadlineSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_sm"
+            android:layout_weight="1"
+            android:text="@string/fatwa_title" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:id="@+id/fatwa_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/space_md">
+
+                <TextView
+                    android:id="@+id/tv_fatwa_question"
+                    style="@style/TextAppearance.IKP.TitleMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_fatwa_meta"
+                    style="@style/TextAppearance.IKP.BodySecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/space_xs" />
+
+                <TextView
+                    android:id="@+id/tv_fatwa_answer"
+                    style="@style/TextAppearance.IKP.BodyLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/space_md" />
+
+                <TextView
+                    android:id="@+id/tv_fatwa_review"
+                    style="@style/TextAppearance.IKP.BodySecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/space_md" />
+
+                <TextView
+                    android:id="@+id/tv_fatwa_disclaimer"
+                    style="@style/TextAppearance.IKP.BodySecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/space_md"
+                    android:text="@string/fatwa_disclaimer" />
+
+                <Button
+                    android:id="@+id/btn_save_fatwa"
+                    style="@style/Widget.IKP.Button.Gold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:layout_marginBottom="@dimen/space_lg"
+                    android:text="@string/research_save" />
+            </LinearLayout>
+        </ScrollView>
+
+        <com.ikp.dev.app.ui.common.StateView
+            android:id="@+id/fatwa_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

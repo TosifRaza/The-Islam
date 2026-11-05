@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ================= IKP Design System — Colour tokens =================
+         Approved brand palette (docs/06-ui-ux-guidelines.md):
+           Deep Emerald #164638 · Islamic Gold #C7A75A · Warm Ivory #F7F6F0 · White #FFFFFF
+         Additional values below are DERIVED tints/shades of the approved four
+         for state layers, elevation and accessibility contrast — they do not
+         introduce new brand hues. Dark-theme values live in values-night. -->
+
+    <!-- Brand -->
+    <color name="emerald_deep">#164638</color>
+    <color name="gold">#C7A75A</color>
+    <color name="ivory">#F7F6F0</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Derived (light theme) -->
+    <color name="emerald_deep_dark">#0F3328</color>
+    <color name="emerald_soft">#1D5A48</color>
+    <color name="emerald_tint_container">#DCE9E3</color>
+    <color name="gold_dark">#8A6F2F</color>
+    <color name="gold_soft_container">#F2E8CF</color>
+    <color name="ivory_elevated">#FFFFFF</color>
+    <color name="surface_dim">#EDECE4</color>
+    <color name="outline_soft">#D8D5C8</color>
+    <color name="outline_strong">#B9B4A3</color>
+
+    <!-- Text -->
+    <color name="text_primary">#17211C</color>
+    <color name="text_secondary">#57665E</color>
+    <color name="text_on_emerald">#FFFFFF</color>
+    <color name="text_on_gold">#221B08</color>
+    <color name="text_disabled">#9AA69F</color>
+
+    <!-- Status -->
+    <color name="error">#A33B2E</color>
+    <color name="error_container">#F6DED9</color>
+    <color name="success">#2E6B4F</color>
+    <color name="success_container">#DDF0E6</color>
+    <color name="warning_gold_text">#6B5518</color>
+
+    <!-- App chrome -->
+    <color name="splash_background">#164638</color>
+    <color name="bottom_bar_background">#FFFFFF</color>
+    <color name="bottom_bar_item_inactive">#7A8880</color>
+    <color name="bottom_bar_item_active">#164638</color>
+    <color name="banner_offline_background">#2B2A24</color>
+    <color name="state_layer_12">#1F164638</color>
+    <color name="state_layer_08">#14164638</color>
+
+    <!-- Reader placeholder palette (expanded in the reading module phase) -->
+    <color name="reader_page">#F7F6F0</color>
+    <color name="reader_text">#17211C</color>
+</resources>

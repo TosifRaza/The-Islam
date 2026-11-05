@@ -1,0 +1,30 @@
+{
+  "sourceRegisterId": "SR-08",
+  "sourceName": "Sunan Ibn Majah (fawazahmed0/hadith-api v1)",
+  "sourceUrl": "https://github.com/fawazahmed0/hadith-api",
+  "licence": "The Unlicense (public domain dedication)",
+  "collectionCode": "ibnmajah",
+  "editions": {
+    "ara": {
+      "sha256": "b406e6be81588ab0ec1ddbed32f5fd95bbcdda242c460d88331e82eb5c2bc0aa",
+      "bytes": 5583102,
+      "hadithCount": 4343,
+      "sectionCount": 38,
+      "gradeEntries": 16183
+    },
+    "eng": {
+      "sha256": "5e9479efd403e935ddcf746a709b2727d535a41fe1f496deadc8a43f1d103cd7",
+      "bytes": 3241088,
+      "hadithCount": 4343,
+      "sectionCount": 38,
+      "gradeEntries": 16183
+    },
+    "urd": {
+      "sha256": "4dfa5332cb7cc1fafab2852c981798ed6a26718aeb6f23d267b810e640e6b7b5",
+      "bytes": 4342459,
+      "hadithCount": 4343,
+      "sectionCount": 38,
+      "gradeEntries": 16183
+    }
+  }
+}

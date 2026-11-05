@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/space_xs"
+            android:paddingEnd="@dimen/space_md"
+            android:paddingTop="@dimen/space_xs">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                style="@style/TouchBack"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="@string/cd_back" />
+        </LinearLayout>
+
+        <com.ikp.dev.app.ui.common.StateView
+            android:id="@+id/detail_state"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/detail_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space_lg"
+            android:visibility="gone">
+
+            <!-- Cover placeholder (covers arrive with media pipeline integration) -->
+            <FrameLayout
+                android:layout_width="@dimen/book_cover_height"
+                android:layout_height="@dimen/book_cover_height"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_book_cover"
+                android:contentDescription="@string/cd_book_cover">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_book"
+                    app:tint="@color/gold"
+                    android:importantForAccessibility="no" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:textAppearance="@style/TextAppearance.IKP.HeadlineSmall" />
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xxs"
+                android:textAppearance="@style/TextAppearance.IKP.BodyLarge"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tv_authors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
+                android:textColor="@color/emerald_soft" />
+
+            <Button
+                android:id="@+id/btn_download"
+                style="@style/Widget.IKP.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:text="@string/book_download_action"
+                android:contentDescription="@string/cd_download" />
+
+            <TextView
+                android:id="@+id/tv_download_restricted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:text="@string/book_download_not_allowed"
+                android:textAppearance="@style/TextAppearance.IKP.BodySecondary"
+                android:gravity="center"
+                android:visibility="gone" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.IKP.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/book_desc_label"
+                        android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xs"
+                        android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
+                        android:lineSpacingMultiplier="1.3" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.IKP.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/book_language_label" />
+                        <TextView android:id="@+id/tv_language" style="@style/DetailValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/book_publisher_label" />
+                        <TextView android:id="@+id/tv_publisher" style="@style/DetailValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/book_year_label" />
+                        <TextView android:id="@+id/tv_year" style="@style/DetailValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/book_pages_label" />
+                        <TextView android:id="@+id/tv_pages" style="@style/DetailValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/book_formats_label" />
+                        <TextView android:id="@+id/tv_formats" style="@style/DetailValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailRow">
+                        <TextView style="@style/DetailKey" android:text="@string/book_copyright_label" />
+                        <TextView android:id="@+id/tv_copyright" style="@style/DetailValue" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

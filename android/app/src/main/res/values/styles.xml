@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============ IKP component styles (reusable, XML design system) ============ -->
+
+    <!-- Buttons -->
+    <style name="Widget.IKP.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:textAppearance">@style/TextAppearance.IKP.LabelLarge</item>
+        <item name="backgroundTint">@color/emerald_deep</item>
+        <item name="android:textColor">@color/text_on_emerald</item>
+        <item name="cornerRadius">@dimen/card_radius</item>
+        <item name="android:minHeight">@dimen/touch_target_min</item>
+        <item name="android:paddingStart">@dimen/space_lg</item>
+        <item name="android:paddingEnd">@dimen/space_lg</item>
+    </style>
+
+    <style name="Widget.IKP.Button.Gold" parent="Widget.Material3.Button">
+        <item name="android:textAppearance">@style/TextAppearance.IKP.LabelLarge</item>
+        <item name="backgroundTint">@color/gold</item>
+        <item name="android:textColor">@color/text_on_gold</item>
+        <item name="cornerRadius">@dimen/card_radius</item>
+        <item name="android:minHeight">@dimen/touch_target_min</item>
+    </style>
+
+    <style name="Widget.IKP.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/TextAppearance.IKP.LabelLarge</item>
+        <item name="strokeColor">@color/emerald_deep</item>
+        <item name="android:textColor">@color/emerald_deep</item>
+        <item name="cornerRadius">@dimen/card_radius</item>
+        <item name="android:minHeight">@dimen/touch_target_min</item>
+    </style>
+
+    <style name="Widget.IKP.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/emerald_deep</item>
+        <item name="android:minHeight">@dimen/touch_target_min</item>
+    </style>
+
+    <!-- Cards -->
+    <style name="Widget.IKP.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">@dimen/card_radius</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPadding">@dimen/space_md</item>
+    </style>
+
+    <style name="Widget.IKP.Card.Tonal" parent="Widget.Material3.CardView.Filled">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">@dimen/card_radius</item>
+        <item name="cardBackgroundColor">@color/emerald_tint_container</item>
+        <item name="contentPadding">@dimen/space_md</item>
+    </style>
+
+    <style name="Widget.IKP.CategoryCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">@dimen/card_radius</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="cardElevation">1dp</item>
+        <item name="android:foreground">@drawable/state_card_pressed</item>
+    </style>
+
+    <!-- Inputs -->
+    <style name="Widget.IKP.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/card_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/card_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/card_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/card_radius</item>
+        <item name="boxStrokeColor">@color/input_stroke</item>
+        <item name="hintTextColor">@color/emerald_soft</item>
+    </style>
+
+    <!-- Section headers -->
+    <style name="TextAppearance.IKP.SectionHeader" parent="TextAppearance.IKP.HeadlineSmall">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Custom bottom bar item (6 sections — BottomNavigationView caps at 5) -->
+    <style name="Widget.IKP.BottomBarItem" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:paddingTop">@dimen/space_xxs</item>
+        <item name="android:paddingBottom">@dimen/space_xs</item>
+    </style>
+
+    <style name="TextAppearance.IKP.BottomBarLabel" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/bottom_bar_item_inactive</item>
+    </style>
+
+    <style name="NavIcon">
+        <item name="android:layout_width">@dimen/bottom_bar_icon</item>
+        <item name="android:layout_height">@dimen/bottom_bar_icon</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="NavLabel" parent="TextAppearance.IKP.BottomBarLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- 48dp back affordance -->
+    <style name="TouchBack">
+        <item name="android:layout_width">@dimen/touch_target_min</item>
+        <item name="android:layout_height">@dimen/touch_target_min</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- Home quick shortcuts -->
+    <style name="Widget.IKP.Shortcut" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:padding">@dimen/space_xs</item>
+    </style>
+
+    <style name="ShortcutIcon">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <style name="ShortcutLabel" parent="TextAppearance.IKP.LabelSmall">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_xxs</item>
+        <item name="android:textColor">@color/ivory</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <!-- Section headers -->
+    <style name="SectionHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.IKP.SectionHeader</item>
+        <item name="android:layout_marginTop">@dimen/space_lg</item>
+        <item name="android:layout_marginStart">@dimen/space_md</item>
+        <item name="android:layout_marginBottom">@dimen/space_sm</item>
+    </style>
+
+    <style name="SectionHeaderFlexible" parent="SectionHeader">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">@dimen/space_md</item>
+        <item name="android:layout_marginBottom">@dimen/space_md</item>
+        <item name="android:background">@color/outline_soft</item>
+    </style>
+
+    <!-- Status pills -->
+    <style name="Widget.IKP.StatusPill" parent="Widget.Material3.Button">
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">@dimen/space_sm</item>
+        <item name="android:paddingEnd">@dimen/space_sm</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="cornerRadius">99dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+    <!-- Detail rows -->
+    <style name="DetailRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingTop">@dimen/space_xs</item>
+        <item name="android:paddingBottom">@dimen/space_xs</item>
+    </style>
+
+    <style name="DetailKey">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.IKP.BodySecondary</item>
+    </style>
+
+    <style name="DetailValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.IKP.BodyMedium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">end</item>
+    </style>
+    <!-- Settings rows -->
+    <style name="SettingsRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/touch_target_min</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:paddingStart">@dimen/space_xs</item>
+        <item name="android:paddingEnd">@dimen/space_xs</item>
+    </style>
+
+    <style name="SettingsRowIcon">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <style name="SettingsRowLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/space_sm</item>
+        <item name="android:textAppearance">@style/TextAppearance.IKP.BodyLarge</item>
+    </style>
+
+    <style name="SettingsRowChevron">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <style name="TextAppearance.IKP.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+</resources>

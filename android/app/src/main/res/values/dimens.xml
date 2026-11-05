@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ================= IKP spacing / dimension tokens ================= -->
+    <dimen name="space_xxs">4dp</dimen>
+    <dimen name="space_xs">8dp</dimen>
+    <dimen name="space_sm">12dp</dimen>
+    <dimen name="space_md">16dp</dimen>
+    <dimen name="space_lg">24dp</dimen>
+    <dimen name="space_xl">32dp</dimen>
+    <dimen name="space_xxl">48dp</dimen>
+
+    <!-- Accessibility: minimum interactive target (prompt §20) -->
+    <dimen name="touch_target_min">48dp</dimen>
+
+    <!-- Bottom navigation -->
+    <dimen name="bottom_bar_height">64dp</dimen>
+    <dimen name="bottom_bar_icon">24dp</dimen>
+
+    <!-- Cards & imagery -->
+    <dimen name="card_radius">14dp</dimen>
+    <dimen name="card_radius_large">20dp</dimen>
+    <dimen name="book_cover_width">84dp</dimen>
+    <dimen name="book_cover_height">120dp</dimen>
+    <dimen name="category_icon">40dp</dimen>
+
+    <!-- Content max width for tablet readability (responsive UI §20) -->
+    <dimen name="content_max_width">600dp</dimen>
+    <dimen name="grid_min_width">160dp</dimen>
+</resources>

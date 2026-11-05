@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:paddingStart="@dimen/space_md" android:paddingEnd="@dimen/space_md"
+    android:paddingTop="@dimen/space_sm" android:paddingBottom="@dimen/space_sm"
+    android:minHeight="@dimen/touch_target_min" android:background="?attr/selectableItemBackground">
+    <TextView android:id="@+id/tv_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
+    <TextView android:id="@+id/tv_arabic" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_xs" android:textDirection="rtl" android:textAlignment="viewStart" android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
+    <TextView android:id="@+id/tv_meaning" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_xs" android:textAppearance="@style/TextAppearance.IKP.BodySmall" android:textColor="@color/text_secondary" />
+    <TextView android:id="@+id/tv_fixture" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_xs" android:text="@string/fixture_badge" android:textAppearance="@style/TextAppearance.IKP.LabelSmall" android:background="@drawable/bg_category_badge" android:paddingStart="@dimen/space_xs" android:paddingEnd="@dimen/space_xs" android:visibility="gone" />
+    <TextView android:id="@+id/tv_audio" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_xs" android:text="@string/dua_audio_unavailable" android:textAppearance="@style/TextAppearance.IKP.LabelSmall" android:textColor="@color/text_secondary" />
+</LinearLayout>

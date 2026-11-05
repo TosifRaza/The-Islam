@@ -1,0 +1,37 @@
+repo-root: /home/z/my-project
+branch: main
+HEAD: b109aae756a920c0b91eed0ed153103caca8a822 2026-11-02 15:34:21 +0000 Initial commit
+--- porcelain status ---
+ M .env
+ M .gitignore
+?? download/14-feature-tracker-v0.2.xlsx
+?? download/14-feature-tracker-v1.0.xlsx
+?? download/14-feature-tracker-v1.1.xlsx
+?? download/14-feature-tracker-v1.2.xlsx
+?? download/14-feature-tracker-v1.3.xlsx
+?? download/14-feature-tracker-v1.4.xlsx
+?? download/THIRDPARTY-NOTICES.md
+?? download/ikp-android-v0.3.0-m3-debug.apk
+?? download/ikp-android-v0.3.0-m3-release-unsigned.apk
+?? download/ikp-android-v0.4.0-m4-androidTest.apk
+?? download/ikp-android-v0.4.0-m4-debug.apk
+?? download/ikp-android-v0.4.0-m4-release-unsigned.apk
+?? download/ikp-android-v0.5.0-m5-debug.apk
+?? download/ikp-android-v0.5.0-m5-release-unsigned.apk
+?? download/islamic-knowledge-platform-baseline-v1.0.zip
+?? download/islamic-knowledge-platform-blueprint-v0.2.zip
+?? download/islamic-knowledge-platform/
+?? download/m1-platform-foundation-v0.1.1.zip
+?? download/m1-platform-foundation-v0.1.zip
+?? download/m2-admin-cms-foundation-v0.1.zip
+?? download/m3-android-foundation-v0.1.zip
+?? download/m4-core-knowledge-modules-v0.1.zip
+?? download/m5-learning-research-v0.1.zip
+?? download/platform-dev/
+?? imports/
+?? openjdk-21-jdk-headless_21.0.13+9-1~deb13u2_amd64.deb
+?? scripts/
+?? tool-results/
+?? tools/
+?? "upload/Pasted Content_1793707078695.txt"
+(untracked entries total: 30)

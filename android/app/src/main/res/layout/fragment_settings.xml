@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_lg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/space_xs"
+            android:paddingEnd="@dimen/space_md"
+            android:paddingTop="@dimen/space_xs">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                style="@style/TouchBack"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="@string/cd_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_title"
+                android:textAppearance="@style/TextAppearance.IKP.HeadlineSmall" />
+        </LinearLayout>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_appearance" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <RadioGroup
+                android:id="@+id/rg_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton
+                    android:id="@+id/rb_theme_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/touch_target_min"
+                    android:gravity="center_vertical"
+                    android:text="@string/settings_theme_light" />
+                <RadioButton
+                    android:id="@+id/rb_theme_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/touch_target_min"
+                    android:gravity="center_vertical"
+                    android:text="@string/settings_theme_dark" />
+                <RadioButton
+                    android:id="@+id/rb_theme_system"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/touch_target_min"
+                    android:gravity="center_vertical"
+                    android:text="@string/settings_theme_system" />
+            </RadioGroup>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_language" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/tg_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true">
+                    <Button android:id="@+id/lang_en" style="@style/Widget.IKP.Button.Outlined"
+                        android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:text="English" />
+                    <Button android:id="@+id/lang_ar" style="@style/Widget.IKP.Button.Outlined"
+                        android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:text="العربية" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:text="@string/settings_language_note"
+                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_personal_info" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_personal_info_note"
+                android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_reader" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_reader_note"
+                android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_notifications" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_notifications_note"
+                android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_privacy" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_privacy_note"
+                android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_account" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/row_data_export"
+                    style="@style/SettingsRow">
+                    <TextView style="@style/SettingsRowLabel" android:text="@string/settings_data_export" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_data_export_note"
+                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                    android:textColor="@color/text_secondary" />
+
+                <LinearLayout
+                    android:id="@+id/row_delete_account"
+                    style="@style/SettingsRow">
+                    <TextView style="@style/SettingsRowLabel" android:text="@string/settings_delete_account" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_delete_account_note"
+                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

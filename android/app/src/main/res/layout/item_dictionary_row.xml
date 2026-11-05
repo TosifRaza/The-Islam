@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:paddingStart="@dimen/space_md" android:paddingEnd="@dimen/space_md"
+    android:paddingTop="@dimen/space_sm" android:paddingBottom="@dimen/space_sm"
+    android:minHeight="@dimen/touch_target_min" android:background="?attr/selectableItemBackground">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+        <TextView android:id="@+id/tv_word" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textSize="20sp" android:textDirection="rtl" android:textAlignment="viewStart" android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
+        <TextView android:id="@+id/tv_fixture" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/fixture_badge" android:textAppearance="@style/TextAppearance.IKP.LabelSmall" android:visibility="gone" />
+    </LinearLayout>
+    <TextView android:id="@+id/tv_meaning" android:layout_width="match_parent" android:layout_height="wrap_content" android:textAppearance="@style/TextAppearance.IKP.BodySmall" android:textColor="@color/text_secondary" />
+</LinearLayout>

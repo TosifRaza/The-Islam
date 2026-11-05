@@ -1,0 +1,30 @@
+{
+  "sourceRegisterId": "SR-08",
+  "sourceName": "Sahih al-Bukhari (fawazahmed0/hadith-api v1)",
+  "sourceUrl": "https://github.com/fawazahmed0/hadith-api",
+  "licence": "The Unlicense (public domain dedication)",
+  "collectionCode": "bukhari",
+  "editions": {
+    "ara": {
+      "sha256": "e34a3402889ca378871da3c5984b7875c680920e93f1c8738ac7afe502179562",
+      "bytes": 9770083,
+      "hadithCount": 7589,
+      "sectionCount": 98,
+      "gradeEntries": 0
+    },
+    "eng": {
+      "sha256": "b3a10b8d50949e86cec82b0d323ce0eae3e2f713fa2f3daa5361638feb795988",
+      "bytes": 5181725,
+      "hadithCount": 7589,
+      "sectionCount": 98,
+      "gradeEntries": 0
+    },
+    "urd": {
+      "sha256": "9b7a2741bc92714c7042e035749aaed1635168e9be72f8861020dc8c59ce873e",
+      "bytes": 9945297,
+      "hadithCount": 7589,
+      "sectionCount": 98,
+      "gradeEntries": 0
+    }
+  }
+}
