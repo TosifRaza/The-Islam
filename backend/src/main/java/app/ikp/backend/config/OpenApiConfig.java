@@ -21,7 +21,7 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI base() {
         return new OpenAPI().info(new Info()
-                .title("Islamic Knowledge Platform — Admin API")
+                .title("The Islam — Platform API")
                 .version("0.2.0-M2")
                 .description("M2 Admin CMS Foundation. Envelope {data,meta}; errors RFC 7807 problem+json "
                         + "with stable codes (docs/05-api-specification.md §2). Fatwa publication is "

@@ -1,4 +1,4 @@
-# IKP Platform — Run Guide
+# The Islam — Run Guide
 ## How to run in Android Studio + How to run on your phone
 
 *Applies to: source snapshot `0.5.0-m5-fix6` (this repo, see `git log`) and APK `ikp-app-debug-phone-usb-0.5.0-m5-fix6.apk` (versionCode 9). fix6 = fix5 + a splash double-navigation crash fix (SplashFragment), found and resolved during our emulator E2E re-verification.*
@@ -63,7 +63,7 @@ Follow **Part C** and keep it running. Verify: open `http://127.0.0.1:8080/actua
 adb install -r ikp-app-debug-phone-usb-0.5.0-m5-fix6.apk   # install/update the app
 adb reverse tcp:8080 tcp:8080                              # phone's localhost:8080 -> your computer's 8080
 ```
-4. Launch **IKP** from the launcher.
+4. Launch **The Islam** from the launcher.
 5. Log in: `dev-reader@ikp.test` / `Dev#Reader-1234` (or any account from the table below).
 
 **Notes**

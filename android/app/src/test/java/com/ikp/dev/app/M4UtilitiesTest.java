@@ -14,6 +14,7 @@ import com.batoulapps.adhan.data.DateComponents;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -30,7 +31,7 @@ public class M4UtilitiesTest {
         CalculationParameters params = CalculationMethod.NORTH_AMERICA.getParameters();
         params.madhab = Madhab.HANAFI;
         PrayerTimes times = new PrayerTimes(new Coordinates(35.7750, -78.6336), date, params);
-        SimpleDateFormat fmt = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat fmt = new SimpleDateFormat("hh:mm a", Locale.US);
         fmt.setTimeZone(TimeZone.getTimeZone("America/New_York"));
         assertEquals("04:42 AM", fmt.format(times.fajr));
         assertEquals("06:08 AM", fmt.format(times.sunrise));

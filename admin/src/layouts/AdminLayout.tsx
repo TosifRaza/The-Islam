@@ -68,10 +68,10 @@ export default function AdminLayout() {
       <header className="sticky top-0 z-40 flex items-center justify-between bg-emerald-deep px-4 py-3 lg:px-6">
         <div className="flex items-center gap-3">
           <Link to="/dashboard" className="text-lg font-semibold text-white">
-            IKP <span className="text-gold-islamic">Admin</span>
+            The Islam
           </Link>
           <span className="hidden text-xs text-emerald-100/70 md:inline">
-            Islamic Knowledge &amp; Learning Platform
+            Admin Portal
           </span>
         </div>
         <div className="flex items-center gap-3">

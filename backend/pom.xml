@@ -15,7 +15,7 @@
   <artifactId>ikp-backend</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <name>ikp-backend</name>
-  <description>Islamic Knowledge Platform — Spring Boot backend (M1 development foundation)</description>
+  <description>The Islam — Spring Boot backend</description>
 
   <properties>
     <java.version>21</java.version>

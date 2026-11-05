@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ================= App ================= -->
-    <string name="app_name" translatable="false">IKP</string>
-    <string name="app_name_display">Islamic Knowledge Platform</string>
+    <string name="app_name" translatable="false">The Islam</string>
+    <string name="app_name_display">The Islam</string>
     <!-- OD-01 (gate G-1): display name is provisional until the branding freeze. -->
 
     <!-- ================= Common ================= -->

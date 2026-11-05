@@ -1,4 +1,4 @@
-# Islamic Knowledge Platform — Development Foundation (M1 v0.1.1) + Admin CMS (M2, v0.1)
+# The Islam — Development Platform
 
 **Version:** v0.1.1 + M2 — the M1 foundation (corrective revision, see `docs-m1/corrective-changelog.md`) extended with the **M2 Admin CMS Foundation**: admin authentication & RBAC, dashboard, user/subject/book management, secure uploads, review & publishing workflow (incl. Fatwa separation of duties) and the searchable audit log. Application scope is unchanged.
 **Scope:** M1 = Phase 2 (content source register) + Phase 7 (development foundation). M2 = the admin CMS modules over that foundation (implementation report: `docs-m2/m2-implementation-report.md`).

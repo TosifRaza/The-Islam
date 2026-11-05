@@ -5,7 +5,10 @@ build/
 target/
 .gradle/
 local.properties
+key.properties
 *.apk.idsig
+*.apk
+*.aab
 captures/
 .externalNativeBuild/
 .cxx/
@@ -18,3 +21,16 @@ captures/
 # Logs / local
 *.log
 .DS_Store
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.pem
+*.key
+secrets/

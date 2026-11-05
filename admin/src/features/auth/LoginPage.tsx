@@ -56,9 +56,9 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-semibold text-emerald-deep">
-            IKP <span className="text-gold-islamic">Admin</span>
+            The Islam
           </h1>
-          <p className="mt-1 text-sm text-gray-500">Islamic Knowledge &amp; Learning Platform</p>
+          <p className="mt-1 text-sm text-gray-500">Admin Portal</p>
         </div>
         <form className="rounded-lg bg-white p-8 shadow" onSubmit={submit} noValidate>
           {serverError && (
