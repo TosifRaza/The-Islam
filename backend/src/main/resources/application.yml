@@ -12,6 +12,8 @@ spring:
       connection-timeout: 30000
   flyway:
     enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
     # Approved migration policy (docs/04-database-design.md §7, testing Option A):
     # forward-only versioned SQL in per-module folders + repeatable seeds; no undo.
     locations:
