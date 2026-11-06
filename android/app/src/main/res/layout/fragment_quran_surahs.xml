@@ -20,14 +20,14 @@
             <!-- Top Header with Mosque Silhouette, Night Sky, and Action Bar -->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="180dp">
 
-                <!-- Vector Header Background -->
+                <!-- Header Background -->
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bg_quran_screen_top"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_quran_header"
                     android:contentDescription="@null" />
 
                 <!-- Top App Bar Navigation & Title -->
