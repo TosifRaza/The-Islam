@@ -5,6 +5,11 @@ spring:
     url: ${IKP_DB_URL:jdbc:postgresql://localhost:5432/ikp}
     username: ${IKP_DB_USER:ikp}
     password: ${IKP_DB_PASSWORD:ikp}
+    hikari:
+      maximum-pool-size: ${IKP_DB_POOL_SIZE:5}
+      minimum-idle: 1
+      max-lifetime: 1800000
+      connection-timeout: 30000
   flyway:
     enabled: true
     # Approved migration policy (docs/04-database-design.md §7, testing Option A):
@@ -26,7 +31,7 @@ spring:
     default-property-inclusion: non_null
 
 server:
-  port: 8080
+  port: ${PORT:8080}
   error:
     whitelabel:
       enabled: false
