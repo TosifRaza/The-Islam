@@ -285,7 +285,8 @@ public final class AuthRepository {
                             return restore();
                         }
                     }
-                    sessionManager.onSessionExpired();
+                    tokenStore.clear();
+                    sessionManager.onSignedOut();
                     return RestoreResult.signedOut();
                 }
             }
@@ -317,7 +318,8 @@ public final class AuthRepository {
                         }
                     }
                 }
-                sessionManager.onSessionExpired();
+                tokenStore.clear();
+                sessionManager.onSignedOut();
                 return RestoreResult.signedOut();
             }
         } catch (IOException offline) {

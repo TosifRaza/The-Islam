@@ -65,14 +65,18 @@ public final class TokenAuthenticator implements okhttp3.Authenticator {
 
             String refresh = tokenStore.refreshToken();
             if (refresh == null || refresh.isEmpty()) {
-                sessionManager.onSessionExpired();
+                if (tokenStore.hasSession()) {
+                    sessionManager.onSessionExpired();
+                }
                 return null;
             }
 
             // Single-flight refresh (synchronous, once).
             Dtos.TokenResponseDto tokens = refreshSync(refresh);
             if (tokens == null || tokens.accessToken == null || tokens.refreshToken == null) {
-                sessionManager.onSessionExpired();
+                if (tokenStore.hasSession()) {
+                    sessionManager.onSessionExpired();
+                }
                 return null;
             }
             tokenStore.updateTokens(tokens.accessToken, tokens.refreshToken);

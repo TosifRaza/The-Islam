@@ -60,8 +60,10 @@ public final class LoginFragment extends Fragment {
 
         View btnGuest = view.findViewById(R.id.btn_guest);
         if (btnGuest != null) {
-            btnGuest.setOnClickListener(v ->
-                    NavHostFragment.findNavController(this).navigate(R.id.action_login_to_home));
+            btnGuest.setOnClickListener(v -> {
+                ServiceLocator.sessionManager().onGuest();
+                NavHostFragment.findNavController(this).navigate(R.id.action_login_to_home);
+            });
         }
 
         view.findViewById(R.id.btn_forgot).setOnClickListener(v ->

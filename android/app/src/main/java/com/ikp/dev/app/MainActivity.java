@@ -36,6 +36,7 @@ public final class MainActivity extends AppCompatActivity {
     private NetworkMonitor networkMonitor;
     private androidx.lifecycle.Observer<Boolean> offlineObserver;
     private androidx.lifecycle.Observer<SessionManager.SessionEvent> sessionObserver;
+    private androidx.appcompat.app.AlertDialog sessionExpiredDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,9 +124,18 @@ public final class MainActivity extends AppCompatActivity {
     private void observeSession() {
         sessionObserver = event -> {
             if (event != null && event.state == SessionManager.AuthState.EXPIRED) {
-                // Return the user to a secure state with an explanation.
-                if (navController.getCurrentDestination() != null
-                        && navController.getCurrentDestination().getId() != R.id.loginFragment) {
+                // Immediately transition state to signed-out to prevent sticky LiveData re-triggering loop
+                sessionManager.onSignedOut();
+
+                int currentDestId = navController.getCurrentDestination() != null
+                        ? navController.getCurrentDestination().getId()
+                        : -1;
+
+                // Never display the session-expired popup on splash/startup or when already on login/onboarding
+                if (currentDestId != R.id.loginFragment
+                        && currentDestId != R.id.splashFragment
+                        && currentDestId != R.id.onboardingFragment
+                        && currentDestId != -1) {
                     showSessionExpiredDialog();
                     try {
                         navController.navigate(R.id.action_global_session_expired);
@@ -139,11 +149,26 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     private void showSessionExpiredDialog() {
-        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        if (sessionExpiredDialog != null && sessionExpiredDialog.isShowing()) {
+            return;
+        }
+        sessionExpiredDialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.auth_session_expired_title)
                 .setMessage(R.string.auth_session_expired_body)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sessionExpiredDialog != null && sessionExpiredDialog.isShowing()) {
+            sessionExpiredDialog.dismiss();
+            sessionExpiredDialog = null;
+        }
     }
 
     /** Toast-free logout confirmation shared by Profile screen (reusable). */
