@@ -80,6 +80,19 @@ public final class SettingsFragment extends Fragment {
                         .setMessage(R.string.settings_delete_account_note)
                         .setPositiveButton(R.string.action_ok, null)
                         .show());
+
+        android.widget.TextView tvVersion = view.findViewById(R.id.tv_app_version);
+        if (tvVersion != null) {
+            tvVersion.setText(getString(R.string.settings_app_version,
+                    com.ikp.dev.app.BuildConfig.VERSION_NAME,
+                    com.ikp.dev.app.BuildConfig.VERSION_CODE));
+        }
+
+        view.findViewById(R.id.row_check_update).setOnClickListener(v -> {
+            if (getActivity() != null) {
+                com.ikp.dev.app.core.update.AppUpdateManager.checkForUpdate(getActivity(), true);
+            }
+        });
     }
 
     private String currentTheme() {

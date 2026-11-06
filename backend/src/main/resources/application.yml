@@ -72,6 +72,13 @@ app:
   upload:
     max-bytes: ${IKP_UPLOAD_MAX_BYTES:209715200}        # 200 MB cap (OD-06 dev posture)
     quota-bytes-per-user: ${IKP_UPLOAD_QUOTA_BYTES:2147483648}  # 2 GB rolling quota
+  version:
+    latest-code: ${APP_LATEST_VERSION_CODE:9}
+    latest-name: ${APP_LATEST_VERSION_NAME:0.5.0-m5-fix6}
+    min-supported-code: ${APP_MIN_SUPPORTED_CODE:1}
+    apk-url: ${APP_APK_URL:https://github.com/TosifRaza/The-Islam/releases/latest/download/The-Islam.apk}
+    release-notes: ${APP_RELEASE_NOTES:Initial release with full Quran, Hadith, and Islamic content.}
+    force-update: ${APP_FORCE_UPDATE:false}
   content:
     # M4 controlled imports: server-side directory holding source files + manifests.
     import-dir: ${IKP_IMPORT_DIR:/home/z/my-project/imports}

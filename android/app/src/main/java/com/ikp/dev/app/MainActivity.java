@@ -61,6 +61,13 @@ public final class MainActivity extends AppCompatActivity {
         observeDestinations();
         observeOffline();
         observeSession();
+
+        // Method 1: Check for in-app updates in background on startup
+        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+            if (!isFinishing() && !isDestroyed()) {
+                com.ikp.dev.app.core.update.AppUpdateManager.checkForUpdate(this, false);
+            }
+        }, 2000);
     }
 
     private void bindTabs() {

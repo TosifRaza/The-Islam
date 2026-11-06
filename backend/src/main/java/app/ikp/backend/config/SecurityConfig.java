@@ -58,6 +58,7 @@ public class SecurityConfig {
                         // Public surface (approved spec §3.1 / §3.4.1 / §3.5.1 / ops health)
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/refresh", "/api/v1/auth/password/**").permitAll()
                         .requestMatchers("/api/v1/health", "/actuator/health").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/app/version").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/subjects", "/api/v1/subjects/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/library/books", "/api/v1/library/books/*").permitAll()
                         // M4 public knowledge content (guest browsing per approved IA)

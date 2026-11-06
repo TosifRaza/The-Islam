@@ -171,5 +171,28 @@
                     android:textColor="@color/text_secondary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/SectionHeader" android:text="@string/settings_about" />
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_md">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/row_check_update"
+                    style="@style/SettingsRow">
+                    <TextView style="@style/SettingsRowLabel" android:text="@string/settings_check_updates" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_app_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

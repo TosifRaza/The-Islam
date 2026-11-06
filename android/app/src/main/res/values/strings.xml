@@ -393,4 +393,17 @@
     <string name="cd_more_actions">More actions</string>
     <string name="action_upload">Upload</string>
     <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="update_available_title" translatable="false">Update Available</string>
+    <string name="update_available_msg" translatable="false">A new version of The Islam (%1$s) is available.</string>
+    <string name="update_btn_now" translatable="false">Update Now</string>
+    <string name="update_btn_later" translatable="false">Later</string>
+    <string name="update_downloading" translatable="false">Downloading update…</string>
+    <string name="update_download_failed" translatable="false">Failed to download update. Please try again.</string>
+    <string name="update_already_latest" translatable="false">You are already on the latest version.</string>
+    <string name="update_permission_title" translatable="false">Permission Required</string>
+    <string name="update_permission_msg" translatable="false">To install this update, please enable “Allow from this source” on the next screen.</string>
+    <string name="update_permission_btn" translatable="false">Open Settings</string>
+    <string name="settings_about" translatable="false">About &amp; Updates</string>
+    <string name="settings_check_updates" translatable="false">Check for updates</string>
+    <string name="settings_app_version" translatable="false">App version: %1$s (%2$d)</string>
 </resources>
