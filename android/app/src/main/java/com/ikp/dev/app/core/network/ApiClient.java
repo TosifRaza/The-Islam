@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -51,10 +52,19 @@ public final class ApiClient {
         });
         logging.setLevel(debugLogging ? HttpLoggingInterceptor.Level.BASIC : HttpLoggingInterceptor.Level.NONE);
 
+        Interceptor emulatorGuard = chain -> {
+            okhttp3.Request req = chain.request();
+            if ("10.0.2.2".equals(req.url().host()) && !isEmulator()) {
+                throw new java.io.IOException("Cannot reach emulator alias 10.0.2.2 on physical device");
+            }
+            return chain.proceed(req);
+        };
+
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .addInterceptor(emulatorGuard)
                 .addInterceptor(logging)
                 .addInterceptor(new AuthInterceptor(tokenStore))
                 .authenticator(new TokenAuthenticator(tokenStore,
@@ -77,12 +87,31 @@ public final class ApiClient {
     }
 
     private static OkHttpClient bareClient(HttpLoggingInterceptor logging) {
+        Interceptor emulatorGuard = chain -> {
+            okhttp3.Request req = chain.request();
+            if ("10.0.2.2".equals(req.url().host()) && !isEmulator()) {
+                throw new java.io.IOException("Cannot reach emulator alias 10.0.2.2 on physical device");
+            }
+            return chain.proceed(req);
+        };
         return new OkHttpClient.Builder()
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .addInterceptor(emulatorGuard)
                 .addInterceptor(logging)
                 .build();
+    }
+
+    public static boolean isEmulator() {
+        return Build.FINGERPRINT.startsWith("generic")
+                || Build.FINGERPRINT.startsWith("unknown")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+                || "google_sdk".equals(Build.PRODUCT);
     }
 
     private static com.ikp.dev.app.data.remote.AuthApi buildApi(String baseUrl, OkHttpClient client, Gson gson) {

@@ -90,20 +90,41 @@ public class TasbihFragment extends Fragment {
                         if (e.counterId == selectedId) currentCount = e.count;
                     }
                 }
-                countText.setText(String.valueOf(currentCount));
-                dailyText.setText(getString(R.string.tasbih_daily_total,
-                        daily == null ? 0 : daily.total));
+                if (countText != null) {
+                    countText.setText(String.valueOf(currentCount));
+                }
+                View btn = getView() != null ? getView().findViewById(R.id.btn_count) : null;
+                if (btn instanceof android.widget.TextView) {
+                    ((android.widget.TextView) btn).setText(String.valueOf(currentCount));
+                }
+                if (dailyText != null) {
+                    dailyText.setText(getString(R.string.tasbih_daily_total,
+                            daily == null ? 0 : daily.total));
+                }
             });
         });
     }
 
     private void increment() {
         currentCount++;
-        countText.setText(String.valueOf(currentCount));
+        if (countText != null) {
+            countText.setText(String.valueOf(currentCount));
+        }
+        View btn = getView() != null ? getView().findViewById(R.id.btn_count) : null;
+        if (btn instanceof android.widget.TextView) {
+            ((android.widget.TextView) btn).setText(String.valueOf(currentCount));
+        }
         if (ServiceLocator.appPrefs().getBoolean("tasbih_vibrate", true)) {
-            Vibrator vib = (Vibrator) requireContext().getSystemService(android.content.Context.VIBRATOR_SERVICE);
-            if (vib != null && vib.hasVibrator()) {
-                vib.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
+            try {
+                Vibrator vib = (Vibrator) requireContext().getSystemService(android.content.Context.VIBRATOR_SERVICE);
+                if (vib != null && vib.hasVibrator()) {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        vib.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vib.vibrate(30);
+                    }
+                }
+            } catch (Exception ignored) {
             }
         }
         if (ServiceLocator.appPrefs().getBoolean("tasbih_sound", false)) {

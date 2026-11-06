@@ -61,15 +61,15 @@
             app:destination="@id/forgotFragment" />
     </fragment>
 
-    <!-- Honest "capability not yet in backend" screen (registration, password reset) -->
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.ikp.dev.app.ui.auth.UnavailableFragment"
+        android:name="com.ikp.dev.app.ui.auth.RegisterFragment"
         android:label="Register">
-        <argument
-            android:name="mode"
-            app:argType="string"
-            android:defaultValue="register" />
+        <action
+            android:id="@+id/action_register_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

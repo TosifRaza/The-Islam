@@ -57,8 +57,12 @@ public final class ProfileFragment extends Fragment {
 
         viewModel.logoutDone().observe(getViewLifecycleOwner(), done -> {
             if (Boolean.TRUE.equals(done)) {
-                renderGuest();
-                viewModel.loadProfile();
+                try {
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_session_expired);
+                } catch (Exception ignored) {
+                    renderGuest();
+                    viewModel.loadProfile();
+                }
             }
         });
 
@@ -131,15 +135,10 @@ public final class ProfileFragment extends Fragment {
         ((TextView) view.findViewById(R.id.tv_profile_status)).setText(
                 user.status == null || user.status.isEmpty() ? "—" : user.status);
         if (user.createdAt != null && !user.createdAt.isEmpty()) {
-            try {
-                java.time.Instant instant = java.time.Instant.parse(user.createdAt);
-                java.time.LocalDate d = instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-                ((TextView) view.findViewById(R.id.tv_member_since)).setText(
-                        String.format(java.util.Locale.getDefault(), "%d-%02d-%02d",
-                                d.getYear(), d.getMonthValue(), d.getDayOfMonth()));
-            } catch (Exception ignored) {
-                ((TextView) view.findViewById(R.id.tv_member_since)).setText("—");
-            }
+            String date = user.createdAt.length() >= 10 ? user.createdAt.substring(0, 10) : user.createdAt;
+            ((TextView) view.findViewById(R.id.tv_member_since)).setText(date);
+        } else {
+            ((TextView) view.findViewById(R.id.tv_member_since)).setText("—");
         }
     }
 }

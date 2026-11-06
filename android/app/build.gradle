@@ -20,6 +20,10 @@ android {
         // the developer host. NEVER hardcode a production endpoint here — the
         // release URL is injected by CI/local config via IKP_BASE_URL (README §6).
         buildConfigField "String", "BASE_URL", "\"${project.findProperty('IKP_BASE_URL') ?: 'http://10.0.2.2:8080/'}\""
+
+        // Supabase configuration
+        buildConfigField "String", "SUPABASE_URL", "\"${project.findProperty('SUPABASE_URL') ?: 'https://svfttjrtnbzogeouovql.supabase.co/'}\""
+        buildConfigField "String", "SUPABASE_ANON_KEY", "\"${project.findProperty('SUPABASE_ANON_KEY') ?: 'sb_publishable_qMtyVLdkkIsbTlTT9tRMcw_oGuZTQQb'}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -56,6 +56,12 @@
     <string name="forgot_password_link">Forgot password?</string>
     <string name="register_link">New here? Create an account</string>
     <string name="register_title">Create an account</string>
+    <string name="register_subtitle" translatable="false">Sign up to track your learning journey</string>
+    <string name="name_label" translatable="false">Full name (optional)</string>
+    <string name="register_button" translatable="false">Create account</string>
+    <string name="register_loading" translatable="false">Creating your account…</string>
+    <string name="already_have_account" translatable="false">Already have an account? Sign in</string>
+    <string name="account_created_notice" translatable="false">Account created! You can now sign in.</string>
     <string name="register_unavailable_title">Registration is not open yet</string>
     <string name="register_unavailable_body">Account registration is not yet available in the backend service (planned with the approved authentication rollout). You can still browse as a guest, or sign in if you already have an account.</string>
     <string name="forgot_title">Reset your password</string>

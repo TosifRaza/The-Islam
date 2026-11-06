@@ -1,0 +1,45 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="54dp"
+    android:height="54dp"
+    android:viewportWidth="54"
+    android:viewportHeight="54">
+    <!-- Left Minaret -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 6,24 L 8,16 L 10,24 L 9,24 L 9,46 L 7,46 L 7,24 Z" />
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.2"
+        android:pathData="M 8,12 L 8,16" />
+    <!-- Right Minaret -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 44,24 L 46,16 L 48,24 L 47,24 L 47,46 L 45,46 L 45,24 Z" />
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.2"
+        android:pathData="M 46,12 L 46,16" />
+    <!-- Inner Minarets -->
+    <path
+        android:fillColor="#164A3B"
+        android:pathData="M 14,28 L 15.5,22 L 17,28 L 16.5,46 L 14.5,46 Z" />
+    <path
+        android:fillColor="#164A3B"
+        android:pathData="M 37,28 L 38.5,22 L 40,28 L 39.5,46 L 37.5,46 Z" />
+    <!-- Center Grand Dome -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 18,34 C 18,24 27,18 27,18 C 27,18 36,24 36,34 L 36,46 L 18,46 Z" />
+    <!-- Center Crescent -->
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.2"
+        android:pathData="M 27,14 L 27,18" />
+    <!-- Base Arched Windows -->
+    <path
+        android:fillColor="#E6F4EA"
+        android:pathData="M 21,39 C 21,37 22,36 23,36 C 24,36 25,37 25,39 L 25,44 L 21,44 Z" />
+    <path
+        android:fillColor="#E6F4EA"
+        android:pathData="M 29,39 C 29,37 30,36 31,36 C 32,36 33,37 33,39 L 33,44 L 29,44 Z" />
+</vector>

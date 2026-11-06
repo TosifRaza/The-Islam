@@ -94,6 +94,14 @@
             android:layout_marginTop="@dimen/space_xl"
             android:text="@string/login_button" />
 
+        <Button
+            android:id="@+id/btn_guest"
+            style="@style/Widget.IKP.Button.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:text="Continue as Guest" />
+
         <TextView
             android:id="@+id/login_error"
             android:layout_width="match_parent"

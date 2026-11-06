@@ -1,0 +1,38 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+    <!-- Wooden Rehal (Book Stand) Legs Crossed -->
+    <path
+        android:fillColor="#5A3A1E"
+        android:pathData="M 16,42 L 56,66 L 52,70 L 12,46 Z" />
+    <path
+        android:fillColor="#442810"
+        android:pathData="M 56,42 L 16,66 L 20,70 L 60,46 Z" />
+    <!-- Rehal Top V-shape support -->
+    <path
+        android:fillColor="#6E4828"
+        android:pathData="M 22,46 L 36,54 L 50,46 L 46,42 L 36,48 L 26,42 Z" />
+    <!-- Open Book Cover (Green with Gold Borders) -->
+    <path
+        android:fillColor="#06251B"
+        android:pathData="M 10,26 C 22,23 34,26 36,30 C 38,26 50,23 62,26 L 60,44 C 48,41 38,44 36,47 C 34,44 24,41 12,44 Z" />
+    <!-- Book Pages (Glowing Ivory/Gold) -->
+    <path
+        android:fillColor="#FAF6EB"
+        android:pathData="M 12,24 C 23,21 34,24 36,28 C 38,24 49,21 60,24 L 58,41 C 47,38 38,41 36,44 C 34,41 23,38 14,41 Z" />
+    <!-- Gold Page Borders & Illumination -->
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.2"
+        android:pathData="M 16,26 C 24,24 33,26 35,29 M 56,26 C 48,24 39,26 37,29" />
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1"
+        android:pathData="M 18,30 L 32,31 M 18,34 L 32,35 M 40,31 L 54,30 M 40,35 L 54,34" />
+    <!-- Center Bookmark Ribbon (Green / Gold) -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M 35,28 L 37,28 L 38,50 L 36,47 L 34,50 Z" />
+</vector>

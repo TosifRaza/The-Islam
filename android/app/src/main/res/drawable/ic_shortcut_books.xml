@@ -1,0 +1,48 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Book 1 (Left) -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 6,10 L 12,10 L 12,30 L 6,30 Z" />
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M 9,14 L 9,22" />
+    <!-- Book 2 (Middle) -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 14,7 L 21,7 L 21,30 L 14,30 Z" />
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M 17.5,12 L 17.5,24" />
+    <!-- Book 3 (Right leaning slightly or upright) -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 23,12 L 30,12 L 30,30 L 23,30 Z" />
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M 26.5,16 L 26.5,23" />
+    <!-- Shelf base line -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M 4,30 L 32,30" />
+</vector>

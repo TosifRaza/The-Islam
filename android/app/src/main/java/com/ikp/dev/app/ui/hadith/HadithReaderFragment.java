@@ -63,12 +63,16 @@ public class HadithReaderFragment extends Fragment {
         recycler.setAdapter(adapter);
         v.findViewById(R.id.btn_back).setOnClickListener(x ->
                 NavHostFragment.findNavController(this).popBackStack());
-        v.findViewById(R.id.btn_retry).setOnClickListener(x -> {
-            page = 1;
-            endReached = false;
-            hadiths.clear();
-            load();
-        });
+        View retryBtn = v.findViewById(R.id.btn_retry);
+        if (retryBtn != null) {
+            retryBtn.setVisibility(View.GONE);
+            retryBtn.setOnClickListener(x -> {
+                page = 1;
+                endReached = false;
+                hadiths.clear();
+                load();
+            });
+        }
         recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView rv, int dx, int dy) {
@@ -84,6 +88,10 @@ public class HadithReaderFragment extends Fragment {
     private void load() {
         if (loading || endReached || bookId <= 0) return;
         loading = true;
+        if (getView() != null) {
+            View retry = getView().findViewById(R.id.btn_retry);
+            if (retry != null) retry.setVisibility(View.GONE);
+        }
         stateText.setVisibility(hadiths.isEmpty() ? View.VISIBLE : View.GONE);
         stateText.setText(R.string.state_loading);
         final int p = page;
@@ -99,6 +107,10 @@ public class HadithReaderFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                     stateText.setVisibility(View.GONE);
                     recycler.setVisibility(View.VISIBLE);
+                    if (getView() != null) {
+                        View retry = getView().findViewById(R.id.btn_retry);
+                        if (retry != null) retry.setVisibility(View.GONE);
+                    }
                     page++;
                     updateFooter();
                 } else if (hadiths.isEmpty()) {

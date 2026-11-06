@@ -122,6 +122,10 @@ public class QuranReaderFragment extends Fragment {
     private void load() {
         if (loading || endReached) return;
         loading = true;
+        if (getView() != null) {
+            View retry = getView().findViewById(R.id.btn_retry);
+            if (retry != null) retry.setVisibility(View.GONE);
+        }
         stateText.setVisibility(ayahs.isEmpty() ? View.VISIBLE : View.GONE);
         if (ayahs.isEmpty()) stateText.setText(R.string.state_loading);
         final int pageParam = page;

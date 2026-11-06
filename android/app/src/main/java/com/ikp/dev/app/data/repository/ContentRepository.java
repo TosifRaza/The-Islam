@@ -70,16 +70,22 @@ public final class ContentRepository {
             return Outcome.ok(rows);
         }
         Outcome<List<ContentDtos.SurahDto>> result = run(api.surahs());
-        if (result.isSuccess()) {
+        if (result.isSuccess() && result.value != null && !result.value.isEmpty()) {
             List<SurahCacheEntity> fresh = new ArrayList<>();
             for (ContentDtos.SurahDto s : result.value) fresh.add(toCache(s, now));
             db.contentDao().replaceSurahs(fresh);
+            return result;
         } else if (!cached.isEmpty()) {
             List<ContentDtos.SurahDto> rows = new ArrayList<>();
             for (SurahCacheEntity e : cached) rows.add(fromCache(e));
             return Outcome.ok(rows);
+        } else {
+            List<ContentDtos.SurahDto> fallback = com.ikp.dev.app.data.content.IslamicContentProvider.getAllSurahs();
+            List<SurahCacheEntity> fresh = new ArrayList<>();
+            for (ContentDtos.SurahDto s : fallback) fresh.add(toCache(s, now));
+            db.contentDao().replaceSurahs(fresh);
+            return Outcome.ok(fallback);
         }
-        return result;
     }
 
     private static ContentDtos.SurahDto fromCache(SurahCacheEntity e) {
@@ -108,7 +114,15 @@ public final class ContentRepository {
     public Outcome<List<ContentDtos.AyahDto>> ayahs(int surahId, @Nullable String translation,
                                                     @Nullable String tafsir, boolean words,
                                                     int page, int limit) {
-        return run(api.ayahs(surahId, translation, tafsir, words, page, limit));
+        Outcome<List<ContentDtos.AyahDto>> res = run(api.ayahs(surahId, translation, tafsir, words, page, limit));
+        if (res.isSuccess() && res.value != null && !res.value.isEmpty()) {
+            return res;
+        }
+        List<ContentDtos.AyahDto> fallback = com.ikp.dev.app.data.content.IslamicContentProvider.fetchAyahs(surahId, page, limit);
+        if (!fallback.isEmpty()) {
+            return Outcome.ok(fallback);
+        }
+        return res;
     }
 
     public Outcome<ContentDtos.AyahDetailDto> ayahDetail(int surahId, int ayahNumber) {
@@ -128,15 +142,77 @@ public final class ContentRepository {
     }
 
     public Outcome<List<ContentDtos.HadithCollectionDto>> hadithCollections() {
-        return run(api.hadithCollections());
+        long now = System.currentTimeMillis();
+        DailyContentEntity cached = db.contentDao().daily("hadith_collections");
+        if (cached != null && cached.payloadJson != null) {
+            java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<List<ContentDtos.HadithCollectionDto>>(){}.getType();
+            List<ContentDtos.HadithCollectionDto> list = gson.fromJson(cached.payloadJson, type);
+            if (list != null && !list.isEmpty()) {
+                return Outcome.ok(list);
+            }
+        }
+        Outcome<List<ContentDtos.HadithCollectionDto>> res = run(api.hadithCollections());
+        List<ContentDtos.HadithCollectionDto> data = (res.isSuccess() && res.value != null && !res.value.isEmpty())
+                ? res.value
+                : com.ikp.dev.app.data.content.IslamicContentProvider.getHadithCollections();
+
+        DailyContentEntity entity = new DailyContentEntity();
+        entity.date = "hadith_collections";
+        entity.payloadJson = gson.toJson(data);
+        entity.cachedAtEpochMs = now;
+        db.contentDao().putDaily(entity);
+
+        return Outcome.ok(data);
     }
 
     public Outcome<List<ContentDtos.HadithBookDto>> hadithBooks(String code) {
-        return run(api.hadithBooks(code));
+        long now = System.currentTimeMillis();
+        String dbKey = "hadith_books_" + (code == null ? "bukhari" : code.toLowerCase());
+        DailyContentEntity cached = db.contentDao().daily(dbKey);
+        if (cached != null && cached.payloadJson != null) {
+            java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<List<ContentDtos.HadithBookDto>>(){}.getType();
+            List<ContentDtos.HadithBookDto> list = gson.fromJson(cached.payloadJson, type);
+            if (list != null && !list.isEmpty()) {
+                return Outcome.ok(list);
+            }
+        }
+        Outcome<List<ContentDtos.HadithBookDto>> res = run(api.hadithBooks(code));
+        List<ContentDtos.HadithBookDto> data = (res.isSuccess() && res.value != null && !res.value.isEmpty())
+                ? res.value
+                : com.ikp.dev.app.data.content.IslamicContentProvider.getHadithBooks(code);
+
+        DailyContentEntity entity = new DailyContentEntity();
+        entity.date = dbKey;
+        entity.payloadJson = gson.toJson(data);
+        entity.cachedAtEpochMs = now;
+        db.contentDao().putDaily(entity);
+
+        return Outcome.ok(data);
     }
 
     public Outcome<List<ContentDtos.HadithDto>> hadithsOfBook(long bookId, int page, int limit) {
-        return run(api.hadithsOfBook(bookId, page, limit));
+        long now = System.currentTimeMillis();
+        String dbKey = "hadiths_book_" + bookId + "_p" + page;
+        DailyContentEntity cached = db.contentDao().daily(dbKey);
+        if (cached != null && cached.payloadJson != null) {
+            java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<List<ContentDtos.HadithDto>>(){}.getType();
+            List<ContentDtos.HadithDto> list = gson.fromJson(cached.payloadJson, type);
+            if (list != null && !list.isEmpty()) {
+                return Outcome.ok(list);
+            }
+        }
+        Outcome<List<ContentDtos.HadithDto>> res = run(api.hadithsOfBook(bookId, page, limit));
+        List<ContentDtos.HadithDto> data = (res.isSuccess() && res.value != null && !res.value.isEmpty())
+                ? res.value
+                : com.ikp.dev.app.data.content.IslamicContentProvider.getHadithsOfBook(bookId, page, limit);
+
+        DailyContentEntity entity = new DailyContentEntity();
+        entity.date = dbKey;
+        entity.payloadJson = gson.toJson(data);
+        entity.cachedAtEpochMs = now;
+        db.contentDao().putDaily(entity);
+
+        return Outcome.ok(data);
     }
 
     public Outcome<List<ContentDtos.HadithDto>> hadithSearch(String q, @Nullable String collection) {
@@ -148,11 +224,52 @@ public final class ContentRepository {
     }
 
     public Outcome<List<ContentDtos.DuaCategoryDto>> duaCategories() {
-        return run(api.duaCategories());
+        long now = System.currentTimeMillis();
+        DailyContentEntity cached = db.contentDao().daily("dua_categories");
+        if (cached != null && cached.payloadJson != null) {
+            java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<List<ContentDtos.DuaCategoryDto>>(){}.getType();
+            List<ContentDtos.DuaCategoryDto> list = gson.fromJson(cached.payloadJson, type);
+            if (list != null && !list.isEmpty()) {
+                return Outcome.ok(list);
+            }
+        }
+        Outcome<List<ContentDtos.DuaCategoryDto>> res = run(api.duaCategories());
+        List<ContentDtos.DuaCategoryDto> data = (res.isSuccess() && res.value != null && !res.value.isEmpty())
+                ? res.value
+                : com.ikp.dev.app.data.content.IslamicContentProvider.getDuaCategories();
+
+        DailyContentEntity entity = new DailyContentEntity();
+        entity.date = "dua_categories";
+        entity.payloadJson = gson.toJson(data);
+        entity.cachedAtEpochMs = now;
+        db.contentDao().putDaily(entity);
+
+        return Outcome.ok(data);
     }
 
     public Outcome<List<ContentDtos.DuaDto>> duas(@Nullable String category, int page, int limit) {
-        return run(api.duas(category, page, limit));
+        long now = System.currentTimeMillis();
+        String dbKey = "duas_" + (category == null ? "all" : category) + "_p" + page;
+        DailyContentEntity cached = db.contentDao().daily(dbKey);
+        if (cached != null && cached.payloadJson != null) {
+            java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<List<ContentDtos.DuaDto>>(){}.getType();
+            List<ContentDtos.DuaDto> list = gson.fromJson(cached.payloadJson, type);
+            if (list != null && !list.isEmpty()) {
+                return Outcome.ok(list);
+            }
+        }
+        Outcome<List<ContentDtos.DuaDto>> res = run(api.duas(category, page, limit));
+        List<ContentDtos.DuaDto> data = (res.isSuccess() && res.value != null && !res.value.isEmpty())
+                ? res.value
+                : com.ikp.dev.app.data.content.IslamicContentProvider.getDuas(category, page, limit);
+
+        DailyContentEntity entity = new DailyContentEntity();
+        entity.date = dbKey;
+        entity.payloadJson = gson.toJson(data);
+        entity.cachedAtEpochMs = now;
+        db.contentDao().putDaily(entity);
+
+        return Outcome.ok(data);
     }
 
     public Outcome<ContentDtos.CalendarTodayDto> calendarToday(@Nullable Integer offsetDays, String tz) {

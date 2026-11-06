@@ -1,0 +1,52 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Bead loop circles -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 18,5 A 1.8,1.8 0 1,0 18,8.6 A 1.8,1.8 0 1,0 18,5 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 23,6.5 A 1.8,1.8 0 1,0 23,10.1 A 1.8,1.8 0 1,0 23,6.5 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 27,10 A 1.8,1.8 0 1,0 27,13.6 A 1.8,1.8 0 1,0 27,10 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 28.5,15 A 1.8,1.8 0 1,0 28.5,18.6 A 1.8,1.8 0 1,0 28.5,15 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 27,20 A 1.8,1.8 0 1,0 27,23.6 A 1.8,1.8 0 1,0 27,20 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 23,23.5 A 1.8,1.8 0 1,0 23,27.1 A 1.8,1.8 0 1,0 23,23.5 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 18,24.5 A 1.8,1.8 0 1,0 18,28.1 A 1.8,1.8 0 1,0 18,24.5 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 13,23.5 A 1.8,1.8 0 1,0 13,27.1 A 1.8,1.8 0 1,0 13,23.5 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 9,20 A 1.8,1.8 0 1,0 9,23.6 A 1.8,1.8 0 1,0 9,20 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 7.5,15 A 1.8,1.8 0 1,0 7.5,18.6 A 1.8,1.8 0 1,0 7.5,15 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 9,10 A 1.8,1.8 0 1,0 9,13.6 A 1.8,1.8 0 1,0 9,10 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 13,6.5 A 1.8,1.8 0 1,0 13,10.1 A 1.8,1.8 0 1,0 13,6.5 Z" />
+    <!-- Center Tassel / Imam bead -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 16.5,27.5 L 19.5,27.5 L 19,30.5 L 17,30.5 Z" />
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M 18,30.5 L 18,34" />
+</vector>

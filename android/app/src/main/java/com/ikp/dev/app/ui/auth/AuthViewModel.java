@@ -21,6 +21,7 @@ public final class AuthViewModel extends ViewModel {
     private final AuthRepository authRepository;
 
     private final MutableLiveData<UiState<Models.User>> loginState = new MutableLiveData<>();
+    private final MutableLiveData<UiState<Models.User>> registerState = new MutableLiveData<>();
     private final MutableLiveData<Boolean> logoutDone = new MutableLiveData<>();
 
     public AuthViewModel() {
@@ -30,10 +31,19 @@ public final class AuthViewModel extends ViewModel {
     public AuthViewModel(AuthRepository authRepository) {
         this.authRepository = authRepository;
         loginState.setValue(UiState.success(null));
+        registerState.setValue(UiState.success(null));
     }
 
     public LiveData<UiState<Models.User>> loginState() {
         return loginState;
+    }
+
+    public LiveData<UiState<Models.User>> registerState() {
+        return registerState;
+    }
+
+    public void resetRegisterState() {
+        registerState.setValue(UiState.success(null));
     }
 
     public LiveData<Boolean> logoutDone() {
@@ -59,6 +69,28 @@ public final class AuthViewModel extends ViewModel {
                 loginState.postValue(UiState.error(result.error));
             } else {
                 loginState.postValue(UiState.success(result.user));
+            }
+        });
+    }
+
+    public void register(String email, String password, String displayName) {
+        if (!isValidEmail(email)) {
+            registerState.setValue(UiState.error(
+                    new com.ikp.dev.app.core.error.ApiError("VAL-CLIENT-001", "error_validation")));
+            return;
+        }
+        if (!isValidPassword(password)) {
+            registerState.setValue(UiState.error(
+                    new com.ikp.dev.app.core.error.ApiError("VAL-CLIENT-002", "error_validation")));
+            return;
+        }
+        registerState.setValue(UiState.loading());
+        com.ikp.dev.app.di.ServiceLocator.executors().io.execute(() -> {
+            Outcome<Models.User> outcome = authRepository.register(email.trim(), password, emptyToNull(displayName));
+            if (outcome.isSuccess()) {
+                registerState.postValue(UiState.success(outcome.value));
+            } else {
+                registerState.postValue(UiState.error(outcome.error));
             }
         });
     }

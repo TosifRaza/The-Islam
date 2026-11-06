@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Left Minaret -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 4,14 L 6,10 L 8,14 L 7,14 L 7,30 L 5,30 L 5,14 Z" />
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.5"
+        android:pathData="M 6,7 L 6,10" />
+    <!-- Right Minaret -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 28,14 L 30,10 L 32,14 L 31,14 L 31,30 L 29,30 L 29,14 Z" />
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.5"
+        android:pathData="M 30,7 L 30,10" />
+    <!-- Center Grand Dome -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 12,23 C 12,16 18,11 18,11 C 18,11 24,16 24,23 L 24,30 L 12,30 Z" />
+    <!-- Crescent top center -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.5"
+        android:pathData="M 18,8 L 18,11" />
+    <!-- Arched Doorway -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 16,30 L 16,26 C 16,24.5 17,24 18,24 C 19,24 20,24.5 20,26 L 20,30 Z" />
+    <!-- Base Foundation Line -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M 3,30 L 33,30" />
+</vector>

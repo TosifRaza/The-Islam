@@ -1,0 +1,53 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="44dp"
+    android:height="52dp"
+    android:viewportWidth="44"
+    android:viewportHeight="52">
+
+    <!-- Book 3D spine and bottom pages shadow -->
+    <path
+        android:fillColor="#33000000"
+        android:pathData="M 6,48 L 40,48 L 36,52 L 2,52 Z" />
+    <path
+        android:fillColor="#E8DFD0"
+        android:pathData="M 38,10 L 42,12 L 42,46 L 38,44 Z" />
+
+    <!-- Main Front Cover (slanted 3D) -->
+    <path
+        android:pathData="M 4,4 C 4,4 36,7 38,8 L 38,44 C 38,44 6,42 4,42 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="4"
+                android:startY="4"
+                android:endX="38"
+                android:endY="44"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#0F4736"/>
+                <item android:offset="0.5" android:color="#0B372A"/>
+                <item android:offset="1.0" android:color="#06221A"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Gold Embossed Border -->
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="1.2"
+        android:pathData="M 8,8 L 34,10 L 34,40 L 8,38 Z" />
+
+    <!-- Center Gold Arabesque Medallion -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M 21,20 C 18,24 18,26 21,30 C 24,26 24,24 21,20 Z" />
+    <path
+        android:strokeColor="#F5DE93"
+        android:strokeWidth="0.8"
+        android:pathData="M 21,18 C 16,23 16,27 21,32 C 26,27 26,23 21,18 Z" />
+
+    <!-- Corner Gold Ornaments -->
+    <path android:fillColor="#D4AF37" android:pathData="M 9,9 L 14,9 L 9,14 Z" />
+    <path android:fillColor="#D4AF37" android:pathData="M 33,11 L 28,11 L 33,16 Z" />
+    <path android:fillColor="#D4AF37" android:pathData="M 9,37 L 14,37 L 9,32 Z" />
+    <path android:fillColor="#D4AF37" android:pathData="M 33,39 L 28,39 L 33,34 Z" />
+</vector>

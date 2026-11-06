@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+    <!-- Outer gold drop / shadow effect -->
+    <!-- Square 1 (rotated 0 deg) -->
+    <path
+        android:fillColor="#0D3B2D"
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:pathData="M 8,6 L 32,6 C 33,6 34,7 34,8 L 34,32 C 34,33 33,34 32,34 L 8,34 C 7,34 6,33 6,32 L 6,8 C 6,7 7,6 8,6 Z" />
+
+    <!-- Square 2 (rotated 45 deg) -->
+    <group
+        android:pivotX="20"
+        android:pivotY="20"
+        android:rotation="45">
+        <path
+            android:fillColor="#0D3B2D"
+            android:strokeColor="#D4AF37"
+            android:strokeWidth="1.5"
+            android:strokeLineJoin="round"
+            android:pathData="M 8,6 L 32,6 C 33,6 34,7 34,8 L 34,32 C 34,33 33,34 32,34 L 8,34 C 7,34 6,33 6,32 L 6,8 C 6,7 7,6 8,6 Z" />
+    </group>
+
+    <!-- Inner gold border ring -->
+    <path
+        android:strokeColor="#F5DE93"
+        android:strokeWidth="0.8"
+        android:pathData="M 20,8 A 12,12 0 1,1 20,7.9 Z" />
+</vector>

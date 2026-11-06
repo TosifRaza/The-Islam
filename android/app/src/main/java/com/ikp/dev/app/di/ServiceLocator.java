@@ -12,6 +12,7 @@ import com.ikp.dev.app.core.network.ApiClient;
 import com.ikp.dev.app.core.security.EncryptedTokenStore;
 import com.ikp.dev.app.core.security.SessionManager;
 import com.ikp.dev.app.core.security.TokenStore;
+import com.ikp.dev.app.core.supabase.SupabaseClient;
 import com.ikp.dev.app.data.remote.AcademyApi;
 import com.ikp.dev.app.data.repository.AcademyRepository;
 import com.ikp.dev.app.data.repository.AuthRepository;
@@ -43,6 +44,7 @@ public final class ServiceLocator {
     private static SessionManager sessionManager;
     private static NetworkMonitor networkMonitor;
     private static ApiClient apiClient;
+    private static SupabaseClient supabaseClient;
     private static AuthRepository authRepository;
     private static SubjectRepository subjectRepository;
     private static BookRepository bookRepository;
@@ -76,6 +78,10 @@ public final class ServiceLocator {
             networkMonitor = new NetworkMonitor(app);
             apiClient = new ApiClient(BuildConfig.BASE_URL, tokenStore, sessionManager,
                     BuildConfig.DEBUG);
+            supabaseClient = SupabaseClient.createDefault(BuildConfig.DEBUG);
+            if (tokenStore.hasSession() && tokenStore.accessToken() != null) {
+                supabaseClient.setSessionToken(tokenStore.accessToken());
+            }
             authRepository = new AuthRepository(apiClient, tokenStore, sessionManager);
             ServiceLocatorBridge.provide(database);
             subjectRepository = new SubjectRepository(apiClient, database);
@@ -138,6 +144,10 @@ public final class ServiceLocator {
         return apiClient;
     }
 
+    public static SupabaseClient supabaseClient() {
+        return supabaseClient;
+    }
+
     public static AppExecutors executors() {
         return appExecutors;
     }
@@ -158,6 +168,7 @@ public final class ServiceLocator {
         sessionManager = null;
         networkMonitor = null;
         apiClient = null;
+        supabaseClient = null;
         authRepository = null;
         subjectRepository = null;
         bookRepository = null;

@@ -1,0 +1,68 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="160dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+    <!-- Soft warm sky backdrop gradient / clouds -->
+    <path
+        android:fillColor="#15C59B4B"
+        android:pathData="M 0,0 L 200,0 L 200,160 L 0,160 Z" />
+    <!-- Distant soft trees / horizon -->
+    <path
+        android:fillColor="#224A6B5B"
+        android:pathData="M 60,140 C 90,135 140,138 200,135 L 200,160 L 60,160 Z" />
+    <!-- Rear minarets (tall slender) -->
+    <path
+        android:fillColor="#550D3B2E"
+        android:pathData="M 102,25 L 105,15 L 108,25 L 107,140 L 103,140 Z" />
+    <path
+        android:fillColor="#550D3B2E"
+        android:pathData="M 188,30 L 191,20 L 194,30 L 193,140 L 189,140 Z" />
+    <!-- Main Center Minaret -->
+    <path
+        android:fillColor="#880D3B2E"
+        android:pathData="M 118,20 L 122,8 L 126,20 L 125,140 L 119,140 Z" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 121,6 L 123,6 L 122,8 Z" />
+    <!-- Front Minaret Right -->
+    <path
+        android:fillColor="#990D3B2E"
+        android:pathData="M 174,15 L 178,5 L 182,15 L 180,140 L 176,140 Z" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 177,3 L 179,3 L 178,5 Z" />
+    <!-- Side Domes -->
+    <path
+        android:fillColor="#660D3B2E"
+        android:pathData="M 122,90 C 122,70 138,55 138,55 C 138,55 154,70 154,90 Z" />
+    <!-- Grand Center Dome -->
+    <path
+        android:fillColor="#AA0D3B2E"
+        android:pathData="M 132,85 C 132,60 152,42 152,42 C 152,42 172,60 172,85 Z" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 151,38 L 153,38 L 152,42 Z" />
+    <!-- Main Mosque Building & Arched Windows -->
+    <path
+        android:fillColor="#BB0D3B2E"
+        android:pathData="M 115,85 L 185,85 L 188,140 L 112,140 Z" />
+    <!-- Colonnade arches on water level -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 124,115 C 124,110 127,108 129,108 C 131,108 134,110 134,115 L 134,130 L 124,130 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 140,112 C 140,105 145,102 148,102 C 151,102 156,105 156,112 L 156,130 L 140,130 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 162,115 C 162,110 165,108 167,108 C 169,108 172,110 172,115 L 172,130 L 162,130 Z" />
+    <!-- Water Reflection at bottom -->
+    <path
+        android:fillColor="#18C59B4B"
+        android:pathData="M 100,140 L 200,140 L 200,160 L 100,160 Z" />
+    <path
+        android:strokeColor="#250D3B2E"
+        android:strokeWidth="1.2"
+        android:pathData="M 115,145 L 185,145 M 125,150 L 175,150 M 135,155 L 165,155" />
+</vector>

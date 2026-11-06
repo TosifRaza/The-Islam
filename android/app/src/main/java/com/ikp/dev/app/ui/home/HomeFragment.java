@@ -88,6 +88,57 @@ public final class HomeFragment extends Fragment {
         view.findViewById(R.id.shortcut_hadith).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_global_hadith_collections));
 
+        View shortcutCal = view.findViewById(R.id.shortcut_calendar);
+        if (shortcutCal != null) {
+            shortcutCal.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_calendar));
+        }
+        View shortcutBooks = view.findViewById(R.id.shortcut_books);
+        if (shortcutBooks != null) {
+            shortcutBooks.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_books));
+        }
+        View btnProfileHeader = view.findViewById(R.id.btn_profile_header);
+        if (btnProfileHeader != null) {
+            btnProfileHeader.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.profileFragment));
+        }
+        View btnNotif = view.findViewById(R.id.btn_notifications);
+        if (btnNotif != null) {
+            btnNotif.setOnClickListener(v ->
+                    android.widget.Toast.makeText(requireContext(), "No new notifications", android.widget.Toast.LENGTH_SHORT).show());
+        }
+        View cardContinue = view.findViewById(R.id.card_continue_reading);
+        if (cardContinue != null) {
+            cardContinue.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_quran_surahs));
+        }
+        View btnAyahReadMore = view.findViewById(R.id.btn_ayah_read_more);
+        if (btnAyahReadMore != null) {
+            btnAyahReadMore.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_quran_surahs));
+        }
+        View btnViewAll = view.findViewById(R.id.btn_recommended_view_all);
+        if (btnViewAll != null) {
+            btnViewAll.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_books));
+        }
+        View cardTafsir = view.findViewById(R.id.card_rec_tafsir);
+        if (cardTafsir != null) {
+            cardTafsir.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_books));
+        }
+        View cardSeerah = view.findViewById(R.id.card_rec_seerah);
+        if (cardSeerah != null) {
+            cardSeerah.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_books));
+        }
+        View cardDuas = view.findViewById(R.id.card_rec_duas);
+        if (cardDuas != null) {
+            cardDuas.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_duas));
+        }
+
         // M4: hijri today + daily content cards (cache-first, published records only).
         hijriText = view.findViewById(R.id.tv_hijri);
         dailyBlock = view.findViewById(R.id.daily_block);
@@ -105,25 +156,15 @@ public final class HomeFragment extends Fragment {
             }
             switch (state.kind) {
                 case LOADING:
-                    stateView.renderLoading();
-                    sections.setVisibility(View.GONE);
                     break;
                 case SUCCESS:
-                    sections.setVisibility(View.VISIBLE);
-                    stateView.setVisibility(View.GONE);
                     if (state.data != null) {
                         subjectAdapter.submit(state.data.subjects);
                         bookAdapter.submit(state.data.books);
                     }
                     break;
                 case EMPTY:
-                    stateView.renderEmpty();
-                    sections.setVisibility(View.GONE);
-                    break;
                 case ERROR:
-                    stateView.renderError(state.error);
-                    stateView.setOnRetry(() -> viewModel.load(false));
-                    sections.setVisibility(View.GONE);
                     break;
             }
         });

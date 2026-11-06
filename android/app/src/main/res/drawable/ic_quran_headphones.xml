@@ -1,0 +1,52 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="44dp"
+    android:height="52dp"
+    android:viewportWidth="44"
+    android:viewportHeight="52">
+
+    <!-- Headband Arc -->
+    <path
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M 9,28 C 7,12 37,12 35,28">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="9"
+                android:startY="12"
+                android:endX="35"
+                android:endY="28"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#0F4736"/>
+                <item android:offset="0.5" android:color="#D4AF37"/>
+                <item android:offset="1.0" android:color="#0F4736"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Left Ear Cup (angled 3D) -->
+    <path
+        android:fillColor="#0D3B2D"
+        android:pathData="M 4,24 C 4,22 9,22 10,24 L 12,38 C 12,41 7,41 5,38 Z" />
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="1.2"
+        android:pathData="M 4,24 C 4,22 9,22 10,24 L 12,38 C 12,41 7,41 5,38 Z" />
+
+    <!-- Right Ear Cup (front facing with circular gold trim and sound waves) -->
+    <!-- Outer gold ring -->
+    <path
+        android:fillColor="#0B3326"
+        android:pathData="M 33,34 A 10,10 0 1,1 33,33.9 Z" />
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="2"
+        android:pathData="M 33,34 A 10,10 0 1,1 33,33.9 Z" />
+
+    <!-- Gold soundwaves inside right earcup -->
+    <path
+        android:strokeColor="#F5DE93"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M 28,34 L 28,34 M 30,31 L 30,37 M 33,28 L 33,40 M 36,30 L 36,38 M 38,33 L 38,35" />
+</vector>

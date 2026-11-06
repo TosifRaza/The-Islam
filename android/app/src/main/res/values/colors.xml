@@ -50,4 +50,32 @@
     <!-- Reader placeholder palette (expanded in the reading module phase) -->
     <color name="reader_page">#F7F6F0</color>
     <color name="reader_text">#17211C</color>
+
+    <!-- Exact Design Tokens for Reference UI -->
+    <color name="bg_home_warm">#F7F5F0</color>
+    <color name="brand_green_dark">#0D3B2E</color>
+    <color name="brand_green_deep">#07261D</color>
+    <color name="brand_green_light">#10B981</color>
+    <color name="brand_gold_accent">#C59B4B</color>
+    <color name="brand_gold_soft">#DFD5C0</color>
+    <color name="card_border_subtle">#EAE5DB</color>
+    <color name="mint_ayah_card_bg">#E6F4EA</color>
+    <color name="mint_ayah_btn_bg">#D3ECDC</color>
+    <color name="text_headline_dark">#0F382C</color>
+    <color name="text_sub_olive">#4A5852</color>
+    <color name="notification_badge_red">#E53935</color>
+
+    <!-- Quran Screen Design Tokens -->
+    <color name="quran_gold_bright">#D4AF37</color>
+    <color name="quran_gold_trim">#C5A059</color>
+    <color name="quran_card_bg">#FCFAF5</color>
+    <color name="quran_card_border">#E8DFC9</color>
+    <color name="quran_divider_gold">#E2D7C2</color>
+    <color name="quran_green_dark">#0B3326</color>
+    <color name="quran_green_pill">#0D3B2D</color>
+    <color name="quran_action_bg">#FFFFFF</color>
+    <color name="quran_badge_bg">#0E3D2F</color>
+    <color name="quran_text_olive">#5C7367</color>
+    <color name="quran_text_title">#0C2F24</color>
+    <color name="quran_bg_page">#F6F2EA</color>
 </resources>

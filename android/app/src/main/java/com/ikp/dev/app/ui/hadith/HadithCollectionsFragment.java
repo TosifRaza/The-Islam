@@ -51,6 +51,10 @@ public class HadithCollectionsFragment extends Fragment {
     }
 
     private void load() {
+        if (getView() != null) {
+            View retry = getView().findViewById(R.id.btn_retry);
+            if (retry != null) retry.setVisibility(View.GONE);
+        }
         stateText.setText(R.string.state_loading);
         stateText.setVisibility(View.VISIBLE);
         ServiceLocator.executors().io.execute(() -> {
@@ -64,6 +68,10 @@ public class HadithCollectionsFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                     stateText.setVisibility(View.GONE);
                     recycler.setVisibility(View.VISIBLE);
+                    if (getView() != null) {
+                        View retry = getView().findViewById(R.id.btn_retry);
+                        if (retry != null) retry.setVisibility(View.GONE);
+                    }
                 } else {
                     stateText.setText(R.string.state_error_offline);
                     if (getView() != null) getView().findViewById(R.id.btn_retry).setVisibility(View.VISIBLE);

@@ -1,0 +1,48 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Calendar Body -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 6,9 C 6,7 7,6 9,6 L 27,6 C 29,6 30,7 30,9 L 30,29 C 30,31 29,32 27,32 L 9,32 C 7,32 6,31 6,29 Z" />
+    <!-- Header band -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 6.5,6.5 L 29.5,6.5 L 29.5,13 L 6.5,13 Z" />
+    <!-- Binders -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M 12,3 L 12,7 M 24,3 L 24,7" />
+    <!-- Calendar Grid Dots -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 11,17 A 1.2,1.2 0 1,0 11,19.4 A 1.2,1.2 0 1,0 11,17 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 18,17 A 1.2,1.2 0 1,0 18,19.4 A 1.2,1.2 0 1,0 18,17 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 25,17 A 1.2,1.2 0 1,0 25,19.4 A 1.2,1.2 0 1,0 25,17 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 11,22 A 1.2,1.2 0 1,0 11,24.4 A 1.2,1.2 0 1,0 11,22 Z" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 18,22 A 1.4,1.4 0 1,0 18,24.8 A 1.4,1.4 0 1,0 18,22 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 25,22 A 1.2,1.2 0 1,0 25,24.4 A 1.2,1.2 0 1,0 25,22 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 11,27 A 1.2,1.2 0 1,0 11,29.4 A 1.2,1.2 0 1,0 11,27 Z" />
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 18,27 A 1.2,1.2 0 1,0 18,29.4 A 1.2,1.2 0 1,0 18,27 Z" />
+</vector>

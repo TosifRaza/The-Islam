@@ -14,6 +14,14 @@ public final class CompassView extends View {
         super(context);
     }
 
+    public CompassView(Context context, @androidx.annotation.Nullable android.util.AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public CompassView(Context context, @androidx.annotation.Nullable android.util.AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
     public void setAngles(float azimuth, float bearing) {
         this.azimuth = azimuth;
         this.bearing = bearing;

@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Top Book -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 6,10 L 18,6 L 30,10 L 18,14 Z" />
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 6,10 L 6,15 L 18,19 L 30,15 L 30,10" />
+    <!-- Middle Book -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 6,18 L 6,22 L 18,26 L 30,22 L 30,18" />
+    <!-- Bottom Book -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 6,25 L 6,29 L 18,33 L 30,29 L 30,25" />
+</vector>

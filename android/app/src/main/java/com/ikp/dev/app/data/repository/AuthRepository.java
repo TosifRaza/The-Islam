@@ -70,11 +70,23 @@ public final class AuthRepository {
 
     /** POST /auth/login → persist session, update SessionManager. */
     public Outcome<Models.User> login(@NonNull String email, @NonNull String password, @Nullable String deviceName) {
+        // 1. Try Supabase cloud authentication first
+        Outcome<Models.User> sbResult = loginWithSupabase(email, password, deviceName);
+        if (sbResult != null && sbResult.isSuccess()) {
+            return sbResult;
+        }
+        if (sbResult != null && "AUTH-001".equals(sbResult.error != null ? sbResult.error.code : null)) {
+            return sbResult;
+        }
+
         try {
             Response<ApiResponse<Dtos.TokenResponseDto>> res = auth
                     .login(new Dtos.LoginRequestDto(email, password, deviceName))
                     .execute();
             if (!res.isSuccessful() || res.body() == null || res.body().data == null) {
+                if (sbResult != null && !sbResult.isSuccess()) {
+                    return sbResult;
+                }
                 return Outcome.fail(ErrorMapper.fromResponse(res));
             }
             Dtos.TokenResponseDto tokens = res.body().data;
@@ -92,21 +104,134 @@ public final class AuthRepository {
             }
             return Outcome.ok(user);
         } catch (IOException | RuntimeException e) {
+            if (sbResult != null && !sbResult.isSuccess()) {
+                return sbResult;
+            }
             return Outcome.fail(ErrorMapper.fromThrowable(e));
         }
     }
 
+    private Outcome<Models.User> loginWithSupabase(@NonNull String email, @NonNull String password, @Nullable String deviceName) {
+        try {
+            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+            if (sb == null) {
+                return null;
+            }
+            Response<com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse> res =
+                    sb.auth().signInWithPassword("password",
+                            new com.ikp.dev.app.core.supabase.SupabaseModels.AuthRequest(email, password)).execute();
+            if (res.isSuccessful() && res.body() != null && res.body().accessToken != null) {
+                com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse authResp = res.body();
+                String userId = authResp.user != null && authResp.user.id != null ? authResp.user.id : "sb-" + System.currentTimeMillis();
+                String userEmail = authResp.user != null && authResp.user.email != null ? authResp.user.email : email;
+                String displayName = userEmail.contains("@") ? userEmail.substring(0, userEmail.indexOf('@')) : userEmail;
+                if (authResp.user != null && authResp.user.userMetadata != null && authResp.user.userMetadata.containsKey("full_name")) {
+                    Object fn = authResp.user.userMetadata.get("full_name");
+                    if (fn != null && !fn.toString().isEmpty()) {
+                        displayName = fn.toString();
+                    }
+                }
+                List<String> roles = java.util.Collections.singletonList("USER");
+                List<String> permissions = java.util.Collections.emptyList();
+                String createdAt = authResp.user != null && authResp.user.createdAt != null ? authResp.user.createdAt : "";
+                Models.User user = new Models.User(userId, userEmail, displayName, "en", "active", roles, permissions, createdAt);
+
+                tokenStore.save(authResp.accessToken,
+                        authResp.refreshToken != null ? authResp.refreshToken : "",
+                        userId, displayName, userEmail, toJson(roles), deviceName);
+                sb.setSessionToken(authResp.accessToken);
+                sessionManager.onSignedIn(userId, displayName, userEmail);
+                cacheProfile(user);
+                return Outcome.ok(user);
+            } else if (!res.isSuccessful()) {
+                String errBody = "";
+                try {
+                    if (res.errorBody() != null) {
+                        errBody = res.errorBody().string();
+                    }
+                } catch (Exception ignored) {
+                }
+                android.util.Log.e("SUPABASE-AUTH", "Supabase login HTTP " + res.code() + ": " + errBody);
+                if (errBody.toLowerCase().contains("email not confirmed")) {
+                    return Outcome.fail(new ApiError("AUTH-EMAIL-NOT-CONFIRMED", "error_auth",
+                            "Email not confirmed yet. Check your inbox or confirm in Supabase Dashboard."));
+                }
+                if (res.code() == 400) {
+                    return Outcome.fail(new ApiError("AUTH-001", "error_credentials"));
+                }
+            }
+        } catch (Exception e) {
+            android.util.Log.w("SUPABASE-AUTH", "Supabase login error: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /** Register a new user in Supabase GoTrue Auth. */
+    public Outcome<Models.User> register(@NonNull String email, @NonNull String password, @Nullable String displayName) {
+        try {
+            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+            if (sb == null) {
+                return Outcome.fail(new ApiError(ApiError.UNKNOWN, "error_unavailable"));
+            }
+            java.util.Map<String, Object> data = new java.util.HashMap<>();
+            if (displayName != null && !displayName.trim().isEmpty()) {
+                data.put("full_name", displayName.trim());
+            }
+            Response<com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse> res =
+                    sb.auth().signUp(new com.ikp.dev.app.core.supabase.SupabaseModels.AuthRequest(email, password, data)).execute();
+            if (res.isSuccessful() && res.body() != null) {
+                com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse authResp = res.body();
+                String userId = authResp.user != null && authResp.user.id != null ? authResp.user.id : "sb-user";
+                String userEmail = authResp.user != null && authResp.user.email != null ? authResp.user.email : email;
+                String name = displayName != null && !displayName.trim().isEmpty() ? displayName.trim() :
+                        (userEmail.contains("@") ? userEmail.substring(0, userEmail.indexOf('@')) : userEmail);
+                List<String> roles = java.util.Collections.singletonList("USER");
+                Models.User user = new Models.User(userId, userEmail, name, "en", "active", roles,
+                        java.util.Collections.emptyList(),
+                        authResp.user != null && authResp.user.createdAt != null ? authResp.user.createdAt : "");
+
+                if (authResp.accessToken != null && !authResp.accessToken.isEmpty()) {
+                    tokenStore.save(authResp.accessToken,
+                            authResp.refreshToken != null ? authResp.refreshToken : "",
+                            userId, name, userEmail, toJson(roles), null);
+                    sb.setSessionToken(authResp.accessToken);
+                    sessionManager.onSignedIn(userId, name, userEmail);
+                    cacheProfile(user);
+                }
+                return Outcome.ok(user);
+            } else if (!res.isSuccessful()) {
+                if (res.code() == 422 || res.code() == 400) {
+                    return Outcome.fail(new ApiError("VAL-001", "error_validation"));
+                }
+                return Outcome.fail(new ApiError(ApiError.UNKNOWN, "error_server"));
+            }
+        } catch (Exception e) {
+            return Outcome.fail(ErrorMapper.fromThrowable(e));
+        }
+        return Outcome.fail(new ApiError(ApiError.UNKNOWN, "error_unavailable"));
+    }
+
     /** POST /auth/logout (best effort) + local credential clear. */
     public void logout() {
-        String refresh = tokenStore.refreshToken();
-        if (refresh != null) {
-            try {
-                auth.logout(new Dtos.RefreshRequestDto(refresh)).execute();
-            } catch (IOException | RuntimeException ignored) {
-                // Revocation is best-effort; local clear is mandatory below.
+        try {
+            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+            if (sb != null) {
+                sb.clearSession();
             }
+        } catch (Exception ignored) {
         }
+        String refresh = tokenStore.refreshToken();
+        tokenStore.clear();
         sessionManager.onSignedOut();
+        if (refresh != null) {
+            com.ikp.dev.app.di.ServiceLocator.executors().io.execute(() -> {
+                try {
+                    auth.logout(new Dtos.RefreshRequestDto(refresh)).execute();
+                } catch (Exception ignored) {
+                    // Revocation is best-effort
+                }
+            });
+        }
     }
 
     /**
@@ -124,6 +249,52 @@ public final class AuthRepository {
             sessionManager.onGuest();
             return RestoreResult.signedOut();
         }
+
+        // Try Supabase restore
+        try {
+            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+            if (sb != null && tokenStore.accessToken() != null) {
+                sb.setSessionToken(tokenStore.accessToken());
+                Response<com.ikp.dev.app.core.supabase.SupabaseModels.User> res = sb.auth().getUser().execute();
+                if (res.isSuccessful() && res.body() != null) {
+                    com.ikp.dev.app.core.supabase.SupabaseModels.User sbUser = res.body();
+                    String email = sbUser.email != null ? sbUser.email : tokenStore.email();
+                    String name = email != null && email.contains("@") ? email.substring(0, email.indexOf('@')) : tokenStore.displayName();
+                    if (sbUser.userMetadata != null && sbUser.userMetadata.containsKey("full_name")) {
+                        Object fn = sbUser.userMetadata.get("full_name");
+                        if (fn != null && !fn.toString().isEmpty()) {
+                            name = fn.toString();
+                        }
+                    }
+                    Models.User user = new Models.User(sbUser.id != null ? sbUser.id : tokenStore.userId(),
+                            email, name, "en", "active",
+                            java.util.Collections.singletonList("USER"), java.util.Collections.emptyList(), sbUser.createdAt);
+                    sessionManager.onSignedIn(user.userId, user.displayName, user.email);
+                    return RestoreResult.signedIn(user);
+                } else if (res.code() == 401) {
+                    String refresh = tokenStore.refreshToken();
+                    if (refresh != null && !refresh.isEmpty()) {
+                        java.util.Map<String, String> body = new java.util.HashMap<>();
+                        body.put("refresh_token", refresh);
+                        Response<com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse> refreshRes =
+                                sb.auth().refreshToken("refresh_token", body).execute();
+                        if (refreshRes.isSuccessful() && refreshRes.body() != null && refreshRes.body().accessToken != null) {
+                            tokenStore.updateTokens(refreshRes.body().accessToken,
+                                    refreshRes.body().refreshToken != null ? refreshRes.body().refreshToken : refresh);
+                            sb.setSessionToken(refreshRes.body().accessToken);
+                            return restore();
+                        }
+                    }
+                    sessionManager.onSessionExpired();
+                    return RestoreResult.signedOut();
+                }
+            }
+        } catch (IOException offline) {
+            sessionManager.onUnvalidatedSession();
+            return RestoreResult.offlineSavedSession();
+        } catch (RuntimeException ignored) {
+        }
+
         try {
             Response<ApiResponse<Dtos.MeResponseDto>> res = auth.me().execute();
             if (res.isSuccessful() && res.body() != null && res.body().data != null) {
@@ -163,6 +334,37 @@ public final class AuthRepository {
 
     /** GET /auth/me (synchronous). */
     public Outcome<Models.User> me() {
+        // Try Supabase me first
+        try {
+            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+            if (sb != null && tokenStore.hasSession()) {
+                String token = tokenStore.accessToken();
+                if (token != null && !token.isEmpty()) {
+                    sb.setSessionToken(token);
+                    Response<com.ikp.dev.app.core.supabase.SupabaseModels.User> res = sb.auth().getUser().execute();
+                    if (res.isSuccessful() && res.body() != null) {
+                        com.ikp.dev.app.core.supabase.SupabaseModels.User sbUser = res.body();
+                        String email = sbUser.email != null ? sbUser.email : tokenStore.email();
+                        String displayName = email != null && email.contains("@") ? email.substring(0, email.indexOf('@')) : tokenStore.displayName();
+                        if (sbUser.userMetadata != null && sbUser.userMetadata.containsKey("full_name")) {
+                            Object fn = sbUser.userMetadata.get("full_name");
+                            if (fn != null && !fn.toString().isEmpty()) {
+                                displayName = fn.toString();
+                            }
+                        }
+                        List<String> roles = java.util.Collections.singletonList("USER");
+                        Models.User user = new Models.User(sbUser.id != null ? sbUser.id : tokenStore.userId(),
+                                email, displayName, "en", "active", roles,
+                                java.util.Collections.emptyList(), sbUser.createdAt);
+                        sessionManager.onSignedIn(user.userId, user.displayName, user.email);
+                        cacheProfile(user);
+                        return Outcome.ok(user);
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
         try {
             Response<ApiResponse<Dtos.MeResponseDto>> res = auth.me().execute();
             if (res.isSuccessful() && res.body() != null && res.body().data != null) {
@@ -259,10 +461,13 @@ public final class AuthRepository {
             return 0L;
         }
         try {
-            return java.time.Instant.parse(iso).toEpochMilli();
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                return java.time.Instant.parse(iso).toEpochMilli();
+            }
         } catch (Exception e) {
             return 0L;
         }
+        return 0L;
     }
 
     private static String toJson(List<String> list) {

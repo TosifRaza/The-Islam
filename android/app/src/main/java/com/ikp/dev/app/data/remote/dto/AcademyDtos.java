@@ -23,15 +23,20 @@ public final class AcademyDtos {
     }
 
     public static final class CourseRowDto {
+        @SerializedName(value = "courseId", alternate = {"course_id", "id"})
         public String courseId;
         public String title;
         public String description;
         public String language;
         public String level;
         public SubjectRefDto subject;
+        @SerializedName(value = "estimatedHours", alternate = "estimated_hours")
         public Integer estimatedHours;
+        @SerializedName(value = "instructorDisplayName", alternate = {"instructor_display_name", "instructor_name"})
         public String instructorDisplayName;
+        @SerializedName(value = "lessonCount", alternate = "lesson_count")
         public Integer lessonCount;
+        @SerializedName(value = "publishedAt", alternate = "published_at")
         public String publishedAt;
     }
 

@@ -1,26 +1,654 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="?android:attr/colorBackground">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center_vertical">
-        <ImageButton android:id="@+id/btn_back" android:layout_width="@dimen/touch_target_min"
-            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_back" android:src="@drawable/ic_arrow_back" />
-        <TextView android:id="@+id/title" android:layout_width="0dp" android:layout_weight="1"
-            android:layout_height="wrap_content" android:text="@string/quran_title"
-            android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
-    </LinearLayout>
-    <EditText android:id="@+id/et_filter" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:layout_margin="@dimen/space_md"
-        android:hint="@string/quran_filter_hint" android:inputType="text"
-        android:importantForAutofill="no" />
-    <TextView android:id="@+id/state_text" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="@dimen/space_md"
-        android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
-    <Button android:id="@+id/btn_retry" style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/retry" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler"
-        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
-</LinearLayout>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F2EA">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Top Header with Mosque Silhouette, Night Sky, and Action Bar -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp">
+
+                <!-- Vector Header Background -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_quran_screen_top"
+                    android:contentDescription="@null" />
+
+                <!-- Top App Bar Navigation & Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="12dp">
+
+                    <!-- Hamburger / Back Button -->
+                    <ImageButton
+                        android:id="@+id/btn_back"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/bg_emerald_nav_box"
+                        android:src="@drawable/ic_menu_hamburger"
+                        android:padding="9dp"
+                        android:contentDescription="@string/cd_back" />
+
+                    <!-- Center Title with Gold Diamond Flourishes -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_gold_diamond_flourish"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:id="@+id/tv_header_quran"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="Quran"
+                            android:textColor="#F3DE97"
+                            android:textSize="26sp"
+                            android:fontFamily="serif"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="14dp"
+                            android:scaleX="-1"
+                            android:src="@drawable/ic_gold_diamond_flourish"
+                            android:contentDescription="@null" />
+                    </LinearLayout>
+
+                    <!-- Search Button -->
+                    <ImageButton
+                        android:id="@+id/btn_search_toggle"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/bg_emerald_nav_box"
+                        android:src="@drawable/ic_search"
+                        app:tint="#F3DE97"
+                        android:padding="9dp"
+                        android:contentDescription="Search" />
+                </LinearLayout>
+
+                <!-- Search Input Field (toggled or expandable) -->
+                <LinearLayout
+                    android:id="@+id/layout_search_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_search_bar_white"
+                    android:gravity="center_vertical"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_search"
+                        app:tint="#0D3B2D"
+                        android:contentDescription="@null" />
+
+                    <EditText
+                        android:id="@+id/et_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:background="@null"
+                        android:hint="Search Surah by name or number..."
+                        android:textColor="#0D3B2D"
+                        android:textColorHint="#7A8D84"
+                        android:textSize="14sp"
+                        android:inputType="text"
+                        android:importantForAutofill="no" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Dual Cards: Last Seen & Last Audio -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="false">
+
+                <!-- Last Seen Card -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_last_seen"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#FDFBF7"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_quran_dual_card">
+
+                        <!-- 3D Quran Graphic -->
+                        <ImageView
+                            android:layout_width="38dp"
+                            android:layout_height="46dp"
+                            android:src="@drawable/ic_quran_green_gold_book"
+                            android:contentDescription="@null" />
+
+                        <!-- Details -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="6dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="📖 Last Seen"
+                                android:textColor="#5A7B68"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_last_seen_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Al-Fatihah"
+                                android:textColor="#0C2F24"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp" />
+
+                            <TextView
+                                android:id="@+id/tv_last_seen_verses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="7 Verses"
+                                android:textColor="#7A9084"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!-- Chevron Arrow -->
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="#5A7B68"
+                            android:contentDescription="@null" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Last Audio Card -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_last_audio"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#FDFBF7"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_quran_dual_card">
+
+                        <!-- 3D Headphones Graphic -->
+                        <ImageView
+                            android:layout_width="38dp"
+                            android:layout_height="46dp"
+                            android:src="@drawable/ic_quran_headphones"
+                            android:contentDescription="@null" />
+
+                        <!-- Details -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="6dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🎧 Last Audio"
+                                android:textColor="#5A7B68"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_last_audio_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Al-Baqarah"
+                                android:textColor="#0C2F24"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp" />
+
+                            <TextView
+                                android:id="@+id/tv_last_audio_verses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="286 Verses"
+                                android:textColor="#7A9084"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!-- Circular Play Button -->
+                        <FrameLayout
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/bg_circle_play_emerald">
+
+                            <ImageView
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_play_triangle_white"
+                                android:contentDescription="@null" />
+                        </FrameLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Quick Action Buttons Row (Bookmarks, Notes, Do & Don't, FAQ) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="14dp"
+                android:baselineAligned="false">
+
+                <!-- 1. Bookmarks -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_action_bookmarks"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FDFBF7"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_quran_action_btn">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_action_bookmarks"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bookmarks"
+                            android:textColor="#0C2F24"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 2. Notes -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_action_notes"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FDFBF7"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_quran_action_btn">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_action_notes"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notes"
+                            android:textColor="#0C2F24"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 3. Do & Don't -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_action_dodont"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FDFBF7"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_quran_action_btn">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_action_dodont"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Do &amp; Don't"
+                            android:textColor="#0C2F24"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 4. FAQ -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_action_faq"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FDFBF7"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_quran_action_btn">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_action_faq"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FAQ"
+                            android:textColor="#0C2F24"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Decorative Gold Arch Crest -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_gold_arch_crest"
+                android:contentDescription="@null" />
+
+            <!-- Segmented Filter Tabs: By Surah | By Juz | Favourite -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical">
+
+                <!-- Tab 1: By Surah (Selected) -->
+                <LinearLayout
+                    android:id="@+id/tab_by_surah"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/bg_tab_surah_selected"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iv_tab_surah_icon"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_tab_mosque"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/tv_tab_surah_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="By Surah"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Tab 2: By Juz -->
+                <LinearLayout
+                    android:id="@+id/tab_by_juz"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.95"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/bg_tab_unselected"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iv_tab_juz_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_tab_juz"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/tv_tab_juz_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="By Juz"
+                        android:textColor="#0D3B2D"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Tab 3: Favourite -->
+                <LinearLayout
+                    android:id="@+id/tab_by_favourite"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/bg_tab_unselected"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iv_tab_favourite_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_heart_outline"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/tv_tab_favourite_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="Favourite"
+                        android:textColor="#0D3B2D"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- State message / Loading indicator -->
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:indeterminateTint="#0D3B2D"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/state_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textColor="#5A7B68"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_retry"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/retry"
+                android:textColor="#0D3B2D"
+                android:visibility="gone" />
+
+            <!-- Surah Cards List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp" />
+
+            <!-- View All 114 Surahs Banner -->
+            <FrameLayout
+                android:id="@+id/btn_view_all_surahs"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="28dp"
+                android:background="@drawable/bg_emerald_banner_arched"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View All 114 Surahs"
+                        android:textColor="#F3DE97"
+                        android:textSize="15sp"
+                        android:fontFamily="serif"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#F3DE97"
+                        android:contentDescription="@null" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

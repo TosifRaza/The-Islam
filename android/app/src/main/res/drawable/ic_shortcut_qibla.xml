@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Outer Ring -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="2.5"
+        android:pathData="M 18,5 A 13,13 0 1,0 18,31 A 13,13 0 1,0 18,5 Z" />
+    <!-- Ticks -->
+    <path
+        android:strokeColor="#0D3B2E"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M 18,5 L 18,8 M 18,28 L 18,31 M 5,18 L 8,18 M 28,18 L 31,18" />
+    <!-- Directional Needle pointing north-east / Kaaba -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 18,18 L 24,10 L 19,16 Z" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 18,18 L 12,26 L 17,20 Z" />
+    <!-- Center Pivot Pin -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 18,16.5 A 1.5,1.5 0 1,0 18,19.5 A 1.5,1.5 0 1,0 18,16.5 Z" />
+</vector>

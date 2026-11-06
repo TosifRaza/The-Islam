@@ -60,7 +60,26 @@ public final class AcademyRepository {
     // ----- academy -----
 
     public Outcome<List<AcademyDtos.CourseRowDto>> courses(int page, int size) {
+        // 1. Try Supabase cloud first
+        Outcome<List<AcademyDtos.CourseRowDto>> sbFallback = fetchCoursesFromSupabase();
+        if (sbFallback != null && sbFallback.isSuccess()) {
+            return sbFallback;
+        }
         return run(api.courses(page, size));
+    }
+
+    private Outcome<List<AcademyDtos.CourseRowDto>> fetchCoursesFromSupabase() {
+        try {
+            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+            if (sb != null) {
+                Response<List<AcademyDtos.CourseRowDto>> res = sb.db().getCourses().execute();
+                if (res.isSuccessful() && res.body() != null && !res.body().isEmpty()) {
+                    return Outcome.ok(res.body());
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        return null;
     }
 
     public Outcome<AcademyDtos.CourseDetailDto> course(String courseId) {

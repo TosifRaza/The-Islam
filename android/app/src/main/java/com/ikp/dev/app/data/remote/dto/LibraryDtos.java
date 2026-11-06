@@ -13,7 +13,7 @@ public final class LibraryDtos {
     /** GET /subjects row. Stable public id = slug (CAT-*); position 06 is
      *  never returned by the backend (OD-03 enforced server-side). */
     public static final class SubjectDto {
-        @SerializedName(value = "subjectId", alternate = "subject_id")
+        @SerializedName(value = "subjectId", alternate = {"subject_id", "id"})
         public String subjectId;
         public String slug;
         public String name;
@@ -22,6 +22,7 @@ public final class LibraryDtos {
         public String description;
         @SerializedName(value = "imageUrl", alternate = "image_url")
         public String imageUrl;
+        @SerializedName(value = "position", alternate = {"sort_order", "sortOrder"})
         public Integer position;
         public String status;
         @SerializedName(value = "updatedAt", alternate = "updated_at")

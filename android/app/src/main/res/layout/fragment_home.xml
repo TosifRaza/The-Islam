@@ -3,284 +3,966 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_scroll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_home_warm"
+    android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
 
-        <!-- Emerald header band -->
-        <LinearLayout
-            android:id="@+id/home_header"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/emerald_deep"
-            android:orientation="vertical"
-            android:padding="@dimen/space_lg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tv_greeting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/greeting_salam"
-                android:textAppearance="@style/TextAppearance.IKP.HeadlineMedium"
-                android:textColor="@color/ivory" />
-
-            <TextView
-                android:id="@+id/tv_hijri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_xxs"
-                android:text="@string/home_hijri_unavailable"
-                android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
-                android:textColor="@color/gold" />
-
-            <!-- Search entry -->
-            <LinearLayout
-                android:id="@+id/search_entry"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/touch_target_min"
-                android:layout_marginTop="@dimen/space_md"
-                android:background="@drawable/bg_search_field"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/space_md"
-                android:paddingEnd="@dimen/space_md"
-                android:contentDescription="@string/cd_search">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_search"
-                    android:importantForAccessibility="no" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/space_sm"
-                    android:text="@string/home_search_hint"
-                    android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
-                    android:textColor="@color/text_secondary" />
-            </LinearLayout>
-
-            <!-- Quick shortcuts: prayer / qibla / tasbih (M4 destinations) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_md"
-                android:orientation="horizontal">
-
-                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_prayer">
-                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_star" android:importantForAccessibility="no" />
-                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_prayer" />
-                </LinearLayout>
-
-                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_qibla">
-                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_star" android:importantForAccessibility="no" />
-                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_qibla" />
-                </LinearLayout>
-
-                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_tasbih">
-                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_star" android:importantForAccessibility="no" />
-                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_tasbih" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_xs"
-                android:orientation="horizontal">
-
-                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_duas">
-                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_book" android:importantForAccessibility="no" />
-                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_duas" />
-                </LinearLayout>
-
-                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_quran">
-                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_book" android:importantForAccessibility="no" />
-                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_quran" />
-                </LinearLayout>
-
-                <LinearLayout style="@style/Widget.IKP.Shortcut" android:id="@+id/shortcut_hadith">
-                    <ImageView style="@style/ShortcutIcon" android:src="@drawable/ic_book" android:importantForAccessibility="no" />
-                    <TextView style="@style/ShortcutLabel" android:text="@string/shortcut_hadith" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- M4: daily content (published records only; hidden until loaded) -->
-            <LinearLayout
-                android:id="@+id/daily_block"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_md"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_daily_ayah"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
-                    android:textColor="@color/ivory" />
-
-                <TextView
-                    android:id="@+id/tv_daily_ayah_attr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
-                    android:textColor="@color/gold" />
-
-                <TextView
-                    android:id="@+id/tv_daily_hadith"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_sm"
-                    android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
-                    android:textColor="@color/ivory" />
-
-                <TextView
-                    android:id="@+id/tv_daily_hadith_attr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
-                    android:textColor="@color/gold" />
-
-                <TextView
-                    android:id="@+id/tv_daily_reminder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_sm"
-                    android:textAppearance="@style/TextAppearance.IKP.BodySmall"
-                    android:textColor="@color/text_secondary" />
-
-                <TextView
-                    android:id="@+id/tv_daily_event"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_xs"
-                    android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
-                    android:textColor="@color/gold" />
-            </LinearLayout>
-        </LinearLayout>
-
+        <!-- 1. Top Section: Logo, Notifications, Profile, Mosque Graphic & Greeting -->
         <FrameLayout
-            android:id="@+id/home_content"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_header">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="6dp">
 
-            <com.ikp.dev.app.ui.common.StateView
-                android:id="@+id/home_state"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/space_lg" />
+            <!-- Mosque Scenic Background Illustration on the Top Right -->
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="140dp"
+                android:layout_gravity="end|top"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/bg_mosque_header"
+                android:importantForAccessibility="no" />
 
+            <!-- Header Content Stack -->
             <LinearLayout
-                android:id="@+id/home_sections"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/space_lg"
-                android:visibility="gone">
+                android:orientation="vertical">
 
-                <!-- Today: Ayah / Hadith / Reminder (M4 content — honest states) -->
-                <TextView style="@style/SectionHeader"
-                    android:text="@string/home_section_today" />
-
-                <com.google.android.material.card.MaterialCardView style="@style/Widget.IKP.Card">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/home_ayah_of_day"
-                            android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
-                            android:textColor="@color/emerald_deep" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/space_xs"
-                            android:text="@string/home_content_unavailable"
-                            android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
-                        <View style="@style/Divider" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/home_hadith_of_day"
-                            android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
-                            android:textColor="@color/emerald_deep" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/space_xs"
-                            android:text="@string/home_content_unavailable"
-                            android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Continue learning -->
-                <TextView style="@style/SectionHeader"
-                    android:text="@string/home_continue_learning" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_continue"
-                    style="@style/Widget.IKP.Card">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_continue_empty"
-                        android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Popular subjects (real API) -->
+                <!-- Top App Bar: Brand Logo + Notification & Profile Buttons -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView style="@style/SectionHeaderFlexible"
-                        android:text="@string/home_popular_subjects" />
-                    <Button
-                        android:id="@+id/btn_subjects_all"
-                        style="@style/Widget.IKP.Button.Text"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Brand Logo + Name -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_logo_mark"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Islamic"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:fontFamily="serif"
+                                android:textColor="#0D3B2E"
+                                android:includeFontPadding="false" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Knowledge"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:fontFamily="serif"
+                                android:textColor="#0D3B2E"
+                                android:includeFontPadding="false" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Platform"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:fontFamily="serif"
+                                android:textColor="#C59B4B"
+                                android:includeFontPadding="false" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Circular Action Buttons: Notification Bell + Profile -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/action_view_all" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:id="@+id/btn_notifications"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_circle_icon_button"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_notification_bell"
+                                android:importantForAccessibility="no" />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/btn_profile_header"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/bg_circle_icon_button"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_profile_avatar"
+                                android:importantForAccessibility="no" />
+                        </FrameLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_subjects"
-                    android:layout_width="match_parent"
+                <!-- Greeting Section -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:clipToPadding="false"
-                    android:paddingStart="@dimen/space_md"
-                    android:paddingEnd="@dimen/space_md"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    android:layout_marginTop="22dp"
+                    android:orientation="vertical">
 
-                <!-- Recommended books (real API) -->
-                <TextView style="@style/SectionHeader"
-                    android:text="@string/home_recommended_books" />
+                    <TextView
+                        android:id="@+id/tv_greeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Assalamu Alaikum"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:fontFamily="serif"
+                        android:textColor="#0D3B2E" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_books"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:clipToPadding="false"
-                    android:paddingStart="@dimen/space_md"
-                    android:paddingEnd="@dimen/space_md"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    <TextView
+                        android:id="@+id/tv_sub_greeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="May Allah accept our good deeds"
+                        android:textSize="13sp"
+                        android:textColor="#4A5852" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="14dp"
+                        android:layout_marginTop="6dp"
+                        android:src="@drawable/ic_arabesque_divider"
+                        android:importantForAccessibility="no" />
+                </LinearLayout>
             </LinearLayout>
         </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 2. Search Bar -->
+        <LinearLayout
+            android:id="@+id/search_entry"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_search_bar_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="6dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_search"
+                app:tint="#57665E"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:text="Search Quran, Hadith, Duas..."
+                android:textSize="14sp"
+                android:textColor="#8A968F" />
+
+            <FrameLayout
+                android:id="@+id/btn_search_filter"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_green_filter_btn">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_filter_sliders"
+                    android:importantForAccessibility="no" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- 3. 8-Grid Feature Shortcuts Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeWidth="1dp"
+            app:strokeColor="#EAE5DB">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <!-- Row 1: Quran, Hadith, Duas, Prayer Times -->
+                <TableRow>
+                    <!-- Quran -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_quran"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_quran" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Quran"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+
+                    <!-- Hadith -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_hadith"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_hadith" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Hadith"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+
+                    <!-- Duas -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_duas"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_duas" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Duas"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+
+                    <!-- Prayer Times -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_prayer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_prayer" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Prayer\nTimes"
+                            android:gravity="center"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+                </TableRow>
+
+                <!-- Thin Horizontal Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="#F0ECE4" />
+
+                <!-- Row 2: Qibla, Tasbih, Hijri Calendar, Islamic Books -->
+                <TableRow>
+                    <!-- Qibla -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_qibla"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_qibla" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Qibla"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+
+                    <!-- Tasbih -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_tasbih"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_tasbih" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Tasbih"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+
+                    <!-- Hijri Calendar -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_calendar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_calendar" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Hijri\nCalendar"
+                            android:gravity="center"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+
+                    <!-- Islamic Books -->
+                    <LinearLayout
+                        android:id="@+id/shortcut_books"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shortcut_books" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Islamic\nBooks"
+                            android:gravity="center"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#17211C" />
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 4. "Continue Reading" Hero Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_continue_reading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="#0A3628"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_continue_reading"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <!-- Left: 3D Quran on Rehal -->
+                <ImageView
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:src="@drawable/ic_quran_rehal"
+                    android:importantForAccessibility="no" />
+
+                <!-- Vertical subtle line -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="#33C59B4B" />
+
+                <!-- Center: Surah & Progress -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Continue Reading"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="serif"
+                        android:textColor="#C59B4B" />
+
+                    <TextView
+                        android:id="@+id/tv_continue_surah"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Surah Al-Baqarah"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tv_continue_ayah"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ayat 45"
+                        android:textSize="12sp"
+                        android:textColor="#DFD8CA" />
+
+                    <!-- Progress Bar Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="6dp"
+                            android:layout_weight="1"
+                            android:progress="65"
+                            android:max="100"
+                            android:progressTint="#10B981"
+                            android:progressBackgroundTint="#1D4E3E" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="65%"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Right: Arrow Button -->
+                <FrameLayout
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_circle_arrow_green">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#FFFFFF"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 5. "Today's Ayah" Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_todays_ayah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#E6F4EA"
+            app:strokeWidth="1dp"
+            app:strokeColor="#D6EBDC">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp">
+
+                <!-- Mosque Silhouette -->
+                <ImageView
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:src="@drawable/ic_mosque_silhouette"
+                    android:importantForAccessibility="no" />
+
+                <!-- Content -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Today's Ayah"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:fontFamily="serif"
+                        android:textColor="#0D3B2E" />
+
+                    <TextView
+                        android:id="@+id/tv_daily_ayah"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="“And He is with you wherever you are…”"
+                        android:textSize="12sp"
+                        android:fontFamily="serif"
+                        android:textStyle="italic"
+                        android:textColor="#17382B" />
+
+                    <TextView
+                        android:id="@+id/tv_daily_ayah_attr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:text="— Qur’an 57:4"
+                        android:textSize="11sp"
+                        android:textColor="#4A6B5B" />
+                </LinearLayout>
+
+                <!-- Vertical divider -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#BEDBC9" />
+
+                <!-- Read More Button -->
+                <TextView
+                    android:id="@+id/btn_ayah_read_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_mint_button"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Read More →"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D3B2E"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 6. "Recommended for You" Section Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Recommended for You"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:textColor="#0D3B2E" />
+
+            <TextView
+                android:id="@+id/btn_recommended_view_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All →"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#0D3B2E"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- Horizontal Scroll of 3 Recommended Cards -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clipToPadding="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Card 1: Tafsir Ibn Kathir -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_rec_tafsir"
+                    android:layout_width="190dp"
+                    android:layout_height="115dp"
+                    android:layout_marginEnd="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#F3EFE9"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E6E0D5"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="62dp"
+                            android:src="@drawable/ic_book_tafsir_cover"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tafsir\nIbn Kathir"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="#17211C"
+                                android:lineSpacingExtra="1dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_pill_dark_green"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:text="Read"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="#FFFFFF" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Card 2: Seerah of Prophet -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_rec_seerah"
+                    android:layout_width="190dp"
+                    android:layout_height="115dp"
+                    android:layout_marginEnd="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#162942"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_card_seerah">
+
+                        <!-- Mosque silhouette at bottom left -->
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="bottom|start"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="4dp"
+                            android:alpha="0.4"
+                            android:src="@drawable/ic_mosque_silhouette"
+                            app:tint="#88A8C8"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Seerah\nof Prophet ﷺ"
+                                android:gravity="center"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="#FFFFFF"
+                                android:lineSpacingExtra="1dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_pill_emerald"
+                                android:paddingStart="14dp"
+                                android:paddingEnd="14dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:text="Explore"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="#FFFFFF" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Card 3: Essential Duas -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_rec_duas"
+                    android:layout_width="190dp"
+                    android:layout_height="115dp"
+                    android:layout_marginEnd="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#54381C"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_card_duas">
+
+                        <!-- Praying hands silhouette at bottom left -->
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:layout_gravity="bottom|start"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="4dp"
+                            android:alpha="0.35"
+                            android:src="@drawable/ic_shortcut_duas"
+                            app:tint="#FFFFFF"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Essential\nDuas"
+                                android:gravity="center"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="#FFFFFF"
+                                android:lineSpacingExtra="1dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_pill_emerald"
+                                android:paddingStart="14dp"
+                                android:paddingEnd="14dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:text="Read"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="#FFFFFF" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Hidden Compatibility Views (to ensure HomeFragment and adapters continue operating seamlessly) -->
+        <FrameLayout
+            android:id="@+id/home_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone">
+            <com.ikp.dev.app.ui.common.StateView
+                android:id="@+id/home_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/home_sections"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_subjects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_books"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btn_subjects_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_hijri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/daily_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_daily_hadith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_daily_hadith_attr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_daily_reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_daily_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

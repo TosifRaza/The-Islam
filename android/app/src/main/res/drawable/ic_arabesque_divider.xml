@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="16dp"
+    android:viewportWidth="120"
+    android:viewportHeight="16">
+    <!-- Left Line -->
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1"
+        android:pathData="M 10,8 L 48,8" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 48,8 A 1.5,1.5 0 1,0 48,11 A 1.5,1.5 0 1,0 48,8 Z" />
+    <!-- Center 8-pointed star / diamond knot -->
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.2"
+        android:fillColor="#15C59B4B"
+        android:pathData="M 60,2 L 66,8 L 60,14 L 54,8 Z" />
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.2"
+        android:fillColor="#15C59B4B"
+        android:pathData="M 56,4 L 64,4 L 64,12 L 56,12 Z" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 60,7 A 1,1 0 1,0 60,9 A 1,1 0 1,0 60,7 Z" />
+    <!-- Right Line -->
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 72,8 A 1.5,1.5 0 1,0 72,11 A 1.5,1.5 0 1,0 72,8 Z" />
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1"
+        android:pathData="M 72,8 L 110,8" />
+</vector>

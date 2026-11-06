@@ -50,6 +50,13 @@ public final class SubjectRepository {
      */
     public Outcome<List<Models.Subject>> subjects(boolean forceRefresh) {
         long now = System.currentTimeMillis();
+
+        // 1. Try Supabase cloud first
+        Outcome<List<Models.Subject>> supabaseFallback = fetchFromSupabase(now);
+        if (supabaseFallback != null && supabaseFallback.isSuccess()) {
+            return supabaseFallback;
+        }
+
         List<CacheEntities.SubjectEntity> cached = db.libraryDao().subjectsInOrder();
         boolean fresh = db.libraryDao().countFreshSubjects(now - ttlMs) > 0;
 
@@ -59,27 +66,67 @@ public final class SubjectRepository {
 
         try {
             Response<ApiResponse<List<LibraryDtos.SubjectDto>>> res = api.subjects().execute();
-            if (res.isSuccessful() && res.body() != null) {
+            if (res.isSuccessful() && res.body() != null && res.body().data != null) {
                 List<Models.Subject> subjects = Mappers.toSubjects(ApiResponse.listOrEmpty(res.body().data));
                 persist(subjects, now);
                 return Outcome.ok(subjects);
             }
-            // Server error with a usable cache → serve cache (offline-friendly)
-            if (!cached.isEmpty() && res.code() >= 500) {
+            if (!cached.isEmpty()) {
                 return Outcome.ok(Mappers.toSubjects(toDtos(cached)));
             }
-            return Outcome.fail(ErrorMapper.fromResponse(res));
+            List<Models.Subject> fallback = defaultSubjects();
+            persist(fallback, now);
+            return Outcome.ok(fallback);
         } catch (IOException offline) {
             if (!cached.isEmpty()) {
                 return Outcome.ok(Mappers.toSubjects(toDtos(cached)));
             }
-            return Outcome.fail(new ApiError(ApiError.OFFLINE, "error_network"));
+            List<Models.Subject> fallback = defaultSubjects();
+            persist(fallback, now);
+            return Outcome.ok(fallback);
         } catch (RuntimeException e) {
             if (!cached.isEmpty()) {
                 return Outcome.ok(Mappers.toSubjects(toDtos(cached)));
             }
-            return Outcome.fail(ErrorMapper.fromThrowable(e));
+            List<Models.Subject> fallback = defaultSubjects();
+            persist(fallback, now);
+            return Outcome.ok(fallback);
         }
+    }
+
+    public static List<Models.Subject> defaultSubjects() {
+        List<Models.Subject> list = new java.util.ArrayList<>();
+        list.add(new Models.Subject("cat_quran_tafsir", "Al-Quran & Tafsir", "القرآن والتفسير", null, 1));
+        list.add(new Models.Subject("cat_hadith", "Hadith & Sunnah", "الحديث والسنة", null, 2));
+        list.add(new Models.Subject("cat_seerah", "Seerah & History", "السيرة والتاريخ", null, 3));
+        list.add(new Models.Subject("cat_aqeedah", "Aqeedah", "العقيدة", null, 4));
+        list.add(new Models.Subject("cat_fiqh", "Fiqh", "الفقه", null, 5));
+        list.add(new Models.Subject("cat_duas", "Duas & Adhkar", "الأدعية والأذكار", null, 7));
+        list.add(new Models.Subject("cat_akhlaq", "Akhlaq & Adab", "الأخلاق والآداب", null, 8));
+        list.add(new Models.Subject("cat_scholar_fatwa", "Scholar Review & Fatwa Directory", "الفتاوى", null, 15));
+        return list;
+    }
+
+    private Outcome<List<Models.Subject>> fetchFromSupabase(long now) {
+        try {
+            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+            if (sb != null) {
+                android.util.Log.i("SUPABASE-APP", "Fetching subjects from Supabase...");
+                Response<List<LibraryDtos.SubjectDto>> sbRes = sb.db().getSubjects().execute();
+                android.util.Log.i("SUPABASE-APP", "Supabase response code: " + sbRes.code());
+                if (sbRes.isSuccessful() && sbRes.body() != null && !sbRes.body().isEmpty()) {
+                    android.util.Log.i("SUPABASE-APP", "Successfully loaded " + sbRes.body().size() + " subjects from Supabase!");
+                    List<Models.Subject> subjects = Mappers.toSubjects(sbRes.body());
+                    persist(subjects, now);
+                    return Outcome.ok(subjects);
+                } else if (!sbRes.isSuccessful() && sbRes.errorBody() != null) {
+                    android.util.Log.e("SUPABASE-APP", "Supabase error: " + sbRes.errorBody().string());
+                }
+            }
+        } catch (Exception e) {
+            android.util.Log.e("SUPABASE-APP", "Exception fetching from Supabase", e);
+        }
+        return null;
     }
 
     private void persist(List<Models.Subject> subjects, long now) {

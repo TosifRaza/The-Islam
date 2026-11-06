@@ -58,6 +58,12 @@ public final class LoginFragment extends Fragment {
 
         btnLogin.setOnClickListener(v -> submit());
 
+        View btnGuest = view.findViewById(R.id.btn_guest);
+        if (btnGuest != null) {
+            btnGuest.setOnClickListener(v ->
+                    NavHostFragment.findNavController(this).navigate(R.id.action_login_to_home));
+        }
+
         view.findViewById(R.id.btn_forgot).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_login_to_forgot));
         view.findViewById(R.id.btn_go_register).setOnClickListener(v ->
@@ -109,9 +115,13 @@ public final class LoginFragment extends Fragment {
             case ERROR:
                 btnLogin.setEnabled(true);
                 btnLogin.setText(R.string.login_button);
-                int resId = MessageKeys.resIdForKey(
-                        state.error == null ? "error_unknown" : state.error.messageKey);
-                loginError.setText(resId);
+                if (state.error != null && state.error.rawDetail != null && !state.error.rawDetail.isEmpty()) {
+                    loginError.setText(state.error.rawDetail);
+                } else {
+                    int resId = MessageKeys.resIdForKey(
+                            state.error == null ? "error_unknown" : state.error.messageKey);
+                    loginError.setText(resId);
+                }
                 loginError.setVisibility(View.VISIBLE);
                 break;
             default:

@@ -49,17 +49,25 @@ public class HadithBooksFragment extends Fragment {
         title = v.findViewById(R.id.title);
         title.setText(collectionName);
         stateText = v.findViewById(R.id.state_text);
+        View retryBtn = v.findViewById(R.id.btn_retry);
+        if (retryBtn != null) retryBtn.setVisibility(View.GONE);
         RecyclerView recycler = v.findViewById(R.id.recycler);
         adapter = new BookAdapter();
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.setAdapter(adapter);
         v.findViewById(R.id.btn_back).setOnClickListener(x ->
                 NavHostFragment.findNavController(this).popBackStack());
-        v.findViewById(R.id.btn_retry).setOnClickListener(x -> load());
+        if (retryBtn != null) {
+            retryBtn.setOnClickListener(x -> load());
+        }
         load();
     }
 
     private void load() {
+        if (getView() != null) {
+            View retry = getView().findViewById(R.id.btn_retry);
+            if (retry != null) retry.setVisibility(View.GONE);
+        }
         stateText.setText(R.string.state_loading);
         stateText.setVisibility(View.VISIBLE);
         ServiceLocator.executors().io.execute(() -> {
@@ -72,9 +80,16 @@ public class HadithBooksFragment extends Fragment {
                     rows.addAll(r.value);
                     adapter.notifyDataSetChanged();
                     stateText.setVisibility(View.GONE);
+                    if (getView() != null) {
+                        View retry = getView().findViewById(R.id.btn_retry);
+                        if (retry != null) retry.setVisibility(View.GONE);
+                    }
                 } else {
                     stateText.setText(R.string.state_error_offline);
-                    if (getView() != null) getView().findViewById(R.id.btn_retry).setVisibility(View.VISIBLE);
+                    if (getView() != null) {
+                        View retry = getView().findViewById(R.id.btn_retry);
+                        if (retry != null) retry.setVisibility(View.VISIBLE);
+                    }
                 }
             });
         });

@@ -1,0 +1,35 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="44dp"
+    android:height="62dp"
+    android:viewportWidth="44"
+    android:viewportHeight="62">
+    <!-- Book Spine 3D shadow -->
+    <path
+        android:fillColor="#151A18"
+        android:pathData="M 4,2 L 8,2 L 8,60 L 4,60 Z" />
+    <!-- Book Front Cover (Dark Green / Black Leather) -->
+    <path
+        android:fillColor="#0D241C"
+        android:pathData="M 8,2 L 40,2 C 41,2 42,3 42,4 L 42,58 C 42,59 41,60 40,60 L 8,60 Z" />
+    <!-- Gold Embossed Border -->
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.2"
+        android:pathData="M 12,6 L 38,6 L 38,56 L 12,56 Z" />
+    <!-- Inner Gold Frame -->
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="0.8"
+        android:pathData="M 14,8 L 36,8 L 36,54 L 14,54 Z" />
+    <!-- Center Arabesque Medallion -->
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 25,24 C 21,24 19,27 19,31 C 19,35 21,38 25,38 C 29,38 31,35 31,31 C 31,27 29,24 25,24 Z" />
+    <path
+        android:fillColor="#0D241C"
+        android:pathData="M 25,26 C 23,26 21,28 21,31 C 21,34 23,36 25,36 C 27,36 29,34 29,31 C 29,28 27,26 25,26 Z" />
+    <!-- Arabic Calligraphy lines -->
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 23,29 L 27,29 L 27,33 L 23,33 Z" />
+</vector>
