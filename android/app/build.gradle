@@ -16,8 +16,9 @@ android {
         versionCode 10
         versionName "0.5.1"
 
-        // Local / Dev Backend URL for Android Emulator (10.0.2.2 points to host localhost:8080)
-        buildConfigField "String", "BASE_URL", "\"${project.findProperty('IKP_BASE_URL') ?: 'http://10.0.2.2:8080/'}\""
+        // Use the live API by default so CI-built APKs work on physical devices.
+        // Local development can still override this with -PIKP_BASE_URL=http://10.0.2.2:8080/.
+        buildConfigField "String", "BASE_URL", "\"${project.findProperty('IKP_BASE_URL') ?: 'https://the-islam.onrender.com/'}\""
 
         // Supabase configuration
         buildConfigField "String", "SUPABASE_URL", "\"${project.findProperty('SUPABASE_URL') ?: 'https://svfttjrtnbzogeouovql.supabase.co/'}\""
