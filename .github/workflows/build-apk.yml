@@ -1,0 +1,72 @@
+name: Build and Release Android APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build APK & Publish Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Make Gradlew Executable
+        run: chmod +x android/gradlew
+
+      - name: Build Android APK
+        run: |
+          cd android
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Prepare APK Asset
+        run: |
+          mkdir -p release-assets
+          cp android/app/build/outputs/apk/debug/app-debug.apk release-assets/The-Islam.apk
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: The-Islam-APK
+          path: release-assets/The-Islam.apk
+          if-no-files-found: error
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: latest
+          name: "The Islam v0.5.1"
+          body: |
+            ### 🌙 The Islam Android Release (v0.5.1)
+            
+            **What's New in this update:**
+            - 🕌 **Redesigned Profile Screen**: Mosque archway banner with hanging lanterns, golden avatar medallion, and Member badge.
+            - 📊 **Learning Stats**: Track courses, bookmarks, downloads, and daily study streak.
+            - 📚 **Two-Column Navigation**: My Learning (*My Courses, Progress, Certificates, Recitation Practice*) and Saved & Library (*Bookmarks, Downloads, Flashcards, Notes, History*).
+            - 🎓 **Upgraded Academy & Flashcards**: Filter by category, debounced search, chapters & lessons viewer, and flip-card practice decks.
+            - ⚡ **Auto-Update & Enhancements**: Fresh design, smoother responsiveness, and bug fixes.
+            
+            **Direct Download:**
+            Download `The-Islam.apk` below and install it directly on your Android phone.
+          draft: false
+          prerelease: false
+          files: release-assets/The-Islam.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/app")
 public class AppVersionController {
 
-    @Value("${app.version.latest-code:9}")
+    @Value("${app.version.latest-code:10}")
     private int latestVersionCode;
 
-    @Value("${app.version.latest-name:0.5.0-m5-fix6}")
+    @Value("${app.version.latest-name:0.5.1}")
     private String latestVersionName;
 
     @Value("${app.version.min-supported-code:1}")
