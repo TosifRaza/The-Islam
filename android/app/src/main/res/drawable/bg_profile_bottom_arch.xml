@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="48dp"
+    android:viewportWidth="360"
+    android:viewportHeight="48">
+    <!-- Gold accent rim -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="1.5"
+        android:pathData="M 0,46 C 70,44 140,24 180,6 C 220,24 290,44 360,46" />
+    <!-- Islamic pointed arch base -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 0,48 L 0,46 C 70,44 140,24 180,6 C 220,24 290,44 360,46 L 360,48 Z" />
+</vector>

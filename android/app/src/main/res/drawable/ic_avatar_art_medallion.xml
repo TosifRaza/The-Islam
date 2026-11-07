@@ -1,0 +1,52 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+    <!-- Circular Background with Warm Sky Gradient -->
+    <path
+        android:pathData="M 36,0 A 36,36 0 1,1 35.9,0 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:angle="270"
+                android:startColor="#FDF3DD"
+                android:centerColor="#F5DFB3"
+                android:endColor="#C59B4B"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+    <!-- Soft Sunlight Glow -->
+    <path
+        android:fillColor="#FFFDF7"
+        android:pathData="M 36,10 A 18,18 0 1,1 35.9,10 Z" />
+    <!-- Mosque Minarets and Dome in Emerald -->
+    <!-- Left Minaret -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 16,36 L 18,26 L 20,36 L 19.5,60 L 16.5,60 Z" />
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 18,22 L 18,26" />
+    <!-- Right Minaret -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 52,36 L 54,26 L 56,36 L 55.5,60 L 52.5,60 Z" />
+    <!-- Center Green Dome (Masjid an-Nabawi style) -->
+    <path
+        android:fillColor="#0D3B2E"
+        android:pathData="M 26,48 C 26,34 36,28 36,28 C 36,28 46,34 46,48 L 46,64 L 26,64 Z" />
+    <!-- Crescent on Dome -->
+    <path
+        android:fillColor="#C59B4B"
+        android:pathData="M 36,22 A 3,3 0 1,0 38,27 A 2.2,2.2 0 1,1 36,22 Z" />
+    <!-- Base Foreground -->
+    <path
+        android:fillColor="#07261D"
+        android:pathData="M 0,58 Q 36,54 72,58 L 72,72 L 0,72 Z" />
+    <!-- Outer Gold Ring -->
+    <path
+        android:strokeColor="#C59B4B"
+        android:strokeWidth="2.5"
+        android:pathData="M 36,1.5 A 34.5,34.5 0 1,1 35.9,1.5 Z" />
+</vector>
