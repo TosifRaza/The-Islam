@@ -1,98 +1,528 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Academy (M5): continue-learning, quick tools, published course catalogue. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- IKP Academy: Premium Islamic Learning Platform (Phases 1-3) -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/academy_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        style="@style/TextAppearance.IKP.HeadlineSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space_md"
-        android:text="@string/academy_title" />
+    android:background="@color/bg_home_warm"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/space_md">
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
 
-        <Button
-            android:id="@+id/btn_quizzes"
-            style="@style/Widget.IKP.Button.Outlined"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_xs"
-            android:layout_weight="1"
-            android:text="@string/academy_quizzes" />
-
-        <Button
-            android:id="@+id/btn_flashcards"
-            style="@style/Widget.IKP.Button.Outlined"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_xs"
-            android:layout_weight="1"
-            android:text="@string/academy_flashcards" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_signin_hint"
-        style="@style/TextAppearance.IKP.BodySecondary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/space_md"
-        android:paddingTop="@dimen/space_sm"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/label_continue"
-        style="@style/TextAppearance.IKP.SectionHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/space_md"
-        android:paddingTop="@dimen/space_md"
-        android:text="@string/academy_continue"
-        android:visibility="gone" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_continue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:visibility="gone" />
-
-    <TextView
-        style="@style/TextAppearance.IKP.SectionHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/space_md"
-        android:paddingTop="@dimen/space_md"
-        android:text="@string/academy_catalogue" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
+        <!-- ================= SECTION A: Premium Academy Header ================= -->
         <FrameLayout
-            android:id="@+id/academy_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_academy_header"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp">
 
+            <!-- Mosque Scenic Artwork Background in Top-Right -->
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                android:layout_gravity="end|top"
+                android:alpha="0.25"
+                android:src="@drawable/bg_mosque_header"
+                android:importantForAccessibility="no" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Top Row: Icon + Bookmark Button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_nav_academy"
+                        app:tint="#C9A45A"
+                        android:importantForAccessibility="no" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <!-- Saved Courses / Bookmark Shortcut -->
+                    <ImageButton
+                        android:id="@+id/btn_header_bookmark"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_circle_icon_button"
+                        android:src="@drawable/ic_bookmark_outline"
+                        app:tint="#FFFFFF"
+                        android:contentDescription="@string/cd_bookmark" />
+                </LinearLayout>
+
+                <!-- Academy Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/academy_title"
+                    android:textColor="#FFFFFF"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <!-- Subtitle: Learn • Study • Grow in Islam -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/academy_subtitle"
+                    android:textColor="#D8E8E0"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <!-- Guest / Member sign-in notice (when signed out) -->
+                <TextView
+                    android:id="@+id/tv_signin_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#1AFFFFFF"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    android:text="@string/academy_signin_hint"
+                    android:textColor="#E4EDE8"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Content Container (Padding 16dp) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp">
+
+            <!-- ================= SECTION B: Search Bar ================= -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_search_bar_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="#7A8880"
+                    android:importantForAccessibility="no" />
+
+                <EditText
+                    android:id="@+id/et_academy_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/academy_search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="#12291F"
+                    android:textColorHint="#8A9990"
+                    android:textSize="14sp" />
+
+                <ImageButton
+                    android:id="@+id/btn_clear_search"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_delete"
+                    app:tint="#8A9990"
+                    android:visibility="gone"
+                    android:contentDescription="@string/action_close" />
+
+                <ImageButton
+                    android:id="@+id/btn_filter_dialog"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_green_filter_btn"
+                    android:src="@drawable/ic_filter_sliders"
+                    app:tint="#FFFFFF"
+                    android:contentDescription="@string/search_title" />
+            </LinearLayout>
+
+            <!-- ================= SECTION C: Quick Access Buttons ================= -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <!-- 1. My Courses -->
+                <LinearLayout
+                    android:id="@+id/btn_quick_my_courses"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_academy_quick_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_book"
+                        app:tint="#0D3B2E"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/academy_quick_my_courses"
+                        android:textColor="#12291F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 2. Downloads -->
+                <LinearLayout
+                    android:id="@+id/btn_quick_downloads"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_academy_quick_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_download"
+                        app:tint="#0D3B2E"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/academy_quick_downloads"
+                        android:textColor="#12291F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 3. Certificates -->
+                <LinearLayout
+                    android:id="@+id/btn_quick_certificates"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_academy_quick_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_verified"
+                        app:tint="#C9A45A"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/academy_quick_certificates"
+                        android:textColor="#12291F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 4. My Progress -->
+                <LinearLayout
+                    android:id="@+id/btn_quick_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_academy_quick_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_star"
+                        app:tint="#C9A45A"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/academy_quick_progress"
+                        android:textColor="#12291F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ================= SECTION D: Explore Categories ================= -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/academy_categories_title"
+                android:textColor="#0D3B2E"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:fontFamily="serif" />
+
+            <!-- Horizontal Category Chips -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal" />
+
+            <!-- ================= SECTION F: Continue Learning Rail ================= -->
+            <LinearLayout
+                android:id="@+id/container_continue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/academy_continue"
+                    android:textColor="#0D3B2E"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_continue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+
+            <!-- ================= SECTION G: Daily Islamic Lesson ================= -->
+            <LinearLayout
+                android:id="@+id/card_daily_lesson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_daily_lesson_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_category_badge"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="2dp"
+                        android:text="Daily Deen"
+                        android:textColor="#C9A45A"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_quran_headphones"
+                        app:tint="#D8E8E0"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:id="@+id/tv_daily_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="3 min read"
+                        android:textColor="#D8E8E0"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_daily_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="The Excellence of Seeking Knowledge"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:id="@+id/tv_daily_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise. (Sahih Muslim)"
+                    android:textColor="#D8E8E0"
+                    android:textSize="12sp"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+
+                <Button
+                    android:id="@+id/btn_start_daily_lesson"
+                    style="@style/Widget.IKP.Button.Primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#C9A45A"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="@string/academy_start_today_lesson"
+                    android:textColor="#07261D"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ================= SECTION H: Flashcard Practice Decks ================= -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/academy_flashcards_section"
+                    android:textColor="#0D3B2E"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:id="@+id/btn_view_all_flashcards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_view_all"
+                    android:textColor="#C9A45A"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_flashcards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal" />
+
+            <!-- ================= SECTION E: Featured Courses ================= -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/label_courses_section"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/academy_featured_title"
+                    android:textColor="#0D3B2E"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:id="@+id/tv_active_filter_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#7A8880"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Course Cards List -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_courses"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/space_lg" />
-        </FrameLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false" />
 
-        <com.ikp.dev.app.ui.common.StateView
-            android:id="@+id/academy_state"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-    </FrameLayout>
-</LinearLayout>
+            <!-- Empty Courses Search Result Hint -->
+            <TextView
+                android:id="@+id/tv_no_courses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/academy_no_courses_found"
+                android:textColor="#7A8880"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <!-- StateView for Network Loading / Error Handling -->
+            <com.ikp.dev.app.ui.common.StateView
+                android:id="@+id/academy_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

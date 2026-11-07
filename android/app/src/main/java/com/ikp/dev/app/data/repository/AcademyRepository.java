@@ -60,12 +60,17 @@ public final class AcademyRepository {
     // ----- academy -----
 
     public Outcome<List<AcademyDtos.CourseRowDto>> courses(int page, int size) {
-        // 1. Try Supabase cloud first
+        // 1. Try backend API first (has enriched subject models and lesson counts)
+        Outcome<List<AcademyDtos.CourseRowDto>> apiRes = run(api.courses(page, size));
+        if (apiRes.isSuccess() && apiRes.value != null && !apiRes.value.isEmpty()) {
+            return apiRes;
+        }
+        // 2. Fallback to Supabase cloud direct
         Outcome<List<AcademyDtos.CourseRowDto>> sbFallback = fetchCoursesFromSupabase();
         if (sbFallback != null && sbFallback.isSuccess()) {
             return sbFallback;
         }
-        return run(api.courses(page, size));
+        return apiRes;
     }
 
     private Outcome<List<AcademyDtos.CourseRowDto>> fetchCoursesFromSupabase() {

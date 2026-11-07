@@ -15,7 +15,8 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.IKP.Splash"
         android:allowBackup="true"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true">
 
         <!-- Per-app language persistence (AppCompat 1.6+); OD-02 gates the
              final language list — this only stores the user's in-app choice. -->

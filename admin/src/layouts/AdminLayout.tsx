@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 import HealthBadge from '../components/HealthBadge'
 
@@ -45,6 +45,7 @@ export default function AdminLayout() {
   const { me, logout } = useAuth()
   const { hasPermission, hasAnyRole } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -120,19 +121,7 @@ export default function AdminLayout() {
         </div>
       </header>
 
-      <div className="flex">
-        {/* sidebar */}
-        <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-56 shrink-0 flex-col gap-1 overflow-y-auto bg-emerald-deep p-3 md:flex">
-          {visible.map((n) => (
-            <SidebarLink key={n.to} to={n.to} label={n.label} active={location.pathname.startsWith(n.to)} />
-          ))}
-          <div className="mt-auto px-3 pt-4 text-[10px] leading-relaxed text-emerald-100/50">
-            M2 Admin CMS · development build
-            <br />
-            Content import gated at OD-05/G-3
-          </div>
-        </aside>
-
+      <div className="flex flex-col md:flex-row min-h-[calc(100vh-57px)]">
         {/* mobile nav */}
         <div className="flex w-full flex-col md:hidden">
           <nav className="flex flex-wrap gap-1 border-b border-emerald-deep/20 bg-emerald-deep px-2 pb-2">
@@ -149,11 +138,26 @@ export default function AdminLayout() {
             ))}
           </nav>
         </div>
-      </div>
 
-      <main className="mx-auto max-w-6xl flex-1 p-4 lg:p-6 md:ml-0">
-        <Outlet />
-      </main>
+        {/* sidebar */}
+        <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-56 shrink-0 flex-col gap-1 overflow-y-auto bg-emerald-deep p-3 md:flex">
+          {visible.map((n) => (
+            <SidebarLink key={n.to} to={n.to} label={n.label} active={location.pathname.startsWith(n.to)} />
+          ))}
+          <div className="mt-auto px-3 pt-4 text-[10px] leading-relaxed text-emerald-100/50">
+            M2 Admin CMS · development build
+            <br />
+            Content import gated at OD-05/G-3
+          </div>
+        </aside>
+
+        {/* main content */}
+        <main className="min-w-0 flex-1 p-4 lg:p-6">
+          <div className="mx-auto max-w-6xl">
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

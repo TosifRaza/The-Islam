@@ -1,8 +1,10 @@
 package com.ikp.dev.app;
 
 import android.os.Bundle;
-
+import android.view.MotionEvent;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -37,6 +39,22 @@ public final class MainActivity extends AppCompatActivity {
     private androidx.lifecycle.Observer<Boolean> offlineObserver;
     private androidx.lifecycle.Observer<SessionManager.SessionEvent> sessionObserver;
     private androidx.appcompat.app.AlertDialog sessionExpiredDialog;
+
+    @Override
+    public boolean dispatchGenericMotionEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_SCROLL) {
+            NestedScrollView quranScroll = findViewById(R.id.quran_scroll);
+            if (quranScroll != null && quranScroll.getVisibility() == View.VISIBLE) {
+                float vertical = event.getAxisValue(MotionEvent.AXIS_VSCROLL);
+                if (vertical == 0f) vertical = event.getAxisValue(MotionEvent.AXIS_SCROLL);
+                if (vertical != 0f) {
+                    quranScroll.scrollBy(0, Math.round(-vertical * 96f));
+                    return true;
+                }
+            }
+        }
+        return super.dispatchGenericMotionEvent(event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

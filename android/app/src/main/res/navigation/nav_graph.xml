@@ -315,6 +315,36 @@
             android:defaultValue="@null" />
     </fragment>
     <fragment
+        android:id="@+id/lessonViewerFragment"
+        android:name="com.ikp.dev.app.ui.academy.LessonViewerFragment"
+        android:label="Lesson">
+        <argument
+            android:name="lessonId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="lessonTitle"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="lessonBody"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="courseTitle"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
         android:id="@+id/researchArticleFragment"
         android:name="com.ikp.dev.app.ui.research.ResearchArticleFragment"
         android:label="@string/research_title">

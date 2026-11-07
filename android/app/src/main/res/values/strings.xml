@@ -135,6 +135,24 @@
 
     <!-- ================= Academy (foundation) ================= -->
     <string name="academy_title">Academy</string>
+    <string name="academy_subtitle">Learn • Study • Grow in Islam</string>
+    <string name="academy_search_hint">Search courses, topics, or teachers...</string>
+    <string name="academy_quick_my_courses">My Courses</string>
+    <string name="academy_quick_downloads">Downloads</string>
+    <string name="academy_quick_certificates">Certificates</string>
+    <string name="academy_quick_progress">My Progress</string>
+    <string name="academy_categories_title">Explore Categories</string>
+    <string name="academy_all_categories">All</string>
+    <string name="academy_featured_title">Featured Courses</string>
+    <string name="academy_daily_lesson_title">Daily Islamic Lesson</string>
+    <string name="academy_start_today_lesson">Start Today\'s Lesson</string>
+    <string name="academy_flashcards_section">Practice &amp; Memorize</string>
+    <string name="academy_cards_count_fmt">%1$d Cards</string>
+    <string name="academy_practice_action">Practice</string>
+    <string name="academy_hours_fmt">%1$d hrs</string>
+    <string name="academy_lessons_count_fmt">%1$d Lessons</string>
+    <string name="academy_no_courses_found">No courses found matching your criteria.</string>
+    <string name="coming_soon_feature">This feature is coming soon in the next learning release.</string>
     <string name="academy_foundation_body">Course discovery, enrolment and lesson delivery are planned for the Academy milestone (M5). This foundation prepares the navigation, layout and data plumbing — no courses are shown yet, so nothing here pretends to be live.</string>
     <string name="academy_my_courses">My courses</string>
     <string name="academy_discovery">Discover courses</string>
@@ -270,7 +288,20 @@
     <string name="revelation_madani">Madani</string>
     <string name="quran_ayah_number">%1$d:%2$d</string>
     <string name="quran_choose_translation">Translation</string>
-    <string name="quran_audio_unavailable">Recitation audio is not available yet — no licensed recitation has been imported.</string>
+    <string name="quran_audio_attribution">Recitation by Mishary Rashid Alafasy · Audio from Al Quran Cloud.</string>
+    <string name="quran_audio_reciter">Mishary Rashid Alafasy · Al Quran Cloud</string>
+    <string name="quran_audio_track">Surah %1$d · Ayah %2$d</string>
+    <string name="quran_audio_loading">Loading recitation…</string>
+    <string name="quran_audio_error">Could not play the recitation. Check your connection and try again.</string>
+    <string name="quran_audio_play_ayah_cd">Play ayah %1$d</string>
+    <string name="quran_audio_play_surah_cd">Play full Surah</string>
+    <string name="quran_audio_pause_surah_cd">Pause full Surah</string>
+    <string name="quran_audio_full_surah_track">Full Surah · %1$s</string>
+    <string name="quran_audio_surah_generic">Surah %1$d</string>
+    <string name="quran_audio_resume">Resume recitation</string>
+    <string name="quran_audio_pause">Pause recitation</string>
+    <string name="quran_audio_previous">Previous ayah</string>
+    <string name="quran_audio_next">Next ayah</string>
     <string name="fixture_badge">Development fixture</string>
     <string name="hadith_title">Hadith</string>
     <string name="hadith_collection_meta">%1$d hadiths · %2$d books</string>

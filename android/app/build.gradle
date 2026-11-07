@@ -16,8 +16,8 @@ android {
         versionCode 9
         versionName "0.5.0-m5-fix6"
 
-        // Production / Live Backend URL on Render
-        buildConfigField "String", "BASE_URL", "\"${project.findProperty('IKP_BASE_URL') ?: 'https://the-islam.onrender.com/'}\""
+        // Local / Dev Backend URL for Android Emulator (10.0.2.2 points to host localhost:8080)
+        buildConfigField "String", "BASE_URL", "\"${project.findProperty('IKP_BASE_URL') ?: 'http://10.0.2.2:8080/'}\""
 
         // Supabase configuration
         buildConfigField "String", "SUPABASE_URL", "\"${project.findProperty('SUPABASE_URL') ?: 'https://svfttjrtnbzogeouovql.supabase.co/'}\""

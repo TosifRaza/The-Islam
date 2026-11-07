@@ -23,7 +23,7 @@ public final class AcademyDtos {
     }
 
     public static final class CourseRowDto {
-        @SerializedName(value = "courseId", alternate = {"course_id", "id"})
+        @SerializedName(value = "courseId", alternate = {"course_id", "id", "public_id"})
         public String courseId;
         public String title;
         public String description;

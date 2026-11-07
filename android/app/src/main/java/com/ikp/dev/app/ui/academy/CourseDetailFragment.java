@@ -36,6 +36,8 @@ public final class CourseDetailFragment extends Fragment {
     private CourseDetailViewModel viewModel;
     private StateView stateView;
     private View content;
+    private String currentCourseId;
+    private String currentCourseTitle;
 
     @Nullable
     @Override
@@ -80,6 +82,8 @@ public final class CourseDetailFragment extends Fragment {
                 stateView.setVisibility(View.GONE);
                 content.setVisibility(View.VISIBLE);
                 AcademyDtos.CourseDetailDto c = state.data;
+                currentCourseId = c.courseId;
+                currentCourseTitle = c.title;
                 TextView title = requireView().findViewById(R.id.tv_course_title);
                 title.setText(c.title);
                 String meta = (c.subject == null ? "" : c.subject.name + " · ")
@@ -142,11 +146,16 @@ public final class CourseDetailFragment extends Fragment {
     private void openLesson(AcademyDtos.LessonPublicDto l) {
         String type = l.lessonType == null ? "text" : l.lessonType;
         switch (type) {
-            case "text" -> new MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(l.title)
-                    .setMessage(l.bodyText == null ? "" : l.bodyText)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
+            case "text" -> {
+                Bundle args = new Bundle();
+                args.putString("lessonId", l.lessonId);
+                args.putString("courseId", currentCourseId);
+                args.putString("lessonTitle", l.title);
+                args.putString("lessonBody", l.bodyText);
+                args.putString("courseTitle", currentCourseTitle);
+                NavOptions opts = new NavOptions.Builder().setLaunchSingleTop(true).build();
+                NavHostFragment.findNavController(this).navigate(R.id.lessonViewerFragment, args, opts);
+            }
             case "quiz" -> {
                 if (l.quizId != null) {
                     Bundle args = new Bundle();
