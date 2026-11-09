@@ -233,6 +233,8 @@ public final class ResearchFragment extends Fragment {
         handleCommonState(state, state.data != null ? state.data.size() : 0, "articles");
         if (state.kind == UiState.Kind.SUCCESS && state.data != null) {
             articleAdapter.submitList(state.data);
+        } else {
+            articleAdapter.submitList(new java.util.ArrayList<>());
         }
     }
 
@@ -241,6 +243,8 @@ public final class ResearchFragment extends Fragment {
         handleCommonState(state, state.data != null ? state.data.size() : 0, "scholars");
         if (state.kind == UiState.Kind.SUCCESS && state.data != null) {
             scholarAdapter.submitList(state.data);
+        } else {
+            scholarAdapter.submitList(new java.util.ArrayList<>());
         }
     }
 
@@ -249,29 +253,36 @@ public final class ResearchFragment extends Fragment {
         handleCommonState(state, state.data != null ? state.data.size() : 0, "fatwas");
         if (state.kind == UiState.Kind.SUCCESS && state.data != null) {
             fatwaAdapter.submitList(state.data);
+        } else {
+            fatwaAdapter.submitList(new java.util.ArrayList<>());
         }
     }
 
     private <T> void handleCommonState(UiState<T> state, int count, String entityName) {
+        View scroll = getView() != null ? getView().findViewById(R.id.research_scroll) : null;
         switch (state.kind) {
             case LOADING -> {
                 stateView.setVisibility(View.VISIBLE);
                 stateView.renderLoading();
+                if (scroll != null) scroll.setVisibility(View.GONE);
                 tvSectionCount.setText("");
             }
             case SUCCESS -> {
                 stateView.setVisibility(View.GONE);
+                if (scroll != null) scroll.setVisibility(View.VISIBLE);
                 tvSectionCount.setText("(" + count + " " + entityName + ")");
             }
             case EMPTY -> {
                 stateView.setVisibility(View.VISIBLE);
                 stateView.renderEmpty();
+                if (scroll != null) scroll.setVisibility(View.GONE);
                 tvSectionCount.setText("(0 " + entityName + ")");
             }
             case ERROR -> {
                 stateView.setVisibility(View.VISIBLE);
                 stateView.renderError(state.error);
                 stateView.setOnRetry(viewModel::reload);
+                if (scroll != null) scroll.setVisibility(View.GONE);
                 tvSectionCount.setText("");
             }
         }

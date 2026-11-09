@@ -722,12 +722,94 @@ public final class AcademyRepository {
         a5.updatedAt = "2026-11-09";
         all.add(a5);
 
+        AcademyDtos.ArticleRowDto a6 = new AcademyDtos.ArticleRowDto();
+        a6.articleId = "20000000-0000-0000-0000-000000000006";
+        a6.title = "Principles of Islamic Commercial Law: Contemporary Transactions & Ethical Finance";
+        a6.titleAr = "أصول فقه المعاملات المالية المعاصرة ومبادئ الاقتصاد الإسلامي";
+        a6.topic = new AcademyDtos.ArticleTopicDto();
+        a6.topic.slug = "fiqh";
+        a6.topic.name = "Islamic Jurisprudence";
+        a6.sourceTier = "primary";
+        a6.status = "published";
+        a6.language = "en";
+        a6.authorDisplayName = "Shaykh Dr. Ahmad Al-Madani";
+        a6.summary = "An in-depth jurisprudential study on contract mechanics, prohibition of Gharar (uncertainty) and Riba (usury), and contemporary Islamic financial instruments.";
+        a6.readingMinutes = 11;
+        a6.updatedAt = "2026-11-09";
+        all.add(a6);
+
+        AcademyDtos.ArticleRowDto a7 = new AcademyDtos.ArticleRowDto();
+        a7.articleId = "20000000-0000-0000-0000-000000000007";
+        a7.title = "The Diplomatic Letters and Treaties in the Prophetic Seerah";
+        a7.titleAr = "الوثائق النبوية والعهود الدبلوماسية في السيرة الشريفة";
+        a7.topic = new AcademyDtos.ArticleTopicDto();
+        a7.topic.slug = "seerah";
+        a7.topic.name = "Seerah of the Prophet ﷺ";
+        a7.sourceTier = "secondary";
+        a7.status = "published";
+        a7.language = "en";
+        a7.authorDisplayName = "Dr. Muhammad Al-Azhari";
+        a7.summary = "A historical and juridical analysis of the Treaty of Hudaybiyyah, the Constitution of Madinah, and the Prophetic letters to world leaders.";
+        a7.readingMinutes = 9;
+        a7.updatedAt = "2026-11-09";
+        all.add(a7);
+
+        AcademyDtos.ArticleRowDto a8 = new AcademyDtos.ArticleRowDto();
+        a8.articleId = "20000000-0000-0000-0000-000000000008";
+        a8.title = "Linguistic Precision and Rhetorical Structure in Classical Arabic";
+        a8.titleAr = "الإعجاز البياني والدلالات اللغوية في اللسان العربي";
+        a8.topic = new AcademyDtos.ArticleTopicDto();
+        a8.topic.slug = "arabic_language";
+        a8.topic.name = "Arabic Philology";
+        a8.sourceTier = "secondary";
+        a8.status = "published";
+        a8.language = "en";
+        a8.authorDisplayName = "Dr. Fatima Al-Zahra";
+        a8.summary = "An academic exploration of classical Balaghah (rhetoric), semantic shifts, and syntactical precision in classical Arabic literature.";
+        a8.readingMinutes = 8;
+        a8.updatedAt = "2026-11-09";
+        all.add(a8);
+
+        AcademyDtos.ArticleRowDto a9 = new AcademyDtos.ArticleRowDto();
+        a9.articleId = "20000000-0000-0000-0000-000000000009";
+        a9.title = "Methodological Traditions of the Classical Islamic Compendia";
+        a9.titleAr = "المصنفات الموسوعية ومنهج التدوين عند أئمة التراث";
+        a9.topic = new AcademyDtos.ArticleTopicDto();
+        a9.topic.slug = "classical_literature";
+        a9.topic.name = "Classical Literature";
+        a9.sourceTier = "editorial";
+        a9.status = "published";
+        a9.language = "en";
+        a9.authorDisplayName = "Editorial Scholarly Board";
+        a9.summary = "A survey of the major encyclopedic works in the Islamic golden age: compilation methodologies, indexing systems, and preservation of scholarly lineages.";
+        a9.readingMinutes = 7;
+        a9.updatedAt = "2026-11-09";
+        all.add(a9);
+
+        AcademyDtos.ArticleRowDto a10 = new AcademyDtos.ArticleRowDto();
+        a10.articleId = "20000000-0000-0000-0000-000000000010";
+        a10.title = "Comparative Jurisprudence: Roots of Scholarly Divergence Across the Madhahib";
+        a10.titleAr = "الفقه المقارن وأسباب اختلاف الأئمة الفقهاء";
+        a10.topic = new AcademyDtos.ArticleTopicDto();
+        a10.topic.slug = "comparative_studies";
+        a10.topic.name = "Comparative Studies";
+        a10.sourceTier = "primary";
+        a10.status = "published";
+        a10.language = "en";
+        a10.authorDisplayName = "Shaykh Dr. Ahmad Al-Madani";
+        a10.summary = "An analytical examination of Ikhtilaf (scholarly divergence) based on linguistic interpretation, hadith reach, and juristic maxims (Qawa'id Fiqhiyyah).";
+        a10.readingMinutes = 12;
+        a10.updatedAt = "2026-11-09";
+        all.add(a10);
+
         if (topicFilter == null || topicFilter.isEmpty() || "all".equalsIgnoreCase(topicFilter)) {
             return all;
         }
         List<AcademyDtos.ArticleRowDto> filtered = new ArrayList<>();
         for (AcademyDtos.ArticleRowDto a : all) {
-            if (a.topic != null && topicFilter.equalsIgnoreCase(a.topic.slug)) {
+            if (a.topic != null && (topicFilter.equalsIgnoreCase(a.topic.slug)
+                    || a.topic.name.toLowerCase().contains(topicFilter.toLowerCase())
+                    || topicFilter.toLowerCase().contains(a.topic.name.toLowerCase()))) {
                 filtered.add(a);
             }
         }
@@ -795,6 +877,19 @@ public final class AcademyRepository {
 
             addQuranCitation(citations, 1, 42, 11, "There is nothing like unto Him, and He is the Hearing, the Seeing.", "Foundational theological principle of transcendence");
             addQuranCitation(citations, 2, 112, 1, "Say: He is Allah, [who is] One. Allah, the Eternal Refuge...", "Complete articulation of Tawheed");
+        } else if (articleId != null && articleId.endsWith("06")) {
+            d.title = "Principles of Islamic Commercial Law: Contemporary Transactions & Ethical Finance";
+            d.titleAr = "أصول فقه المعاملات المالية المعاصرة ومبادئ الاقتصاد الإسلامي";
+            d.sourceTier = "primary";
+            d.authorDisplayName = "Shaykh Dr. Ahmad Al-Madani";
+            d.readingMinutes = 11;
+            d.topic.slug = "fiqh";
+            d.topic.name = "Islamic Jurisprudence";
+            d.summary = "An in-depth jurisprudential study on contract mechanics, prohibition of Gharar (uncertainty) and Riba (usury), and contemporary Islamic financial instruments.";
+            d.body = "### The Foundations of Islamic Commercial Jurisprudence (Fiqh al-Mu'amalat)\n\nIn classical Islamic jurisprudence, the default ruling governing all commercial transactions and contracts is permissibility (Al-Asl fil-Mu'amalat al-Ibahah), provided that specific divine prohibitions are not breached.\n\n### Core Inviolable Prohibitions in Islamic Finance\n\n1. Riba (Usury and Unjust Increment): Any predetermined surplus charged on a loan without legitimate consideration or risk-sharing is categorically forbidden in the Quran: 'Allah has permitted trade and forbidden usury' (Surah Al-Baqarah 2:275).\n2. Gharar (Excessive Ambiguity and Uncertainty): Contracts wherein the subject matter, delivery date, or price are indeterminate or outside the control of the parties are invalid.\n3. Maysir and Qimar (Gambling and Speculative Chance): Financial arrangements dependent upon zero-sum chance rather than genuine productive economic utility.\n\n### Classical Contracts and Contemporary Applications\n\nClassical contracts provide robust foundations for ethical modern commerce:\n- Murabahah (Cost-Plus Sale): Transparent cost disclosure with agreed profit margin.\n- Mudarabah (Profit-Sharing Partnership): Capital provided by an investor while expertise and labor are provided by an entrepreneur.\n- Musharakah (Equity Joint Venture): Shared capital, proportional profit distribution, and equity risk allocation.\n- Ijarah (Lease and Hire Purchase): Transfer of usufruct without transferring immediate asset ownership.\n\n### Conclusion\n\nIslamic finance is inherently tied to asset-backed, ethical real-economy activities, creating resilient financial systems free from speculative excess.";
+
+            addQuranCitation(citations, 1, 2, 275, "Allah has permitted trade and forbidden usury.", "Constitutional prohibition of Riba in financial contracts");
+            addCitation(citations, 2, "external", "Ibn Rushd, Bidayat al-Mujtahid wa Nihayat al-Muqtasid", "The causes of contract nullification are four: Riba, Gharar, unlawful goods, and coercion.", "Standard classical synthesis of financial prohibitions");
         } else {
             d.title = "Methodology of Hadith Authentication: Rigorous Standards of the Muhaddithin";
             d.titleAr = "منهجية توثيق الحديث الشريف عند أئمة الحديث";
