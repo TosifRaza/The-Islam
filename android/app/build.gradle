@@ -13,8 +13,8 @@ android {
         applicationId "com.ikp.dev.app"
         minSdk 24
         targetSdk 34
-        versionCode 10
-        versionName "0.5.1"
+        versionCode 11
+        versionName "0.5.2"
 
         // Use the live API by default so CI-built APKs work on physical devices.
         // Local development can still override this with -PIKP_BASE_URL=http://10.0.2.2:8080/.

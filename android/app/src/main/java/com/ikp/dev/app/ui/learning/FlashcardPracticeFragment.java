@@ -55,9 +55,15 @@ public final class FlashcardPracticeFragment extends Fragment {
         switch (state.kind) {
             case LOADING -> stateView.renderLoading();
             case SUCCESS -> {
+                PracticeState s = state.data;
+                if (s == null || s.cards == null || s.cards.isEmpty() || s.index < 0 || s.index >= s.cards.size()) {
+                    stateView.setVisibility(View.VISIBLE);
+                    stateView.renderEmpty();
+                    content.setVisibility(View.GONE);
+                    return;
+                }
                 stateView.setVisibility(View.GONE);
                 content.setVisibility(View.VISIBLE);
-                PracticeState s = state.data;
                 AcademyDtos.CardDto card = s.cards.get(s.index);
                 ((TextView) requireView().findViewById(R.id.tv_card_progress)).setText(
                         getString(R.string.deck_progress_fmt, s.index + 1, s.cards.size()));

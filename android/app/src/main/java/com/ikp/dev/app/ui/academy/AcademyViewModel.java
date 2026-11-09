@@ -120,13 +120,8 @@ public final class AcademyViewModel extends ViewModel {
 
             // 1. Fetch courses
             Outcome<List<AcademyDtos.CourseRowDto>> coursesOutcome = repository.courses(1, 50);
-            if (!coursesOutcome.isSuccess()) {
-                state.postValue(UiState.error(coursesOutcome.error));
-                return;
-            }
-
             rawCourses.clear();
-            if (coursesOutcome.value != null) {
+            if (coursesOutcome.isSuccess() && coursesOutcome.value != null) {
                 rawCourses.addAll(coursesOutcome.value);
             }
 
@@ -134,8 +129,11 @@ public final class AcademyViewModel extends ViewModel {
             rawContinue.clear();
             rawWeak.clear();
             if (signedIn) {
-                rawContinue.addAll(orEmpty(repository.continueLearning(5)));
-                rawWeak.addAll(orEmpty(repository.weakTopics()));
+                try {
+                    rawContinue.addAll(orEmpty(repository.continueLearning(5)));
+                    rawWeak.addAll(orEmpty(repository.weakTopics()));
+                } catch (Exception ignored) {
+                }
             }
 
             // 3. Fetch subjects / categories
@@ -176,7 +174,7 @@ public final class AcademyViewModel extends ViewModel {
             }
 
             // 5. Default or loaded daily lesson
-            String firstCourseId = !rawCourses.isEmpty() ? rawCourses.get(0).courseId : null;
+            String firstCourseId = !rawCourses.isEmpty() ? rawCourses.get(0).courseId : "c0000005-0000-0000-0000-000000000005";
             rawDailyLesson = new DailyLessonInfo(
                     "The Excellence of Seeking Knowledge",
                     "Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise. (Sahih Muslim)",
@@ -185,8 +183,12 @@ public final class AcademyViewModel extends ViewModel {
                     null
             );
 
-            if (rawCourses.isEmpty() && rawContinue.isEmpty()) {
-                state.postValue(UiState.empty());
+            if (rawCourses.isEmpty() && rawCategories.isEmpty() && rawDecks.isEmpty()) {
+                if (!coursesOutcome.isSuccess()) {
+                    state.postValue(UiState.error(coursesOutcome.error));
+                } else {
+                    state.postValue(UiState.empty());
+                }
                 return;
             }
 
