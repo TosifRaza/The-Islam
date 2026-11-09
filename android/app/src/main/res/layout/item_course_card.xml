@@ -53,15 +53,16 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btn_course_bookmark"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:padding="4dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="6dp"
                 android:src="@drawable/ic_bookmark_outline"
-                app:tint="#8A9990"
-                android:contentDescription="@string/cd_bookmark"
-                android:background="?attr/selectableItemBackgroundBorderless" />
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/cd_bookmark" />
         </LinearLayout>
 
         <!-- Course Title -->

@@ -15,8 +15,10 @@ import com.ikp.dev.app.R;
 import com.ikp.dev.app.data.remote.dto.AcademyDtos;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public final class CourseCardAdapter extends RecyclerView.Adapter<CourseCardAdapter.ViewHolder> {
 
@@ -26,6 +28,7 @@ public final class CourseCardAdapter extends RecyclerView.Adapter<CourseCardAdap
     }
 
     private final List<AcademyDtos.CourseRowDto> items = new ArrayList<>();
+    private final Set<String> bookmarkedIds = new HashSet<>();
     private final OnCourseClickListener listener;
 
     public CourseCardAdapter(@Nullable OnCourseClickListener listener) {
@@ -36,6 +39,14 @@ public final class CourseCardAdapter extends RecyclerView.Adapter<CourseCardAdap
         items.clear();
         if (newItems != null) {
             items.addAll(newItems);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void setBookmarkedIds(@Nullable Set<String> ids) {
+        bookmarkedIds.clear();
+        if (ids != null) {
+            bookmarkedIds.addAll(ids);
         }
         notifyDataSetChanged();
     }
@@ -86,6 +97,12 @@ public final class CourseCardAdapter extends RecyclerView.Adapter<CourseCardAdap
             meta = "Self-paced";
         }
         holder.metaView.setText(meta);
+
+        // Bookmark State
+        boolean isBookmarked = c.courseId != null && bookmarkedIds.contains(c.courseId);
+        holder.bookmarkBtn.setImageResource(isBookmarked ? R.drawable.ic_bookmark_filled : R.drawable.ic_bookmark_outline);
+        androidx.core.widget.ImageViewCompat.setImageTintList(holder.bookmarkBtn,
+                android.content.res.ColorStateList.valueOf(isBookmarked ? 0xFFC9A45A : 0xFF8A9990));
 
         // Clicks
         holder.itemView.setOnClickListener(v -> {

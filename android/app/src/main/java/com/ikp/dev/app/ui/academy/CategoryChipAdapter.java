@@ -62,11 +62,27 @@ public final class CategoryChipAdapter extends RecyclerView.Adapter<CategoryChip
         holder.nameView.setText(item.name);
         boolean isSelected = (position == selectedPosition);
 
+        if (holder.iconView != null) {
+            String lower = item.name != null ? item.name.toLowerCase() : "";
+            if (position == 0 || "all".equals(lower)) {
+                holder.iconView.setVisibility(View.GONE);
+            } else {
+                holder.iconView.setVisibility(View.VISIBLE);
+                if (lower.contains("quran") || lower.contains("tafsir")) {
+                    holder.iconView.setImageResource(R.drawable.ic_cat_quran);
+                } else if (lower.contains("hadith")) {
+                    holder.iconView.setImageResource(R.drawable.ic_cat_hadith);
+                } else {
+                    holder.iconView.setImageResource(R.drawable.ic_cat_quran);
+                }
+            }
+        }
+
         if (isSelected) {
-            holder.nameView.setBackgroundResource(R.drawable.bg_category_chip_selected);
+            holder.container.setBackgroundResource(R.drawable.bg_category_chip_selected);
             holder.nameView.setTextColor(Color.WHITE);
         } else {
-            holder.nameView.setBackgroundResource(R.drawable.bg_category_chip_default);
+            holder.container.setBackgroundResource(R.drawable.bg_category_chip_default);
             holder.nameView.setTextColor(0xFF12291F);
         }
 
@@ -89,10 +105,14 @@ public final class CategoryChipAdapter extends RecyclerView.Adapter<CategoryChip
     }
 
     static final class ViewHolder extends RecyclerView.ViewHolder {
+        final View container;
+        final android.widget.ImageView iconView;
         final TextView nameView;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            container = itemView.findViewById(R.id.chip_container);
+            iconView = itemView.findViewById(R.id.iv_category_icon);
             nameView = itemView.findViewById(R.id.tv_category_name);
         }
     }

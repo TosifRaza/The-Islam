@@ -129,8 +129,17 @@ public final class MainActivity extends AppCompatActivity {
             bottomBar.setVisibility(topLevel ? android.view.View.VISIBLE : android.view.View.GONE);
             for (Map.Entry<Integer, android.view.View> e : tabByDestination.entrySet()) {
                 boolean selected = e.getKey() == id;
-                e.getValue().setSelected(selected);
-                e.getValue().setActivated(selected);
+                android.view.View tab = e.getValue();
+                tab.setSelected(selected);
+                tab.setActivated(selected);
+                if (tab instanceof android.view.ViewGroup) {
+                    android.view.ViewGroup vg = (android.view.ViewGroup) tab;
+                    for (int i = 0; i < vg.getChildCount(); i++) {
+                        android.view.View child = vg.getChildAt(i);
+                        child.setSelected(selected);
+                        child.setActivated(selected);
+                    }
+                }
             }
         });
     }

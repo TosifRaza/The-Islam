@@ -269,7 +269,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_quran_v2" />
+                                android:src="@drawable/ic_3d_quran" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
@@ -304,7 +304,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_hadith_v2" />
+                                android:src="@drawable/ic_3d_hadith" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
@@ -339,7 +339,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_duas_v2" />
+                                android:src="@drawable/ic_3d_duas" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
@@ -374,7 +374,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_prayer_v2" />
+                                android:src="@drawable/ic_3d_prayer" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
@@ -423,7 +423,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_qibla_v2" />
+                                android:src="@drawable/ic_3d_qibla" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
@@ -458,7 +458,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_tasbih_v2" />
+                                android:src="@drawable/ic_3d_tasbih" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
@@ -493,7 +493,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_calendar_v2" />
+                                android:src="@drawable/ic_3d_calendar" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
@@ -529,7 +529,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_emoji_books_v2" />
+                                android:src="@drawable/ic_3d_books" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"

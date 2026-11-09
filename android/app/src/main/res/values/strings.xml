@@ -137,10 +137,10 @@
     <string name="academy_title">Academy</string>
     <string name="academy_subtitle">Learn • Study • Grow in Islam</string>
     <string name="academy_search_hint">Search courses, topics, or teachers...</string>
-    <string name="academy_quick_my_courses">My Courses</string>
+    <string name="academy_quick_my_courses">Courses</string>
     <string name="academy_quick_downloads">Downloads</string>
     <string name="academy_quick_certificates">Certificates</string>
-    <string name="academy_quick_progress">My Progress</string>
+    <string name="academy_quick_progress">Progress</string>
     <string name="academy_categories_title">Explore Categories</string>
     <string name="academy_all_categories">All</string>
     <string name="academy_featured_title">Featured Courses</string>

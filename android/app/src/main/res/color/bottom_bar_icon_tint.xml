@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:color="@color/bottom_bar_item_active"/>
-    <item android:color="@color/bottom_bar_item_inactive"/>
+    <item android:state_selected="true" android:color="#F3DE97"/>
+    <item android:state_activated="true" android:color="#F3DE97"/>
+    <item android:color="#7A8880"/>
 </selector>

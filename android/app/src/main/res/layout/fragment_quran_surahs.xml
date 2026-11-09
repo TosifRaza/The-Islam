@@ -40,13 +40,14 @@
                     android:paddingEnd="16dp"
                     android:paddingTop="12dp">
 
-                    <!-- Hamburger / Back Button -->
+                    <!-- Back Button -->
                     <ImageButton
                         android:id="@+id/btn_back"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:background="@drawable/bg_emerald_nav_box"
-                        android:src="@drawable/ic_menu_hamburger"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="#F3DE97"
                         android:padding="9dp"
                         android:contentDescription="@string/cd_back" />
 
@@ -107,8 +108,9 @@
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/bg_search_bar_white"
                     android:gravity="center_vertical"
+                    android:elevation="4dp"
                     android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
+                    android:paddingEnd="8dp"
                     android:visibility="gone">
 
                     <ImageView
@@ -120,8 +122,9 @@
 
                     <EditText
                         android:id="@+id/et_filter"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:background="@null"
                         android:hint="Search Surah by name or number..."
@@ -129,7 +132,19 @@
                         android:textColorHint="#7A8D84"
                         android:textSize="14sp"
                         android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionSearch"
                         android:importantForAutofill="no" />
+
+                    <ImageButton
+                        android:id="@+id/btn_clear_search"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_delete"
+                        app:tint="#7A8D84"
+                        android:padding="5dp"
+                        android:contentDescription="Clear search" />
                 </LinearLayout>
             </FrameLayout>
 

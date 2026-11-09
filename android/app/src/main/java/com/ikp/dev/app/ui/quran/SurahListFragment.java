@@ -93,31 +93,59 @@ public class SurahListFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.setAdapter(adapter);
 
-        // Header back / menu button
-        v.findViewById(R.id.btn_back).setOnClickListener(x ->
-                NavHostFragment.findNavController(this).popBackStack());
+        // Header back button
+        v.findViewById(R.id.btn_back).setOnClickListener(x -> {
+            if (!NavHostFragment.findNavController(this).popBackStack()) {
+                NavHostFragment.findNavController(this).navigate(R.id.homeFragment);
+            }
+        });
 
         // Header search toggle button
-        v.findViewById(R.id.btn_search_toggle).setOnClickListener(x -> {
+        ImageButton btnSearchToggle = v.findViewById(R.id.btn_search_toggle);
+        ImageButton btnClearSearch = v.findViewById(R.id.btn_clear_search);
+
+        btnSearchToggle.setOnClickListener(x -> {
             if (layoutSearchBox != null) {
                 if (layoutSearchBox.getVisibility() == View.VISIBLE) {
                     layoutSearchBox.setVisibility(View.GONE);
-                    etFilter.setText("");
+                    btnSearchToggle.setImageResource(R.drawable.ic_search);
+                    if (etFilter != null) etFilter.setText("");
                     hideKeyboard(etFilter);
                 } else {
                     layoutSearchBox.setVisibility(View.VISIBLE);
-                    etFilter.requestFocus();
-                    showKeyboard(etFilter);
+                    btnSearchToggle.setImageResource(R.drawable.ic_delete);
+                    if (etFilter != null) {
+                        etFilter.requestFocus();
+                        etFilter.postDelayed(() -> showKeyboard(etFilter), 150);
+                    }
+                    if (scrollContainer != null && recycler != null) {
+                        scrollContainer.postDelayed(() -> {
+                            scrollContainer.smoothScrollTo(0, (int) Math.max(0, recycler.getY() - 50));
+                        }, 200);
+                    }
                 }
             }
         });
+
+        if (btnClearSearch != null) {
+            btnClearSearch.setOnClickListener(x -> {
+                if (etFilter != null) {
+                    etFilter.setText("");
+                    etFilter.requestFocus();
+                }
+            });
+        }
 
         if (etFilter != null) {
             etFilter.addTextChangedListener(new TextWatcher() {
                 @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) { }
                 @Override public void onTextChanged(CharSequence s, int a, int b, int c) { }
                 @Override public void afterTextChanged(Editable s) {
-                    filter(s == null ? "" : s.toString());
+                    String query = s == null ? "" : s.toString();
+                    filter(query);
+                    if (!query.trim().isEmpty() && scrollContainer != null && recycler != null) {
+                        scrollContainer.smoothScrollTo(0, (int) Math.max(0, recycler.getY() - 50));
+                    }
                 }
             });
         }
@@ -205,17 +233,24 @@ public class SurahListFragment extends Fragment {
 
     private void filter(String q) {
         String needle = q.trim().toLowerCase(Locale.ROOT);
+        String cleanNeedle = needle.replace("-", "").replace(" ", "").replace("'", "");
         List<ContentDtos.SurahDto> rows = new ArrayList<>();
         for (ContentDtos.SurahDto s : all) {
             if (activeTab == 2 && !favourites.contains(s.id)) {
                 continue;
             }
-            if (needle.isEmpty()
-                    || (s.nameEn != null && s.nameEn.toLowerCase(Locale.ROOT).contains(needle))
-                    || (s.nameTransliterated != null
-                        && s.nameTransliterated.toLowerCase(Locale.ROOT).contains(needle))
-                    || (s.nameAr != null && s.nameAr.contains(needle))
-                    || String.valueOf(s.id).equals(needle)) {
+            if (needle.isEmpty()) {
+                rows.add(s);
+                continue;
+            }
+            String cleanEn = s.nameEn != null ? s.nameEn.toLowerCase(Locale.ROOT).replace("-", "").replace(" ", "").replace("'", "") : "";
+            String cleanTrans = s.nameTransliterated != null ? s.nameTransliterated.toLowerCase(Locale.ROOT).replace("-", "").replace(" ", "").replace("'", "") : "";
+            boolean matchEn = cleanEn.contains(cleanNeedle);
+            boolean matchTrans = cleanTrans.contains(cleanNeedle);
+            boolean matchAr = s.nameAr != null && s.nameAr.contains(needle);
+            boolean matchId = String.valueOf(s.id).equals(needle);
+
+            if (matchEn || matchTrans || matchAr || matchId) {
                 rows.add(s);
             }
         }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- IKP Academy: Premium Islamic Learning Platform (Phases 1-3) -->
+<!-- IKP Academy: Premium Master Islamic Learning Platform -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/academy_scroll"
@@ -14,95 +14,53 @@
         android:orientation="vertical"
         android:paddingBottom="40dp">
 
-        <!-- ================= SECTION A: Premium Academy Header ================= -->
+        <!-- ================= SECTION A: Premium Master Academy Header ================= -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_academy_header"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="24dp">
+            android:layout_height="wrap_content">
 
-            <!-- Mosque Scenic Artwork Background in Top-Right -->
             <ImageView
-                android:layout_width="160dp"
-                android:layout_height="120dp"
-                android:layout_gravity="end|top"
-                android:alpha="0.25"
-                android:src="@drawable/bg_mosque_header"
-                android:importantForAccessibility="no" />
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:adjustViewBounds="true"
+                android:src="@drawable/bg_academy_header_complete"
+                android:scaleType="fitXY"
+                android:importantForAccessibility="no" />
 
-                <!-- Top Row: Icon + Bookmark Button -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+            <!-- Interactive Back Button overlay -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|top"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_back" />
 
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_nav_academy"
-                        app:tint="#C9A45A"
-                        android:importantForAccessibility="no" />
+            <!-- Interactive Bookmark Shortcut Button overlay -->
+            <ImageButton
+                android:id="@+id/btn_header_bookmark"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end|top"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_bookmark" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <!-- Saved Courses / Bookmark Shortcut -->
-                    <ImageButton
-                        android:id="@+id/btn_header_bookmark"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:background="@drawable/bg_circle_icon_button"
-                        android:src="@drawable/ic_bookmark_outline"
-                        app:tint="#FFFFFF"
-                        android:contentDescription="@string/cd_bookmark" />
-                </LinearLayout>
-
-                <!-- Academy Title -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/academy_title"
-                    android:textColor="#FFFFFF"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    android:fontFamily="serif" />
-
-                <!-- Subtitle: Learn • Study • Grow in Islam -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/academy_subtitle"
-                    android:textColor="#D8E8E0"
-                    android:textSize="13sp"
-                    android:fontFamily="sans-serif-medium" />
-
-                <!-- Guest / Member sign-in notice (when signed out) -->
-                <TextView
-                    android:id="@+id/tv_signin_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="#1AFFFFFF"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="@string/academy_signin_hint"
-                    android:textColor="#E4EDE8"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-            </LinearLayout>
+            <!-- Guest / Member sign-in notice overlay -->
+            <TextView
+                android:id="@+id/tv_signin_hint"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="12dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true" />
         </FrameLayout>
 
         <!-- Content Container (Padding 16dp) -->
@@ -116,11 +74,13 @@
             <!-- ================= SECTION B: Search Bar ================= -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:background="@drawable/bg_search_bar_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="12dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="7dp"
+                android:elevation="2dp">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -134,12 +94,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="@string/academy_search_hint"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="#12291F"
                     android:textColorHint="#8A9990"
                     android:textSize="14sp" />
@@ -148,175 +110,307 @@
                     android:id="@+id/btn_clear_search"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
+                    android:layout_marginEnd="6dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_delete"
                     app:tint="#8A9990"
+                    android:padding="5dp"
                     android:visibility="gone"
                     android:contentDescription="@string/action_close" />
 
                 <ImageButton
                     android:id="@+id/btn_filter_dialog"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:background="@drawable/bg_green_filter_btn"
                     android:src="@drawable/ic_filter_sliders"
+                    android:padding="8dp"
                     app:tint="#FFFFFF"
                     android:contentDescription="@string/search_title" />
             </LinearLayout>
 
-            <!-- ================= SECTION C: Quick Access Buttons ================= -->
+            <!-- ================= SECTION C: 4 Standalone Quick Access Cards ================= -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
-                <!-- 1. My Courses -->
-                <LinearLayout
+                <!-- 1. Courses -->
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_quick_my_courses"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
+                    android:layout_height="90dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_academy_quick_card"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#DFD7C7"
+                    app:cardBackgroundColor="#FAF7F2"
+                    app:contentPadding="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingVertical="12dp">
+                    android:foreground="?attr/selectableItemBackground">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_book"
-                        app:tint="#0D3B2E"
-                        android:importantForAccessibility="no" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/academy_quick_my_courses"
-                        android:textColor="#12291F"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="12dp"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:src="@drawable/ic_card_arch_watermark"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="26dp"
+                                android:src="@drawable/ic_quick_courses"
+                                android:importantForAccessibility="no" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/academy_quick_my_courses"
+                                android:textColor="#12291F"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:singleLine="true"
+                                android:fontFamily="serif" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- 2. Downloads -->
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_quick_downloads"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginEnd="3dp"
+                    android:layout_height="90dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_academy_quick_card"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#DFD7C7"
+                    app:cardBackgroundColor="#FAF7F2"
+                    app:contentPadding="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingVertical="12dp">
+                    android:foreground="?attr/selectableItemBackground">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_download"
-                        app:tint="#0D3B2E"
-                        android:importantForAccessibility="no" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/academy_quick_downloads"
-                        android:textColor="#12291F"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="12dp"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:src="@drawable/ic_card_arch_watermark"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="26dp"
+                                android:src="@drawable/ic_quick_downloads"
+                                android:importantForAccessibility="no" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/academy_quick_downloads"
+                                android:textColor="#12291F"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:singleLine="true"
+                                android:fontFamily="serif" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- 3. Certificates -->
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_quick_certificates"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginEnd="3dp"
+                    android:layout_height="90dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_academy_quick_card"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#DFD7C7"
+                    app:cardBackgroundColor="#FAF7F2"
+                    app:contentPadding="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingVertical="12dp">
+                    android:foreground="?attr/selectableItemBackground">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_verified"
-                        app:tint="#C9A45A"
-                        android:importantForAccessibility="no" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/academy_quick_certificates"
-                        android:textColor="#12291F"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="12dp"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:src="@drawable/ic_card_arch_watermark"
+                            android:importantForAccessibility="no" />
 
-                <!-- 4. My Progress -->
-                <LinearLayout
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="26dp"
+                                android:src="@drawable/ic_quick_certificates"
+                                android:importantForAccessibility="no" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/academy_quick_certificates"
+                                android:textColor="#12291F"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:singleLine="true"
+                                android:fontFamily="serif" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 4. Progress -->
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_quick_progress"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_height="90dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_academy_quick_card"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#DFD7C7"
+                    app:cardBackgroundColor="#FAF7F2"
+                    app:contentPadding="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingVertical="12dp">
+                    android:foreground="?attr/selectableItemBackground">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_star"
-                        app:tint="#C9A45A"
-                        android:importantForAccessibility="no" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/academy_quick_progress"
-                        android:textColor="#12291F"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="12dp"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:src="@drawable/ic_card_arch_watermark"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="26dp"
+                                android:src="@drawable/ic_quick_progress"
+                                android:importantForAccessibility="no" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/academy_quick_progress"
+                                android:textColor="#12291F"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:singleLine="true"
+                                android:fontFamily="serif" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <!-- ================= SECTION D: Explore Categories ================= -->
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:text="@string/academy_categories_title"
-                android:textColor="#0D3B2E"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:fontFamily="serif" />
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <!-- Horizontal Category Chips -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_categories"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_category_grid_master"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/academy_categories_title"
+                    android:textColor="#0D3B2E"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+            </LinearLayout>
+
+            <!-- Horizontal Category Chips with Next Chevron -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_categories"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal" />
+
+                <ImageButton
+                    android:id="@+id/btn_category_next"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/btn_category_next"
+                    android:contentDescription="@string/action_next" />
+            </LinearLayout>
 
             <!-- ================= SECTION F: Continue Learning Rail ================= -->
             <LinearLayout
@@ -345,90 +439,48 @@
             </LinearLayout>
 
             <!-- ================= SECTION G: Daily Islamic Lesson ================= -->
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/card_daily_lesson"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_daily_lesson_card"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="20dp">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/bg_daily_deen_full"
+                    android:scaleType="fitXY"
+                    android:importantForAccessibility="no" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_category_badge"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="2dp"
-                        android:text="Daily Deen"
-                        android:textColor="#C9A45A"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_quran_headphones"
-                        app:tint="#D8E8E0"
-                        android:importantForAccessibility="no" />
-
-                    <TextView
-                        android:id="@+id/tv_daily_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="3 min read"
-                        android:textColor="#D8E8E0"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_daily_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="The Excellence of Seeking Knowledge"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:fontFamily="serif" />
-
-                <TextView
-                    android:id="@+id/tv_daily_preview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise. (Sahih Muslim)"
-                    android:textColor="#D8E8E0"
-                    android:textSize="12sp"
-                    android:maxLines="2"
-                    android:ellipsize="end" />
-
+                <!-- Transparent Clickable Button overlay on the Start Lesson Button -->
                 <Button
                     android:id="@+id/btn_start_daily_lesson"
-                    style="@style/Widget.IKP.Button.Primary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="12dp"
-                    android:backgroundTint="#C9A45A"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="@string/academy_start_today_lesson"
-                    android:textColor="#07261D"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:layout_width="160dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="bottom|start"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:text="" />
+
+                <!-- Hidden text views for ViewModel data binding without crashing -->
+                <TextView
+                    android:id="@+id/tv_daily_title"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="invisible" />
+                <TextView
+                    android:id="@+id/tv_daily_preview"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="invisible" />
+                <TextView
+                    android:id="@+id/tv_daily_duration"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="invisible" />
+            </FrameLayout>
 
             <!-- ================= SECTION H: Flashcard Practice Decks ================= -->
             <LinearLayout

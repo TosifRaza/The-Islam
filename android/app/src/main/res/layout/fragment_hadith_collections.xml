@@ -1,22 +1,542 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="?android:attr/colorBackground">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center_vertical">
-        <ImageButton android:id="@+id/btn_back" android:layout_width="@dimen/touch_target_min"
-            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_back" android:src="@drawable/ic_arrow_back" />
-        <TextView android:id="@+id/title" android:layout_width="0dp" android:layout_weight="1"
-            android:layout_height="wrap_content" android:text="@string/hadith_title"
-            android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
-    </LinearLayout>
-    <TextView android:id="@+id/state_text" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="@dimen/space_md"
-        android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
-    <Button android:id="@+id/btn_retry" style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/retry" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler"
-        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
-</LinearLayout>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F5EE">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Top Header with Mosque Silhouette, Lanterns, Moon, and Arch -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="175dp">
+
+                <!-- Scenic Mosque Night Backdrop -->
+                <ImageView
+                    android:id="@+id/iv_header_art"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_quran_header"
+                    android:contentDescription="@null" />
+
+                <!-- Rich Emerald Gradient Scrim -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#7704231A" />
+
+                <!-- Top App Bar Navigation -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="12dp">
+
+                    <!-- Back Button -->
+                    <ImageButton
+                        android:id="@+id/btn_back"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/bg_emerald_nav_box"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="#F3DE97"
+                        android:padding="9dp"
+                        android:contentDescription="@string/cd_back" />
+
+                    <!-- Saved / Bookmarks Button -->
+                    <ImageButton
+                        android:id="@+id/btn_header_bookmark"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/bg_emerald_nav_box"
+                        android:src="@drawable/ic_bookmark_outline"
+                        app:tint="#F3DE97"
+                        android:padding="9dp"
+                        android:contentDescription="Saved Collections" />
+                </RelativeLayout>
+
+                <!-- Center Content: Gold Book, Hadith Library, Subtitle -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="50dp">
+
+                    <!-- Gold Open Book Emblem -->
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/ic_gold_quran_book_small"
+                        android:contentDescription="@null" />
+
+                    <!-- Title: Hadith Library -->
+                    <TextView
+                        android:id="@+id/tv_header_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hadith Library"
+                        android:textColor="#FFFFFF"
+                        android:textSize="21sp"
+                        android:textStyle="bold"
+                        android:fontFamily="serif"
+                        android:layout_marginTop="1dp" />
+
+                    <!-- Subtitle -->
+                    <TextView
+                        android:id="@+id/tv_header_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Authentic Sayings of Prophet Muhammad ﷺ"
+                        android:textColor="#C5E6D8"
+                        android:textSize="11sp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:layout_marginTop="2dp" />
+
+                    <!-- Decorative Flourish -->
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="3dp"
+                        android:src="@drawable/ic_gold_diamond_flourish"
+                        android:contentDescription="@null" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Floating Search Bar overlapping header -->
+            <LinearLayout
+                android:id="@+id/layout_search"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="-22dp"
+                android:background="@drawable/bg_search_bar_white"
+                android:gravity="center_vertical"
+                android:elevation="3dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="6dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="#5F6368"
+                    android:contentDescription="@null" />
+
+                <EditText
+                    android:id="@+id/et_search_hadith"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@null"
+                    android:hint="Search hadith, book, or topic..."
+                    android:textColor="#111827"
+                    android:textColorHint="#8C9B93"
+                    android:textSize="13sp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:importantForAutofill="no" />
+
+                <ImageButton
+                    android:id="@+id/btn_clear_search"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_delete"
+                    app:tint="#9CA3AF"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:contentDescription="Clear search" />
+
+                <ImageButton
+                    android:id="@+id/btn_filter"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_green_filter_btn"
+                    android:src="@drawable/ic_filter_sliders"
+                    android:padding="7dp"
+                    android:contentDescription="Filter options" />
+            </LinearLayout>
+
+            <!-- Filter Chips Horizontal Scroll -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:clipToPadding="false"
+                android:scrollbars="none"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Chip 1: All Collections -->
+                    <LinearLayout
+                        android:id="@+id/chip_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_category_chip_selected"
+                        android:gravity="center"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/tv_chip_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All Collections"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Chip 2: Primary (6) -->
+                    <LinearLayout
+                        android:id="@+id/chip_primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_category_chip_default"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:id="@+id/iv_chip_primary"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/ic_chip_ribbon"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:id="@+id/tv_chip_primary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Primary (6)"
+                            android:textColor="#0D3B2E"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Chip 3: Secondary -->
+                    <LinearLayout
+                        android:id="@+id/chip_secondary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_category_chip_default"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:id="@+id/iv_chip_secondary"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/ic_chip_layers"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:id="@+id/tv_chip_secondary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Secondary"
+                            android:textColor="#0D3B2E"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Chip 4: Topical -->
+                    <LinearLayout
+                        android:id="@+id/chip_topical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_category_chip_default"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:id="@+id/iv_chip_topical"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/ic_chip_tag"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:id="@+id/tv_chip_topical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Topical"
+                            android:textColor="#0D3B2E"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Chip 5: Chapters -->
+                    <LinearLayout
+                        android:id="@+id/chip_chapters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_category_chip_default"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:id="@+id/iv_chip_chapters"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/ic_chip_book"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:id="@+id/tv_chip_chapters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Chapters"
+                            android:textColor="#0D3B2E"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Section Title Row: "Major Hadith Collections" & Sort -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp">
+
+                <!-- Left: Book icon + Title -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:src="@drawable/ic_hadith_stats_book"
+                        app:tint="#0D3B2E"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/tv_section_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Major Hadith Collections"
+                        android:textColor="#0D3B2E"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="7dp" />
+                </LinearLayout>
+
+                <!-- Right: Sort Dropdown -->
+                <LinearLayout
+                    android:id="@+id/btn_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:id="@+id/tv_sort_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sort: Recommended"
+                        android:textColor="#4B5563"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_chevron_down"
+                        app:tint="#4B5563"
+                        android:layout_marginStart="3dp"
+                        android:contentDescription="@null" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- State / Error / Loading Text & Button -->
+            <TextView
+                android:id="@+id/state_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_retry"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/retry"
+                android:visibility="gone" />
+
+            <!-- Empty Search Results View -->
+            <TextView
+                android:id="@+id/tv_empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp"
+                android:gravity="center"
+                android:text="No collections found matching your search."
+                android:textColor="#6B7280"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <!-- Recycler for Collection Cards -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+
+            <!-- Bottom Hadith Journey Card -->
+            <FrameLayout
+                android:id="@+id/card_journey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_hadith_journey_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="11dp">
+
+                    <!-- Gold Medal / Rosette -->
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_journey_badge"
+                        android:contentDescription="@null"
+                        android:layout_marginEnd="10dp" />
+
+                    <!-- Center Journey Progress -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your Hadith Journey"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13.5sp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_journey"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="3.5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:max="6"
+                            android:progress="2"
+                            android:progressDrawable="@drawable/progress_hadith_journey" />
+
+                        <TextView
+                            android:id="@+id/tv_journey_progress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2 of 6 collections explored"
+                            android:textColor="#A3D4C0"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <!-- Chevron Button -->
+                    <ImageButton
+                        android:id="@+id/btn_journey_next"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_circle_arrow_green"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#FFFFFF"
+                        android:padding="7dp"
+                        android:contentDescription="Continue journey" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

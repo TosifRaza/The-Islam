@@ -97,7 +97,7 @@ public final class SubjectRepository {
     public static List<Models.Subject> defaultSubjects() {
         List<Models.Subject> list = new java.util.ArrayList<>();
         list.add(new Models.Subject("cat_quran_tafsir", "Al-Quran & Tafsir", "القرآن والتفسير", null, 1));
-        list.add(new Models.Subject("cat_hadith", "Hadith & Sunnah", "الحديث والسنة", null, 2));
+        list.add(new Models.Subject("cat_hadith", "Hadith Library", "الحديث والمكتبة", null, 2));
         list.add(new Models.Subject("cat_seerah", "Seerah & History", "السيرة والتاريخ", null, 3));
         list.add(new Models.Subject("cat_aqeedah", "Aqeedah", "العقيدة", null, 4));
         list.add(new Models.Subject("cat_fiqh", "Fiqh", "الفقه", null, 5));
