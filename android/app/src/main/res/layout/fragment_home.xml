@@ -257,10 +257,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_quran" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_quran_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -282,10 +292,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_hadith" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_hadith_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -307,10 +327,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_duas" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_duas_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -332,10 +362,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_prayer" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_prayer_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -371,10 +411,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_qibla" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_qibla_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -396,10 +446,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_tasbih" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_tasbih_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -421,10 +481,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_calendar" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_calendar_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -447,10 +517,20 @@
                         android:paddingBottom="8dp"
                         android:clickable="true"
                         android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_shortcut_books" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            app:cardCornerRadius="13dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="#0D3B2E"
+                            android:clickable="false"
+                            android:focusable="false">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_emoji_books_v2" />
+                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
