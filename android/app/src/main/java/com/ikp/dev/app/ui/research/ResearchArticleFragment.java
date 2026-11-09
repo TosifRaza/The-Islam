@@ -1,5 +1,8 @@
 package com.ikp.dev.app.ui.research;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +53,25 @@ public final class ResearchArticleFragment extends Fragment {
         articleId = args == null ? null : args.getString("articleId");
         view.findViewById(R.id.btn_back).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).popBackStack());
+
+        View shareBtn = view.findViewById(R.id.btn_share_article);
+        if (shareBtn != null) {
+            shareBtn.setOnClickListener(v -> {
+                UiState<AcademyDtos.ArticleDetailDto> s = viewModel.article().getValue();
+                if (s != null && s.data != null) {
+                    ClipboardManager cb = (ClipboardManager)
+                            requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (cb != null) {
+                        String clip = s.data.title + "\n\n"
+                                + (s.data.summary != null ? s.data.summary + "\n\n" : "")
+                                + (s.data.body != null ? s.data.body : "");
+                        cb.setPrimaryClip(ClipData.newPlainText("Article", clip));
+                        Toast.makeText(requireContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
         view.findViewById(R.id.btn_save_article).setOnClickListener(v -> {
             if (articleId == null) return;
             if (!ServiceLocator.sessionManager().isSignedIn()) {
@@ -94,29 +116,47 @@ public final class ResearchArticleFragment extends Fragment {
                 stateView.setVisibility(View.GONE);
                 content.setVisibility(View.VISIBLE);
                 AcademyDtos.ArticleDetailDto a = state.data;
-                ((TextView) requireView().findViewById(R.id.tv_article_title)).setText(a.title);
+                ((TextView) requireView().findViewById(R.id.tv_article_title)).setText(a.title != null ? a.title : "");
+
+                TextView headline = requireView().findViewById(R.id.tv_article_headline);
+                if (headline != null) {
+                    headline.setText(a.title != null ? a.title : "");
+                }
+
+                TextView readTime = requireView().findViewById(R.id.tv_article_read_time);
+                if (readTime != null) {
+                    if (a.readingMinutes != null && a.readingMinutes > 0) {
+                        readTime.setVisibility(View.VISIBLE);
+                        readTime.setText(a.readingMinutes + " min read");
+                    } else {
+                        readTime.setVisibility(View.GONE);
+                    }
+                }
+
                 String meta = (a.topic == null ? "" : a.topic.name + " · ")
                         + (a.language == null ? "" : a.language + " · ")
                         + (a.authorDisplayName == null ? "" : a.authorDisplayName);
                 ((TextView) requireView().findViewById(R.id.tv_article_meta)).setText(meta);
-                ((TextView) requireView().findViewById(R.id.tv_article_tier)).setText(a.sourceTier);
+                ((TextView) requireView().findViewById(R.id.tv_article_tier)).setText(
+                        a.sourceTier != null ? a.sourceTier.toUpperCase() : "RESEARCH");
                 ((TextView) requireView().findViewById(R.id.tv_article_summary)).setText(
                         a.summary == null ? "" : a.summary);
                 ((TextView) requireView().findViewById(R.id.tv_article_body)).setText(
                         a.body == null ? "" : a.body);
+
                 LinearLayout box = requireView().findViewById(R.id.citations_container);
                 box.removeAllViews();
                 if (a.citations != null && !a.citations.isEmpty()) {
-                    TextView header = new TextView(requireContext());
-                    header.setTextAppearance(R.style.TextAppearance_IKP_SectionHeader);
-                    header.setText(R.string.research_citations);
-                    header.setPadding(0, dp(12), 0, dp(4));
-                    box.addView(header);
                     for (AcademyDtos.CitationDto c : a.citations) {
                         TextView row = new TextView(requireContext());
                         row.setTextAppearance(R.style.TextAppearance_IKP_BodySecondary);
                         row.setText(citationText(c));
-                        row.setPadding(0, 0, 0, dp(6));
+                        row.setPadding(dp(12), dp(8), dp(12), dp(8));
+                        row.setBackgroundResource(R.drawable.bg_citation_card);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        lp.setMargins(0, 0, 0, dp(8));
+                        row.setLayoutParams(lp);
                         box.addView(row);
                     }
                 }
@@ -135,15 +175,15 @@ public final class ResearchArticleFragment extends Fragment {
 
     /** Citation text only from stored fields — never fabricated. */
     private String citationText(AcademyDtos.CitationDto c) {
-        StringBuilder sb = new StringBuilder("• ");
-        if (c.citationKind != null) sb.append("[").append(c.citationKind).append("] ");
+        StringBuilder sb = new StringBuilder();
+        if (c.citationKind != null) sb.append("[").append(c.citationKind.toUpperCase()).append("] ");
         if (c.surahId != null && c.ayahNumber != null) {
-            sb.append("Q ").append(c.surahId).append(":").append(c.ayahNumber).append(" ");
+            sb.append("Surah ").append(c.surahId).append(":").append(c.ayahNumber).append(" ");
         }
-        if (c.hadithId != null) sb.append("hadith #").append(c.hadithId).append(" ");
+        if (c.hadithId != null) sb.append("Hadith #").append(c.hadithId).append(" ");
         if (c.externalRef != null && !c.externalRef.isEmpty()) sb.append(c.externalRef).append(" ");
-        if (c.quote != null && !c.quote.isEmpty()) sb.append("“").append(c.quote).append("” ");
-        if (c.note != null && !c.note.isEmpty()) sb.append("— ").append(c.note);
+        if (c.quote != null && !c.quote.isEmpty()) sb.append("\n“").append(c.quote).append("”");
+        if (c.note != null && !c.note.isEmpty()) sb.append("\nNote: ").append(c.note);
         return sb.toString().trim();
     }
 

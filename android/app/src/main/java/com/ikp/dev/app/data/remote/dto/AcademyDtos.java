@@ -222,12 +222,15 @@ public final class AcademyDtos {
     public static final class ArticleRowDto {
         public String articleId;
         public String title;
+        public String titleAr;
+        public String summary;
         public ArticleTopicDto topic;
         public String sourceTier; // primary | secondary | editorial
         public String status;
         public String language;
         public String authorDisplayName;
         public String updatedAt;
+        public Integer readingMinutes;
     }
 
     public static final class CitationDto {
@@ -253,6 +256,8 @@ public final class AcademyDtos {
         public String authorDisplayName;
         public String sourceTier;
         public String status;
+        public String publishedAt;
+        public Integer readingMinutes;
         public ArticleTopicDto topic;
         public List<CitationDto> citations;
     }
@@ -266,6 +271,8 @@ public final class AcademyDtos {
         public String areasOfExpertise;
         public String verificationStatus; // unverified | verified | revoked
         public String verifiedAt;
+        public Integer articleCount;
+        public Integer fatwaCount;
     }
 
     public static final class FatwaRowDto {
@@ -274,6 +281,8 @@ public final class AcademyDtos {
         public String category;
         public String language;
         public String publicationDate;
+        public String scholarName;
+        public String answerExcerpt;
     }
 
     public static final class FatwaReviewDto {

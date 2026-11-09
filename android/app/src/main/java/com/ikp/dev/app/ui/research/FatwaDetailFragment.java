@@ -1,5 +1,8 @@
 package com.ikp.dev.app.ui.research;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +50,27 @@ public final class FatwaDetailFragment extends Fragment {
         content = view.findViewById(R.id.fatwa_content);
         Bundle args = getArguments();
         fatwaId = args == null ? null : args.getString("fatwaId");
+
         view.findViewById(R.id.btn_back).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).popBackStack());
+
+        View shareBtn = view.findViewById(R.id.btn_share_fatwa);
+        if (shareBtn != null) {
+            shareBtn.setOnClickListener(v -> {
+                UiState<AcademyDtos.FatwaDetailDto> s = viewModel.fatwa().getValue();
+                if (s != null && s.data != null) {
+                    ClipboardManager cb = (ClipboardManager)
+                            requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (cb != null) {
+                        String clip = "Question:\n" + (s.data.question != null ? s.data.question : "")
+                                + "\n\nRuling:\n" + (s.data.answer != null ? s.data.answer : "");
+                        cb.setPrimaryClip(ClipData.newPlainText("Fatwa", clip));
+                        Toast.makeText(requireContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
         view.findViewById(R.id.btn_save_fatwa).setOnClickListener(v -> {
             if (fatwaId == null) return;
             if (!ServiceLocator.sessionManager().isSignedIn()) {
@@ -71,27 +93,53 @@ public final class FatwaDetailFragment extends Fragment {
                 stateView.setVisibility(View.GONE);
                 content.setVisibility(View.VISIBLE);
                 AcademyDtos.FatwaDetailDto f = state.data;
+
+                TextView topicBadge = requireView().findViewById(R.id.tv_fatwa_topic_badge);
+                if (topicBadge != null) {
+                    if (f.category != null && !f.category.isEmpty()) {
+                        topicBadge.setText(f.category.toUpperCase());
+                    } else {
+                        topicBadge.setText("FATWA & RULING");
+                    }
+                }
+
                 ((TextView) requireView().findViewById(R.id.tv_fatwa_question)).setText(
                         f.question == null ? "" : f.question);
+
                 String meta = (f.category == null ? "" : f.category + " · ")
-                        + (f.language == null ? "" : f.language + " · ")
+                        + (f.language == null ? "" : f.language.toUpperCase() + " · ")
                         + (f.publicationDate == null ? "" : f.publicationDate);
                 ((TextView) requireView().findViewById(R.id.tv_fatwa_meta)).setText(meta);
+
                 ((TextView) requireView().findViewById(R.id.tv_fatwa_answer)).setText(
                         f.answer == null ? "" : f.answer);
+
                 TextView review = requireView().findViewById(R.id.tv_fatwa_review);
+                View reviewerBox = requireView().findViewById(R.id.box_fatwa_reviewer);
+
                 if (f.review != null && f.review.scholar != null) {
                     StringBuilder sb = new StringBuilder();
-                    if (f.review.scholar.name != null) sb.append(f.review.scholar.name);
+                    if (f.review.scholar.name != null) {
+                        sb.append("Reviewed by ").append(f.review.scholar.name);
+                    }
+                    if (f.review.scholar.qualifications != null && !f.review.scholar.qualifications.isEmpty()) {
+                        sb.append(" (").append(f.review.scholar.qualifications).append(")");
+                    }
                     if (f.review.reviewDate != null) {
-                        sb.append(sb.length() == 0 ? "" : " · ").append(f.review.reviewDate);
+                        sb.append("\nDate: ").append(f.review.reviewDate);
                     }
                     if (f.review.reviewNotes != null && !f.review.reviewNotes.isEmpty()) {
-                        sb.append("\n").append(f.review.reviewNotes);
+                        sb.append("\nAttestation: ").append(f.review.reviewNotes);
                     }
+                    if (reviewerBox != null) reviewerBox.setVisibility(View.VISIBLE);
                     review.setVisibility(View.VISIBLE);
                     review.setText(sb.toString());
+                } else if (f.review != null && f.review.reviewNotes != null && !f.review.reviewNotes.isEmpty()) {
+                    if (reviewerBox != null) reviewerBox.setVisibility(View.VISIBLE);
+                    review.setVisibility(View.VISIBLE);
+                    review.setText("Attestation: " + f.review.reviewNotes);
                 } else {
+                    if (reviewerBox != null) reviewerBox.setVisibility(View.GONE);
                     review.setVisibility(View.GONE);
                 }
             }

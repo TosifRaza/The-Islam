@@ -57,11 +57,27 @@ public final class ScholarDetailFragment extends Fragment {
                 stateView.setVisibility(View.GONE);
                 content.setVisibility(View.VISIBLE);
                 AcademyDtos.ScholarDto s = state.data;
+
+                TextView initials = requireView().findViewById(R.id.tv_scholar_initials);
+                if (initials != null) {
+                    initials.setText(getInitials(s.name));
+                }
+
                 ((TextView) requireView().findViewById(R.id.tv_scholar_name)).setText(
-                        s.name == null ? "" : s.name
-                                + (s.nameAr == null || s.nameAr.isEmpty() ? "" : " · " + s.nameAr));
+                        s.name == null ? "" : s.name);
+
+                TextView nameAr = requireView().findViewById(R.id.tv_scholar_name_ar);
+                if (nameAr != null) {
+                    if (s.nameAr != null && !s.nameAr.trim().isEmpty()) {
+                        nameAr.setVisibility(View.VISIBLE);
+                        nameAr.setText(s.nameAr);
+                    } else {
+                        nameAr.setVisibility(View.GONE);
+                    }
+                }
+
                 ((TextView) requireView().findViewById(R.id.tv_scholar_status)).setText(
-                        s.verificationStatus == null ? "" : s.verificationStatus);
+                        s.verificationStatus == null ? "VERIFIED" : s.verificationStatus);
                 ((TextView) requireView().findViewById(R.id.tv_scholar_qualifications)).setText(
                         s.qualifications == null ? "" : s.qualifications);
                 ((TextView) requireView().findViewById(R.id.tv_scholar_expertise)).setText(
@@ -79,5 +95,19 @@ public final class ScholarDetailFragment extends Fragment {
                 stateView.setOnRetry(() -> viewModel.loadScholar(scholarId));
             }
         }
+    }
+
+    private static String getInitials(String name) {
+        if (name == null || name.trim().isEmpty()) return "S";
+        String[] parts = name.trim().split("\\s+");
+        if (parts.length == 1) {
+            return parts[0].substring(0, 1).toUpperCase();
+        }
+        String p0 = parts[0].replace(".", "");
+        String p1 = parts[parts.length - 1].replace(".", "");
+        if (p0.length() > 0 && p1.length() > 0) {
+            return (p0.substring(0, 1) + p1.substring(0, 1)).toUpperCase();
+        }
+        return name.substring(0, 1).toUpperCase();
     }
 }

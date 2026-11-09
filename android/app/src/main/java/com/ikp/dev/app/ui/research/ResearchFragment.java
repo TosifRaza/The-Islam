@@ -1,45 +1,61 @@
 package com.ikp.dev.app.ui.research;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.NavOptions;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.ikp.dev.app.R;
 import com.ikp.dev.app.core.common.UiState;
+import com.ikp.dev.app.data.remote.dto.AcademyDtos;
+import com.ikp.dev.app.di.ServiceLocator;
 import com.ikp.dev.app.ui.common.StateView;
-import com.ikp.dev.app.ui.common.TwoLineAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Research tab (M5): three directories behind one screen — research articles
- * (clearly tiered primary/secondary/editorial), the verified-scholar directory
- * and the published-fatwa directory. Guests may browse; saving/noteing
- * requires sign-in (backend enforced, surfaced via stable error codes).
- * The AI research subsystem with citations is M6 — nothing generated here.
+ * Research tab (M5): academic research platform with peer-reviewed articles,
+ * verified scholar directory, and authenticated fatwas.
  */
 public final class ResearchFragment extends Fragment {
 
     private ResearchViewModel viewModel;
     private StateView stateView;
-    private TwoLineAdapter adapter;
-    private TextInputLayout fatwaSearchBox;
-    private final List<ResearchViewModel.TwoLineRow> shown = new ArrayList<>();
+
+    private RecyclerView rvTopics;
+    private RecyclerView rvResearch;
+    private View cardFeatured;
+    private View clearSearchBtn;
+    private TextInputEditText etSearch;
+
+    private TextView tvSectionTitle;
+    private TextView tvSectionCount;
+    private TextView tvFeaturedTitle;
+    private TextView tvFeaturedSummary;
+    private TextView tvFeaturedTime;
+    private TextView tvFeaturedAuthor;
+    private View btnFeaturedRead;
+
+    private ResearchTopicAdapter topicAdapter;
+    private ResearchArticleAdapter articleAdapter;
+    private ScholarAdapter scholarAdapter;
+    private FatwaAdapter fatwaAdapter;
 
     @Nullable
     @Override
@@ -52,97 +68,245 @@ public final class ResearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ResearchViewModel.class);
+
         stateView = view.findViewById(R.id.research_state);
+        rvTopics = view.findViewById(R.id.rv_topics);
+        rvResearch = view.findViewById(R.id.rv_research);
+        cardFeatured = view.findViewById(R.id.card_featured);
+        clearSearchBtn = view.findViewById(R.id.btn_clear_search);
+        etSearch = view.findViewById(R.id.et_fatwa_query);
 
-        RecyclerView rv = view.findViewById(R.id.rv_research);
-        rv.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new TwoLineAdapter((item, pos) -> openDetail(pos));
-        rv.setAdapter(adapter);
+        tvSectionTitle = view.findViewById(R.id.tv_section_title);
+        tvSectionCount = view.findViewById(R.id.tv_section_count);
+        tvFeaturedTitle = view.findViewById(R.id.tv_featured_title);
+        tvFeaturedSummary = view.findViewById(R.id.tv_featured_summary);
+        tvFeaturedTime = view.findViewById(R.id.tv_featured_time);
+        tvFeaturedAuthor = view.findViewById(R.id.tv_featured_author);
+        btnFeaturedRead = view.findViewById(R.id.btn_featured_read);
 
-        fatwaSearchBox = view.findViewById(R.id.til_fatwa_search);
-        TextInputEditText query = view.findViewById(R.id.et_fatwa_query);
-        if (query != null) {
-            query.addTextChangedListener(new android.text.TextWatcher() {
-                @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) { }
-                @Override public void onTextChanged(CharSequence s, int a, int b, int c) { }
+        setupAdapters();
+        setupSearch();
+        setupModeChips(view);
+        setupBookmarkButton(view);
+        observeViewModel();
 
-                @Override public void afterTextChanged(android.text.Editable s) {
-                    viewModel.setFatwaQuery(s == null ? null : s.toString());
+        viewModel.reload();
+    }
+
+    private void setupAdapters() {
+        // Topics Adapter
+        topicAdapter = new ResearchTopicAdapter(topic -> {
+            String slug = topic != null ? topic.slug : null;
+            viewModel.setTopic(slug);
+            viewModel.reload();
+        });
+        rvTopics.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvTopics.setAdapter(topicAdapter);
+
+        // Research List Adapters
+        articleAdapter = new ResearchArticleAdapter(
+                this::openArticleDetail,
+                this::saveArticleBookmark
+        );
+
+        scholarAdapter = new ScholarAdapter(this::openScholarDetail);
+
+        fatwaAdapter = new FatwaAdapter(this::openFatwaDetail);
+
+        rvResearch.setLayoutManager(new LinearLayoutManager(requireContext()));
+        rvResearch.setAdapter(articleAdapter);
+    }
+
+    private void setupSearch() {
+        if (etSearch != null) {
+            etSearch.addTextChangedListener(new TextWatcher() {
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String q = s != null ? s.toString().trim() : "";
+                    if (clearSearchBtn != null) {
+                        clearSearchBtn.setVisibility(q.isEmpty() ? View.GONE : View.VISIBLE);
+                    }
+                    viewModel.setFatwaQuery(q);
                 }
             });
-            query.setOnEditorActionListener((v, actionId, event) -> {
+
+            etSearch.setOnEditorActionListener((v, actionId, event) -> {
                 viewModel.reload();
                 return false;
             });
         }
 
-        ChipGroup chips = view.findViewById(R.id.chips_research_mode);
-        chips.setOnCheckedStateChangeListener((group, ids) -> {
-            if (ids.contains(R.id.chip_scholars)) {
+        if (clearSearchBtn != null) {
+            clearSearchBtn.setOnClickListener(v -> {
+                if (etSearch != null) etSearch.setText("");
+                viewModel.setFatwaQuery(null);
+                viewModel.reload();
+            });
+        }
+    }
+
+    private void setupModeChips(View root) {
+        ChipGroup chips = root.findViewById(R.id.chips_research_mode);
+        if (chips == null) return;
+
+        chips.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            if (checkedIds.contains(R.id.chip_scholars)) {
                 viewModel.setMode(ResearchViewModel.Mode.SCHOLARS);
-            } else if (ids.contains(R.id.chip_fatwas)) {
+                rvResearch.setAdapter(scholarAdapter);
+                rvTopics.setVisibility(View.GONE);
+                cardFeatured.setVisibility(View.GONE);
+                tvSectionTitle.setText("Verified Scholars");
+                if (etSearch != null) etSearch.setHint("Search scholars by name or specialization...");
+            } else if (checkedIds.contains(R.id.chip_fatwas)) {
                 viewModel.setMode(ResearchViewModel.Mode.FATWAS);
+                rvResearch.setAdapter(fatwaAdapter);
+                rvTopics.setVisibility(View.VISIBLE);
+                cardFeatured.setVisibility(View.GONE);
+                tvSectionTitle.setText("Authenticated Fatwas & Rulings");
+                if (etSearch != null) etSearch.setHint("Search fatwas by topic or question...");
             } else {
                 viewModel.setMode(ResearchViewModel.Mode.ARTICLES);
+                rvResearch.setAdapter(articleAdapter);
+                rvTopics.setVisibility(View.VISIBLE);
+                tvSectionTitle.setText("Published Research Articles");
+                if (etSearch != null) etSearch.setHint("Search articles, scholars, or fatwas...");
             }
-            renderList();
+            if (topicAdapter != null) topicAdapter.setSelectedSlug(null);
             viewModel.reload();
         });
-
-        viewModel.state().observe(getViewLifecycleOwner(), this::render);
-        viewModel.reload();
     }
 
-    private void openDetail(int pos) {
-        if (pos < 0 || pos >= shown.size()) return;
-        ResearchViewModel.TwoLineRow row = shown.get(pos);
-        Bundle args = new Bundle();
-        NavOptions opts = new NavOptions.Builder().setLaunchSingleTop(true).build();
-        switch (viewModel.mode()) {
-            case ARTICLES -> args.putString("articleId", row.id);
-            case SCHOLARS -> args.putString("scholarId", row.id);
-            case FATWAS -> args.putString("fatwaId", row.id);
+    private void setupBookmarkButton(View root) {
+        View bookmarkBtn = root.findViewById(R.id.btn_research_bookmarks);
+        if (bookmarkBtn != null) {
+            bookmarkBtn.setOnClickListener(v -> {
+                if (!ServiceLocator.sessionManager().isSignedIn()) {
+                    Toast.makeText(requireContext(), R.string.signin_required, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Saved Research & Bookmarks", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        int dest = viewModel.mode() == ResearchViewModel.Mode.ARTICLES ? R.id.researchArticleFragment
-                : viewModel.mode() == ResearchViewModel.Mode.SCHOLARS ? R.id.scholarDetailFragment
-                : R.id.fatwaDetailFragment;
-        NavHostFragment.findNavController(this).navigate(dest, args, opts);
     }
 
-    private void renderList() {
-        fatwaSearchBox.setVisibility(
-                viewModel.mode() == ResearchViewModel.Mode.FATWAS ? View.VISIBLE : View.GONE);
-        UiState<List<ResearchViewModel.TwoLineRow>> s = viewModel.state().getValue();
-        if (s != null) render(s);
+    private void observeViewModel() {
+        viewModel.topics().observe(getViewLifecycleOwner(), topics -> {
+            if (topics != null && !topics.isEmpty()) {
+                topicAdapter.submitList(topics, viewModel.selectedTopic().getValue());
+            }
+        });
+
+        viewModel.featuredArticle().observe(getViewLifecycleOwner(), article -> {
+            if (viewModel.mode() == ResearchViewModel.Mode.ARTICLES && article != null) {
+                cardFeatured.setVisibility(View.VISIBLE);
+                tvFeaturedTitle.setText(article.title != null ? article.title : "");
+                tvFeaturedSummary.setText(article.summary != null ? article.summary : "");
+                tvFeaturedTime.setText((article.readingMinutes != null && article.readingMinutes > 0)
+                        ? article.readingMinutes + " min read" : "Academic Paper");
+                tvFeaturedAuthor.setText(article.authorDisplayName != null
+                        ? "By " + article.authorDisplayName : "Academic Research");
+
+                View.OnClickListener openFeatured = v -> openArticleDetail(article);
+                cardFeatured.setOnClickListener(openFeatured);
+                if (btnFeaturedRead != null) btnFeaturedRead.setOnClickListener(openFeatured);
+            } else {
+                cardFeatured.setVisibility(View.GONE);
+            }
+        });
+
+        viewModel.articlesState().observe(getViewLifecycleOwner(), this::renderArticles);
+        viewModel.scholarsState().observe(getViewLifecycleOwner(), this::renderScholars);
+        viewModel.fatwasState().observe(getViewLifecycleOwner(), this::renderFatwas);
+
+        viewModel.bookmarkSaved().observe(getViewLifecycleOwner(), ok -> {
+            if (ok != null && ok) {
+                Toast.makeText(requireContext(), "Saved to Bookmarks", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void render(UiState<List<ResearchViewModel.TwoLineRow>> state) {
+    private void renderArticles(UiState<List<AcademyDtos.ArticleRowDto>> state) {
+        if (viewModel.mode() != ResearchViewModel.Mode.ARTICLES) return;
+        handleCommonState(state, state.data != null ? state.data.size() : 0, "articles");
+        if (state.kind == UiState.Kind.SUCCESS && state.data != null) {
+            articleAdapter.submitList(state.data);
+        }
+    }
+
+    private void renderScholars(UiState<List<AcademyDtos.ScholarDto>> state) {
+        if (viewModel.mode() != ResearchViewModel.Mode.SCHOLARS) return;
+        handleCommonState(state, state.data != null ? state.data.size() : 0, "scholars");
+        if (state.kind == UiState.Kind.SUCCESS && state.data != null) {
+            scholarAdapter.submitList(state.data);
+        }
+    }
+
+    private void renderFatwas(UiState<List<AcademyDtos.FatwaRowDto>> state) {
+        if (viewModel.mode() != ResearchViewModel.Mode.FATWAS) return;
+        handleCommonState(state, state.data != null ? state.data.size() : 0, "fatwas");
+        if (state.kind == UiState.Kind.SUCCESS && state.data != null) {
+            fatwaAdapter.submitList(state.data);
+        }
+    }
+
+    private <T> void handleCommonState(UiState<T> state, int count, String entityName) {
         switch (state.kind) {
             case LOADING -> {
                 stateView.setVisibility(View.VISIBLE);
                 stateView.renderLoading();
+                tvSectionCount.setText("");
             }
             case SUCCESS -> {
                 stateView.setVisibility(View.GONE);
-                shown.clear();
-                if (state.data != null) shown.addAll(state.data);
-                List<TwoLineAdapter.Item> rows = new ArrayList<>();
-                for (ResearchViewModel.TwoLineRow r : shown) {
-                    rows.add(new TwoLineAdapter.ItemImpl(r.title, r.subtitle, r.badge));
-                }
-                adapter.submit(rows);
+                tvSectionCount.setText("(" + count + " " + entityName + ")");
             }
             case EMPTY -> {
-                shown.clear();
-                adapter.submit(new ArrayList<>());
                 stateView.setVisibility(View.VISIBLE);
                 stateView.renderEmpty();
+                tvSectionCount.setText("(0 " + entityName + ")");
             }
             case ERROR -> {
                 stateView.setVisibility(View.VISIBLE);
                 stateView.renderError(state.error);
                 stateView.setOnRetry(viewModel::reload);
+                tvSectionCount.setText("");
             }
         }
+    }
+
+    private void openArticleDetail(AcademyDtos.ArticleRowDto article) {
+        if (article == null || article.articleId == null) return;
+        Bundle args = new Bundle();
+        args.putString("articleId", article.articleId);
+        NavOptions opts = new NavOptions.Builder().setLaunchSingleTop(true).build();
+        NavHostFragment.findNavController(this).navigate(R.id.researchArticleFragment, args, opts);
+    }
+
+    private void openScholarDetail(AcademyDtos.ScholarDto scholar) {
+        if (scholar == null || scholar.scholarId == null) return;
+        Bundle args = new Bundle();
+        args.putString("scholarId", scholar.scholarId);
+        NavOptions opts = new NavOptions.Builder().setLaunchSingleTop(true).build();
+        NavHostFragment.findNavController(this).navigate(R.id.scholarDetailFragment, args, opts);
+    }
+
+    private void openFatwaDetail(AcademyDtos.FatwaRowDto fatwa) {
+        if (fatwa == null || fatwa.fatwaId == null) return;
+        Bundle args = new Bundle();
+        args.putString("fatwaId", fatwa.fatwaId);
+        NavOptions opts = new NavOptions.Builder().setLaunchSingleTop(true).build();
+        NavHostFragment.findNavController(this).navigate(R.id.fatwaDetailFragment, args, opts);
+    }
+
+    private void saveArticleBookmark(AcademyDtos.ArticleRowDto article) {
+        if (article == null || article.articleId == null) return;
+        if (!ServiceLocator.sessionManager().isSignedIn()) {
+            Toast.makeText(requireContext(), R.string.signin_required, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        viewModel.saveArticleBookmark(article.articleId);
     }
 }
