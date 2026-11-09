@@ -19,6 +19,7 @@ import { FatwaDetailPage, FatwaFormPage } from './features/review/FatwasPage'
 import AcademyPage from './features/academy/AcademyPage'
 import AssessmentsPage from './features/assessment/AssessmentsPage'
 import ResearchPage from './features/research/ResearchPage'
+import AssistantAdminPage from './features/assistant/AssistantAdminPage'
 import ScholarsPage from './features/scholars/ScholarsPage'
 import AuditPage from './features/audit/AuditPage'
 import ProfilePage from './features/profile/ProfilePage'
@@ -85,6 +86,10 @@ export default function App() {
                     <ResearchPage />
                   </RequirePermission>
                 }
+              />
+              <Route
+                path="/assistant-ai"
+                element={<AssistantAdminPage />}
               />
               <Route
                 path="/scholars"

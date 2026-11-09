@@ -78,6 +78,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/scholars", "/api/v1/scholars/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/fatwas", "/api/v1/fatwas/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/flashcards/decks", "/api/v1/flashcards/decks/*").permitAll()
+                        // M6 AI Research Assistant (public research queries, suggestions, and feedback)
+                        .requestMatchers("/api/v1/assistant/**").permitAll()
                         // Signed media access (token in query, validated in controller)
                         .requestMatchers(HttpMethod.GET, "/api/v1/files/*").permitAll()
                         // OpenAPI docs (non-production)

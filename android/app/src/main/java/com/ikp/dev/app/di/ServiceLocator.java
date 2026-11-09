@@ -52,6 +52,7 @@ public final class ServiceLocator {
     private static UserContentRepository userContentRepository;
     private static PersonalLibraryRepository personalLibraryRepository;
     private static AcademyRepository academyRepository;
+    private static com.ikp.dev.app.data.repository.AssistantRepository assistantRepository;
     private static ExecutorService ioExecutor;
     private static SharedPreferences appPrefs;
     private static AppExecutors appExecutors;
@@ -90,6 +91,10 @@ public final class ServiceLocator {
             userContentRepository = new UserContentRepository(apiClient);
             personalLibraryRepository = new PersonalLibraryRepository(apiClient);
             academyRepository = new AcademyRepository(apiClient.create(AcademyApi.class));
+            assistantRepository = new com.ikp.dev.app.data.repository.AssistantRepository(
+                    apiClient.create(com.ikp.dev.app.data.remote.AssistantApi.class),
+                    app,
+                    academyRepository);
             appExecutors = new AppExecutors();
         }
     }
@@ -140,6 +145,10 @@ public final class ServiceLocator {
         return academyRepository;
     }
 
+    public static com.ikp.dev.app.data.repository.AssistantRepository assistantRepository() {
+        return assistantRepository;
+    }
+
     public static ApiClient apiClient() {
         return apiClient;
     }
@@ -176,6 +185,7 @@ public final class ServiceLocator {
         userContentRepository = null;
         personalLibraryRepository = null;
         academyRepository = null;
+        assistantRepository = null;
         appExecutors = null;
         appPrefs = null;
     }

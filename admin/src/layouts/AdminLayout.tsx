@@ -21,6 +21,7 @@ const NAV: NavItem[] = [
   { to: '/academy', label: 'Academy', anyPermission: ['academy.manage'] },
   { to: '/assessments', label: 'Assessments', anyPermission: ['assessment.manage', 'academy.manage'] },
   { to: '/research', label: 'Research', anyPermission: ['content.edit'] },
+  { to: '/assistant-ai', label: 'AI Assistant', anyRole: ['super_admin', 'admin', 'content_manager', 'scholar_reviewer'] },
   { to: '/scholars', label: 'Scholars', anyPermission: ['scholars.manage'] },
   { to: '/files', label: 'Files & uploads', anyPermission: ['files.upload'] },
   { to: '/fatwas', label: 'Fatwas', anyPermission: ['fatwa.create', 'fatwa.publish', 'fatwa.review.approve'] },

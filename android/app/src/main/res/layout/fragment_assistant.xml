@@ -3,86 +3,315 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F7F5F0"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_md"
-        android:layout_marginTop="@dimen/space_md"
-        android:text="@string/assistant_title"
-        android:textAppearance="@style/TextAppearance.IKP.HeadlineMedium" />
-
-    <!-- Honest status banner: the RAG subsystem is not connected at M3 -->
-    <TextView
-        android:id="@+id/assistant_banner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_md"
-        android:padding="@dimen/space_sm"
-        android:background="@drawable/bg_banner_gold"
-        android:text="@string/assistant_unavailable_banner"
-        android:textAppearance="@style/TextAppearance.IKP.BodySmall"
-        android:textColor="@color/warning_gold_text"
-        android:contentDescription="@string/assistant_unavailable_banner" />
-
-    <com.ikp.dev.app.ui.common.StateView
-        android:id="@+id/assistant_state"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+    <!-- Top Action Bar -->
     <LinearLayout
-        android:id="@+id/assistant_content"
+        android:id="@+id/assistant_header_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:background="#063F32"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
-        <TextView style="@style/SectionHeader" android:text="@string/assistant_conversations" />
-        <TextView
-            android:id="@+id/assistant_empty_conversations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_md"
-            android:layout_marginEnd="@dimen/space_md"
-            android:text="@string/assistant_empty_conversations"
-            android:textAppearance="@style/TextAppearance.IKP.BodySecondary" />
+        <ImageButton
+            android:id="@+id/btn_back_home"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_arrow_back"
+            android:visibility="gone"
+            app:tint="#FFFFFF" />
 
-        <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
-
-        <!-- Chat composer: message bubbles land with M6; input disabled honestly -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="@dimen/space_md">
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.IKP.TextInput"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="@string/assistant_message_hint"
-                android:enabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_assistant_question"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:enabled="false"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btn_send"
-                style="@style/Widget.IKP.Button.Primary"
+            <TextView
+                android:id="@+id/tv_header_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_sm"
-                android:enabled="false"
-                android:text="@string/assistant_send" />
+                android:text="AI Research Assistant"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/bg_dot_active"
+                    android:backgroundTint="#10B981" />
+
+                <TextView
+                    android:id="@+id/tv_header_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Approved Library Grounded"
+                    android:textColor="#DFD5C0"
+                    android:textSize="11sp" />
+            </LinearLayout>
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_new_chat"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="New Conversation"
+            android:src="@drawable/ic_shortcut_books"
+            app:tint="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/btn_history"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Conversation History"
+            android:src="@drawable/ic_history_clock"
+            app:tint="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/btn_chat_options"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Options"
+            android:src="@drawable/ic_more_vert"
+            android:visibility="gone"
+            app:tint="#FFFFFF" />
+    </LinearLayout>
+
+    <!-- Main Content Frame -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- 1. HOME / WELCOME VIEW -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_assistant_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Welcome Hero Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_assistant_hero"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Islamic Research Companion"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Explore Islamic knowledge through answers strictly grounded in IKP's approved research articles, verified fatwas, and authenticated classical compendia."
+                        android:textColor="#E8E2D5"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_category_badge"
+                        android:backgroundTint="#0F3328"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_verified"
+                            app:tint="#C59B4B" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="M6 Approved · Peer-Reviewed · No Hallucinations"
+                            android:textColor="#C59B4B"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Suggested Questions Section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Suggested Research Topics"
+                    android:textColor="#063F32"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_suggestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal" />
+
+                <!-- Recent Conversations Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Recent Inquiries"
+                        android:textColor="#063F32"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btn_view_all_history"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View All History"
+                        android:textColor="#C59B4B"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recent_conversations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/tv_no_recent_conversations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="No previous inquiries. Select a suggested topic above or ask a question below."
+                    android:textColor="#7A8880"
+                    android:textSize="12.5sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- 2. ACTIVE CHAT VIEW -->
+        <LinearLayout
+            android:id="@+id/ll_active_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_chat_messages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="12dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Bottom Question Composer -->
+    <LinearLayout
+        android:id="@+id/ll_composer_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:elevation="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp">
+
+        <ImageButton
+            android:id="@+id/btn_voice_input"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Voice Input"
+            android:src="@drawable/ic_mic" />
+
+        <EditText
+            android:id="@+id/et_assistant_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_suggestion_chip"
+            android:hint="Ask a research question…"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="4"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="9dp"
+            android:textColor="#17211C"
+            android:textColorHint="#9AA69F"
+            android:textSize="14sp" />
+
+        <FrameLayout
+            android:layout_width="42dp"
+            android:layout_height="42dp">
+
+            <ImageButton
+                android:id="@+id/btn_send_question"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_circle_arrow_green"
+                android:backgroundTint="#063F32"
+                android:contentDescription="Send Question"
+                android:padding="10dp"
+                android:src="@drawable/ic_send_vector" />
+
+            <ProgressBar
+                android:id="@+id/pb_generating"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="#FFFFFF"
+                android:visibility="gone" />
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>
