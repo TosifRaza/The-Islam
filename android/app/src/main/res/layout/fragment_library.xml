@@ -37,7 +37,7 @@
                     <ImageView android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/ic_shortcut_books" android:tint="@color/library_green" android:contentDescription="@null" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:fontFamily="serif" android:text="@string/library_categories_title" android:textColor="@color/library_ink" android:textSize="19sp" android:textStyle="bold" />
                 </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_subjects" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingStart="10dp" android:paddingEnd="10dp" android:clipToPadding="false" android:nestedScrollingEnabled="false" />
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_subjects" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingStart="4dp" android:paddingEnd="4dp" android:clipToPadding="false" android:nestedScrollingEnabled="false" />
                 <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_recent" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone" />
             </LinearLayout>
             <com.ikp.dev.app.ui.common.StateView android:id="@+id/library_state" android:layout_width="match_parent" android:layout_height="280dp" />
