@@ -10,8 +10,11 @@
     app:cardBackgroundColor="@color/library_card"
     app:cardCornerRadius="14dp"
     app:cardElevation="1dp"
+    app:cardUseCompatPadding="false"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp"
     app:strokeColor="#E6DCC5"
-    app:strokeWidth="1dp">
+    app:strokeWidth="1.2dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,37 +22,36 @@
 
         <!-- Subtle geometric arch watermark in bottom-left corner -->
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:layout_gravity="bottom|start"
             android:scaleType="fitStart"
-            android:alpha="0.20"
+            android:alpha="0.22"
             android:src="@drawable/ic_card_arch_watermark"
             android:contentDescription="@null" />
 
-        <!-- All content in a single horizontal row -->
+        <!-- All content horizontally aligned, snug padding to remove empty space -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="64dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingStart="5dp"
-            android:paddingEnd="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="7dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp">
 
-            <!-- Left: 8-Point Rub el Hizb Star + Subject Icon + Number Badge -->
+            <!-- Left: Rub el Hizb Star (38dp) + Centered Icon (20dp) + Number Badge (16dp) -->
             <FrameLayout
                 android:id="@+id/icon_badge_container"
-                android:layout_width="37dp"
-                android:layout_height="38dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:layout_gravity="center_vertical">
 
                 <!-- 8-Point Star and Centered Icon -->
                 <FrameLayout
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     android:layout_gravity="bottom|end">
 
                     <ImageView
@@ -60,37 +62,37 @@
 
                     <ImageView
                         android:id="@+id/iv_subject_icon"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:tint="#FFF3D6"
                         android:contentDescription="@null" />
                 </FrameLayout>
 
-                <!-- Small Circular Number Badge (top-left) -->
+                <!-- Circular Number Badge (top-left) -->
                 <TextView
                     android:id="@+id/tv_position"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="top|start"
                     android:background="@drawable/bg_library_number"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="8.5sp"
+                    android:textSize="9.5sp"
                     android:textStyle="bold"
                     android:includeFontPadding="false"
                     tools:text="1" />
             </FrameLayout>
 
-            <!-- Subtle vertical divider line -->
+            <!-- Vertical divider line -->
             <View
-                android:layout_width="1dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="5dp"
-                android:background="#E2D7C0" />
+                android:layout_width="1.2dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="8dp"
+                android:background="#DFD3BA" />
 
-            <!-- Middle: Title and Arabic Subtitle Column -->
+            <!-- Middle: Title and Arabic Subtitle Column (Bigger text filling card width) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -98,50 +100,52 @@
                 android:orientation="vertical"
                 android:gravity="center_vertical">
 
+                <!-- English Title: Snug 12sp font that fits long words like Assessment -->
                 <TextView
                     android:id="@+id/tv_subject_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
                     android:textColor="@color/library_ink"
-                    android:textSize="10.5sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:maxLines="3"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
-                    android:lineSpacingExtra="0dp"
+                    android:lineSpacingExtra="0.5dp"
                     app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="7.5sp"
-                    app:autoSizeMaxTextSize="10.5sp"
+                    app:autoSizeMinTextSize="9sp"
+                    app:autoSizeMaxTextSize="12sp"
                     app:autoSizeStepGranularity="0.5sp"
                     tools:text="Al-Quran &amp;\nTafsir" />
 
+                <!-- Arabic Subtitle: Large 11sp font -->
                 <TextView
                     android:id="@+id/tv_subject_name_ar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif"
-                    android:textColor="#5A6F64"
-                    android:textSize="8.5sp"
+                    android:textColor="#4E6759"
+                    android:textSize="11sp"
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:gravity="start"
                     android:textAlignment="viewStart"
                     app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="7sp"
-                    app:autoSizeMaxTextSize="8.5sp"
+                    app:autoSizeMinTextSize="8.5sp"
+                    app:autoSizeMaxTextSize="11sp"
                     app:autoSizeStepGranularity="0.5sp"
                     tools:text="القرآن والتفسير" />
             </LinearLayout>
 
             <!-- Right: Chevron arrow -->
             <ImageView
-                android:layout_width="11dp"
-                android:layout_height="11dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="1dp"
                 android:src="@drawable/ic_chevron_right"
                 android:tint="#1B4232"
                 android:contentDescription="@null" />
