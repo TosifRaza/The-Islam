@@ -3,64 +3,224 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/library_ivory">
 
-    <LinearLayout
+    <!-- Top Arched Mosque Header -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/space_xs"
-        android:paddingEnd="@dimen/space_md"
-        android:paddingTop="@dimen/space_xs">
+        android:layout_height="175dp">
 
+        <!-- Mosque Night Backdrop -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_quran_header"
+            android:contentDescription="@null" />
+
+        <!-- Emerald Gradient Scrim -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#7704231A" />
+
+        <!-- Back Button on Top Left -->
         <ImageButton
             android:id="@+id/btn_back"
-            style="@style/TouchBack"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_circle_back_gold"
             android:src="@drawable/ic_arrow_back"
+            app:tint="#FFFFFF"
+            android:padding="8dp"
             android:contentDescription="@string/cd_back" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="0dp"
+        <!-- Center Title Stack: Golden Book + Books Title + Diamond Flourish -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/space_xs"
-            android:textAppearance="@style/TextAppearance.IKP.HeadlineSmall"
-            android:maxLines="1"
-            android:ellipsize="end" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <!-- Search / filter bar (query, language filter) -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_query"
-        style="@style/Widget.IKP.TextInput"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_gold_quran_book_small"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="serif"
+                    android:text="@string/books_title_generic"
+                    android:textColor="#FFFFFF"
+                    android:textSize="23sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_gold_diamond_flourish"
+                android:contentDescription="@null" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Floating Elevated Search Bar -->
+    <LinearLayout
+        android:id="@+id/layout_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_md"
-        android:layout_marginEnd="@dimen/space_md"
-        android:layout_marginTop="@dimen/space_xs"
-        android:hint="@string/library_search_hint"
-        app:startIconDrawable="@drawable/ic_search">
+        android:layout_height="48dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="-24dp"
+        android:background="@drawable/bg_search_bar_white"
+        android:elevation="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingEnd="6dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_search"
+            app:tint="#53645D"
+            android:contentDescription="@null" />
+
+        <EditText
             android:id="@+id/et_query"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:hint="Search books by title or author"
+            android:textColorHint="#72827A"
+            android:textColor="#17211C"
+            android:textSize="14sp"
             android:inputType="text"
             android:imeOptions="actionSearch"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:maxLines="1"
+            android:singleLine="true" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chips_language"
+        <FrameLayout
+            android:id="@+id/btn_filter"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_chip_book_selected">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_filter_sliders"
+                app:tint="#FFFFFF"
+                android:contentDescription="@string/cd_filter" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Horizontal Language Filter Chips -->
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_md"
-        android:layout_marginEnd="@dimen/space_md"
-        app:singleSelection="true"
-        app:selectionRequired="true" />
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="10dp">
 
+        <LinearLayout
+            android:id="@+id/chips_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/chip_all"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_chip_book_selected"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/library_all_books"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/chip_ar"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chip_book_unselected"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/language_ar"
+                android:textColor="#2A3830"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/chip_en"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chip_book_unselected"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/language_en"
+                android:textColor="#2A3830"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/chip_ur"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chip_book_unselected"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/language_ur"
+                android:textColor="#2A3830"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/chip_hi"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chip_book_unselected"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/language_hi"
+                android:textColor="#2A3830"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Books Recycler List Container -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -76,7 +236,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/space_lg"
+            android:paddingBottom="96dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </FrameLayout>
 </LinearLayout>

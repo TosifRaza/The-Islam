@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="16dp"
+    android:viewportWidth="24"
+    android:viewportHeight="16">
+    <!-- Center Dome -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M 8,16 L 8,11 C 8,6 12,3 12,3 C 12,3 16,6 16,11 L 16,16 Z" />
+    <!-- Finial / Crescent -->
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="1"
+        android:pathData="M 12,0.5 L 12,3" />
+    <!-- Left Minaret -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M 4,16 L 4,8 L 5,6 L 6,8 L 6,16 Z" />
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="0.8"
+        android:pathData="M 5,4.5 L 5,6" />
+    <!-- Right Minaret -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M 18,16 L 18,8 L 19,6 L 20,8 L 20,16 Z" />
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="0.8"
+        android:pathData="M 19,4.5 L 19,6" />
+</vector>

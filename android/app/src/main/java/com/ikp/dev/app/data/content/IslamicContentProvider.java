@@ -723,7 +723,7 @@ public final class IslamicContentProvider {
 
         all.add(new com.ikp.dev.app.domain.model.Models.Book(
                 "b_tafsir_ibn_kathir",
-                "Tafsir Ibn Kathir (تفسير القرآن العظيم)",
+                "Tafsir Ibn Kathir (تفسير القرآن (ابن كثير))",
                 "The premier classical Quranic commentary based on Quran, Sunnah and statements of Sahabah",
                 "ar",
                 "cat_quran_tafsir",
@@ -747,12 +747,12 @@ public final class IslamicContentProvider {
 
         all.add(new com.ikp.dev.app.domain.model.Models.Book(
                 "b_sahih_bukhari",
-                "Sahih al-Bukhari (الجامع المسند الصحيh)",
+                "Sahih al-Bukhari (الجامع المسند الصحيح)",
                 "The most authentic book of Hadith in Ahl-e-Sunnah wal-Jama'ah (97 Books)",
                 "ar",
                 "cat_hadith",
                 "Hadith & Sunnah",
-                Collections.singletonList("Imam Muhammad ibn Ismail al-Bukhari (الإمام البخاري)"),
+                Collections.singletonList("Imam Muhammad ibn Ismail al-Bukhari"),
                 Collections.singletonList("pdf"),
                 true
         ));
@@ -764,7 +764,7 @@ public final class IslamicContentProvider {
                 "ar",
                 "cat_hadith",
                 "Hadith & Sunnah",
-                Collections.singletonList("Imam Muslim ibn al-Hajjaj (الإمام مسلم)"),
+                Collections.singletonList("Imam Muslim ibn al-Hajjaj"),
                 Collections.singletonList("pdf"),
                 true
         ));
@@ -776,7 +776,7 @@ public final class IslamicContentProvider {
                 "ar",
                 "cat_hadith",
                 "Hadith & Sunnah",
-                Collections.singletonList("Imam Yahya ibn Sharaf an-Nawawi (الإمام النووي)"),
+                Collections.singletonList("Imam al-Nawawi"),
                 Collections.singletonList("pdf"),
                 true
         ));

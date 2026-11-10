@@ -58,6 +58,14 @@ public final class BookRepository {
                                                    boolean forceRefresh) {
         String key = queryKey(subject, language, q);
         long now = System.currentTimeMillis();
+
+        // Authoritative Ahl-e-Sunnah wal-Jama'ah books catalog
+        List<Models.Book> ahlSunnah = com.ikp.dev.app.data.content.IslamicContentProvider.getAhlSunnahBooks(subject, language, q);
+        if (ahlSunnah != null && !ahlSunnah.isEmpty()) {
+            persist(key, ahlSunnah, now);
+            return Outcome.ok(new Models.Page<>(ahlSunnah, null));
+        }
+
         List<CacheEntities.BookEntity> cached = db.libraryDao().booksForQuery(key);
 
         if (!forceRefresh && cursor == null && !cached.isEmpty()) {
@@ -66,7 +74,6 @@ public final class BookRepository {
 
         // Cache empty: seed local Room DB immediately with bundled Ahl-e-Sunnah books for instant display
         if (!forceRefresh && cursor == null) {
-            List<Models.Book> ahlSunnah = com.ikp.dev.app.data.content.IslamicContentProvider.getAhlSunnahBooks(subject, language, q);
             persist(key, ahlSunnah, now);
             com.ikp.dev.app.di.ServiceLocator.executors().io.execute(() -> syncBooksSilently(key, subject, language, q, now));
             return Outcome.ok(new Models.Page<>(ahlSunnah, null));
@@ -94,7 +101,6 @@ public final class BookRepository {
         }
 
         // Save authoritative Ahl-e-Sunnah wal-Jama'ah books directly into the Room database
-        List<Models.Book> ahlSunnah = com.ikp.dev.app.data.content.IslamicContentProvider.getAhlSunnahBooks(subject, language, q);
         persist(key, ahlSunnah, now);
         List<CacheEntities.BookEntity> freshlyLoaded = db.libraryDao().booksForQuery(key);
         return Outcome.ok(new Models.Page<>(fromEntities(freshlyLoaded), null));

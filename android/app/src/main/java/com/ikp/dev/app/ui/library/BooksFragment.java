@@ -1,38 +1,42 @@
 package com.ikp.dev.app.ui.library;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.ikp.dev.app.R;
-import com.ikp.dev.app.core.common.UiState;
 import com.ikp.dev.app.domain.model.Models;
 import com.ikp.dev.app.ui.common.StateView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Book browse/search screen: free-text search (debounced), subject filter,
- * language chips, cursor-based load-more, real backend paging.
+ * Islamic Book browse/search screen matching the master reference design.
  */
 public final class BooksFragment extends Fragment {
 
     private BooksViewModel viewModel;
     private StateView stateView;
     private BookRowAdapter adapter;
+
+    private final List<TextView> chipViews = new ArrayList<>();
+    private final String[] chipCodes = {null, "ar", "en", "ur", "hi"};
 
     @Nullable
     @Override
@@ -58,17 +62,21 @@ public final class BooksFragment extends Fragment {
         ImageButton back = view.findViewById(R.id.btn_back);
         back.setOnClickListener(v -> NavHostFragment.findNavController(this).popBackStack());
 
-        TextInputLayout tilQuery = view.findViewById(R.id.til_query);
-        TextInputEditText etQuery = view.findViewById(R.id.et_query);
+        EditText etQuery = view.findViewById(R.id.et_query);
         etQuery.addTextChangedListener(viewModel.queryWatcher());
 
-        ChipGroup chips = view.findViewById(R.id.chips_language);
-        buildLanguageChips(chips);
+        View btnFilter = view.findViewById(R.id.btn_filter);
+        if (btnFilter != null) {
+            btnFilter.setOnClickListener(v ->
+                    Toast.makeText(requireContext(), "Filter Options", Toast.LENGTH_SHORT).show());
+        }
+
+        setupChips(view);
 
         RecyclerView rv = view.findViewById(R.id.rv_books);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new BookRowAdapter(book -> {
-            android.os.Bundle d = new android.os.Bundle();
+            Bundle d = new Bundle();
             d.putString("bookId", book.bookId);
             NavHostFragment.findNavController(this).navigate(R.id.action_books_to_detail, d);
         });
@@ -105,20 +113,37 @@ public final class BooksFragment extends Fragment {
         viewModel.reload();
     }
 
-    private void buildLanguageChips(ChipGroup group) {
-        String[] codes = {null, "ar", "en", "ur", "hi"};
-        int[] labels = {R.string.library_all_books, R.string.language_ar,
-                R.string.language_en, R.string.language_ur, R.string.language_hi};
-        for (int i = 0; i < codes.length; i++) {
-            Chip chip = new Chip(requireContext());
-            chip.setText(labels[i]);
-            chip.setCheckable(true);
-            final String code = codes[i];
-            chip.setOnClickListener(v -> viewModel.setLanguage(code));
-            group.addView(chip);
-            if (i == 0) {
-                chip.setChecked(true);
+    private void setupChips(@NonNull View root) {
+        chipViews.clear();
+        chipViews.add(root.findViewById(R.id.chip_all));
+        chipViews.add(root.findViewById(R.id.chip_ar));
+        chipViews.add(root.findViewById(R.id.chip_en));
+        chipViews.add(root.findViewById(R.id.chip_ur));
+        chipViews.add(root.findViewById(R.id.chip_hi));
+
+        for (int i = 0; i < chipViews.size(); i++) {
+            final int index = i;
+            TextView chip = chipViews.get(i);
+            if (chip != null) {
+                chip.setOnClickListener(v -> selectChip(index));
             }
         }
+    }
+
+    private void selectChip(int selectedIndex) {
+        for (int i = 0; i < chipViews.size(); i++) {
+            TextView chip = chipViews.get(i);
+            if (chip == null) continue;
+            if (i == selectedIndex) {
+                chip.setBackgroundResource(R.drawable.bg_chip_book_selected);
+                chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+                chip.setTypeface(null, Typeface.BOLD);
+            } else {
+                chip.setBackgroundResource(R.drawable.bg_chip_book_unselected);
+                chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.library_ink));
+                chip.setTypeface(null, Typeface.NORMAL);
+            }
+        }
+        viewModel.setLanguage(chipCodes[selectedIndex]);
     }
 }

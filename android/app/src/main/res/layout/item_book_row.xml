@@ -1,61 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Widget.IKP.CategoryCard"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="6dp">
+    android:layout_marginStart="14dp"
+    android:layout_marginEnd="14dp"
+    android:layout_marginBottom="9dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#EDE5D4"
+    app:cardBackgroundColor="#FEFAF4"
+    app:cardUseCompatPadding="false"
+    app:contentPadding="0dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:layout_width="56dp"
-            android:layout_height="80dp"
-            android:background="@drawable/bg_book_cover">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_book"
-                android:importantForAccessibility="no" />
-        </FrameLayout>
+        <!-- Subtle Gold Arabesque Watermark in Right Corner -->
+        <ImageView
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:layout_gravity="top|end"
+            android:src="@drawable/ic_card_arch_watermark"
+            android:alpha="0.22"
+            android:scaleType="fitEnd"
+            android:importantForAccessibility="no" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/space_sm"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
 
-            <TextView
-                android:id="@+id/tv_book_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
-                android:maxLines="2"
-                android:ellipsize="end" />
+            <!-- 1. Left: Photorealistic 3D Leather Islamic Book Cover -->
+            <ImageView
+                android:id="@+id/iv_book_cover"
+                android:layout_width="56dp"
+                android:layout_height="70dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_book_cover_ibn_kathir"
+                android:importantForAccessibility="no" />
 
-            <TextView
-                android:id="@+id/tv_book_author"
-                android:layout_width="match_parent"
+            <!-- 2. Middle: Book Title, Arabic Title, Author, Badges -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
-                android:textColor="@color/text_secondary"
-                android:maxLines="1"
-                android:ellipsize="end" />
+                android:layout_weight="1"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="6dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_book_meta"
-                android:layout_width="match_parent"
+                <!-- English Title -->
+                <TextView
+                    android:id="@+id/tv_book_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
+                    android:textSize="15.5sp"
+                    android:textColor="#162E25"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <!-- Arabic Subtitle -->
+                <TextView
+                    android:id="@+id/tv_book_title_ar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:fontFamily="serif"
+                    android:textSize="13sp"
+                    android:textColor="#2B3A33"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <!-- Author Row with Bust Icon -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_author_bust"
+                        app:tint="#C5A059"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:id="@+id/tv_book_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textSize="11.5sp"
+                        android:textColor="#5D6D65"
+                        android:singleLine="true"
+                        android:ellipsize="end" />
+                </LinearLayout>
+
+                <!-- Metadata Badges: Language & Format -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4.5dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Language Pill -->
+                    <LinearLayout
+                        android:id="@+id/layout_badge_lang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="19dp"
+                        android:background="@drawable/bg_book_meta_pill"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@drawable/ic_book"
+                            app:tint="#3F4D45"
+                            android:importantForAccessibility="no" />
+
+                        <TextView
+                            android:id="@+id/tv_badge_lang"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3.5dp"
+                            android:text="ar"
+                            android:textColor="#3F4D45"
+                            android:textSize="10.5sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Format Pill -->
+                    <LinearLayout
+                        android:id="@+id/layout_badge_format"
+                        android:layout_width="wrap_content"
+                        android:layout_height="19dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/bg_book_meta_pill"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@drawable/ic_badge_format_pdf"
+                            app:tint="#3F4D45"
+                            android:importantForAccessibility="no" />
+
+                        <TextView
+                            android:id="@+id/tv_badge_format"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3.5dp"
+                            android:text="pdf"
+                            android:textColor="#3F4D45"
+                            android:textSize="10.5sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 3. Right: Thin Vertical Divider & Action Buttons (Bookmark & Download) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
-                android:maxLines="1"
-                android:ellipsize="end" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Vertical Divider Line -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="38dp"
+                    android:background="#E5DBC5"
+                    android:layout_marginEnd="9dp" />
+
+                <!-- Bookmark Button -->
+                <ImageButton
+                    android:id="@+id/btn_bookmark"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_book_action_bookmark"
+                    android:src="@drawable/ic_bookmark_outline"
+                    app:tint="#0B4A37"
+                    android:padding="6dp"
+                    android:contentDescription="Bookmark" />
+
+                <!-- Download Button -->
+                <ImageButton
+                    android:id="@+id/btn_download"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/bg_book_action_download"
+                    android:src="@drawable/ic_download"
+                    app:tint="#FFFFFF"
+                    android:padding="6.5dp"
+                    android:contentDescription="Download" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </FrameLayout>
 </com.google.android.material.card.MaterialCardView>
