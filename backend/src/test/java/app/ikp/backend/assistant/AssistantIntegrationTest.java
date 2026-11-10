@@ -11,6 +11,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class AssistantIntegrationTest extends IntegrationTestBase {
 
     @Test
@@ -19,7 +20,9 @@ public class AssistantIntegrationTest extends IntegrationTestBase {
         ResponseEntity<Map> res = rest.getForEntity("/api/v1/assistant/suggestions", Map.class);
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(res.getBody()).isNotNull();
-        List<Map<String, Object>> data = (List<Map<String, Object>>) res.getBody().get("data");
+        Map<?, ?> body = res.getBody();
+        assert body != null;
+        List<Map<String, Object>> data = (List<Map<String, Object>>) body.get("data");
         assertThat(data).isNotEmpty();
         assertThat(data.size()).isGreaterThanOrEqualTo(5);
         assertThat(data.get(0).get("question")).toString().contains("Ayat al-Kursi");
@@ -36,7 +39,9 @@ public class AssistantIntegrationTest extends IntegrationTestBase {
         ResponseEntity<Map> res = rest.postForEntity("/api/v1/assistant/query", req, Map.class);
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(res.getBody()).isNotNull();
-        Map<String, Object> data = (Map<String, Object>) res.getBody().get("data");
+        Map<?, ?> body = res.getBody();
+        assert body != null;
+        Map<String, Object> data = (Map<String, Object>) body.get("data");
         assertThat(data.get("groundedStatus")).isEqualTo("FULLY_GROUNDED");
         assertThat(data.get("title").toString()).contains("Ayat al-Kursi");
         String answer = data.get("answer").toString();
@@ -63,7 +68,9 @@ public class AssistantIntegrationTest extends IntegrationTestBase {
         ResponseEntity<Map> res = rest.postForEntity("/api/v1/assistant/query", req, Map.class);
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(res.getBody()).isNotNull();
-        Map<String, Object> data = (Map<String, Object>) res.getBody().get("data");
+        Map<?, ?> body = res.getBody();
+        assert body != null;
+        Map<String, Object> data = (Map<String, Object>) body.get("data");
         assertThat(data.get("groundedStatus")).isEqualTo("FULLY_GROUNDED");
         String answer = data.get("answer").toString();
         assertThat(answer).contains("The Nine Preconditions (Shuroot as-Salah)");
@@ -85,7 +92,9 @@ public class AssistantIntegrationTest extends IntegrationTestBase {
         ResponseEntity<Map> res = rest.postForEntity("/api/v1/assistant/query", req, Map.class);
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(res.getBody()).isNotNull();
-        Map<String, Object> data = (Map<String, Object>) res.getBody().get("data");
+        Map<?, ?> body = res.getBody();
+        assert body != null;
+        Map<String, Object> data = (Map<String, Object>) body.get("data");
         assertThat(data.get("groundedStatus")).isEqualTo("INSUFFICIENT_DATA");
         String answer = data.get("answer").toString();
         assertThat(answer).contains("I couldn't find sufficient information about this topic in the approved IKP research library");
@@ -109,7 +118,10 @@ public class AssistantIntegrationTest extends IntegrationTestBase {
 
         ResponseEntity<Map> resOverview = rest.getForEntity("/api/v1/assistant/overview", Map.class);
         assertThat(resOverview.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Map<String, Object> overview = (Map<String, Object>) resOverview.getBody().get("data");
+        assertThat(resOverview.getBody()).isNotNull();
+        Map<?, ?> body = resOverview.getBody();
+        assert body != null;
+        Map<String, Object> overview = (Map<String, Object>) body.get("data");
         assertThat(overview.get("groundingEngineStatus")).isEqualTo("M6_ACTIVE");
         assertThat(((Number) overview.get("totalFeedbackRecorded")).intValue()).isGreaterThanOrEqualTo(1);
     }
