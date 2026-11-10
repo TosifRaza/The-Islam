@@ -74,6 +74,7 @@ public final class SessionManager {
     }
 
     public void onGuest() {
+        tokenStore.clear();
         state.postValue(new SessionEvent(AuthState.GUEST, null));
     }
 
