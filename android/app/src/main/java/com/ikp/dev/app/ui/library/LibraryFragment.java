@@ -61,6 +61,13 @@ public final class LibraryFragment extends Fragment {
         recent.setAdapter(recentAdapter);
         recent.setVisibility(View.GONE); // populated by local history (below)
 
+        bindFeatured(view, R.id.featured_essential, R.string.library_featured_essential,
+                R.drawable.ic_shortcut_books);
+        bindFeatured(view, R.id.featured_scholarly, R.string.library_featured_scholarly,
+                R.drawable.ic_chip_layers);
+        bindFeatured(view, R.id.featured_beginner, R.string.library_featured_beginner,
+                R.drawable.ic_chip_ribbon);
+
         view.findViewById(R.id.library_search_entry).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_library_to_books));
         view.findViewById(R.id.btn_browse_all).setOnClickListener(v ->
@@ -100,6 +107,14 @@ public final class LibraryFragment extends Fragment {
         });
 
         viewModel.load(false);
+    }
+
+    private void bindFeatured(@NonNull View root, int containerId, int labelId, int iconId) {
+        View card = root.findViewById(containerId);
+        ((android.widget.TextView) card.findViewById(R.id.featured_label)).setText(labelId);
+        ((android.widget.ImageView) card.findViewById(R.id.featured_icon)).setImageResource(iconId);
+        card.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_library_to_books));
     }
 
     private void openSubject(Models.Subject subject) {

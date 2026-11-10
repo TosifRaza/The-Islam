@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +52,12 @@ public final class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Ho
         holder.name.setText(s.name == null ? "" : s.name);
         holder.nameAr.setVisibility(s.nameAr == null || s.nameAr.isEmpty() ? View.GONE : View.VISIBLE);
         holder.nameAr.setText(s.nameAr == null ? "" : s.nameAr);
+        int[] icons = {R.drawable.ic_quran_rehal, R.drawable.ic_shortcut_hadith,
+                R.drawable.ic_action_notes, R.drawable.ic_mosque_silhouette,
+                R.drawable.ic_shortcut_books, R.drawable.ic_chip_tag,
+                R.drawable.ic_deck_flashcards, R.drawable.ic_tab_mosque,
+                R.drawable.ic_book, R.drawable.ic_gold_sparkle};
+        holder.icon.setImageResource(icons[position % icons.length]);
         holder.position.setText(s.position == null ? "•" : String.valueOf(s.position));
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -68,12 +75,14 @@ public final class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Ho
         final TextView name;
         final TextView nameAr;
         final TextView position;
+        final ImageView icon;
 
         Holder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_subject_name);
             nameAr = itemView.findViewById(R.id.tv_subject_name_ar);
             position = itemView.findViewById(R.id.tv_position);
+            icon = itemView.findViewById(R.id.iv_subject_icon);
         }
     }
 }

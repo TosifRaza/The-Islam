@@ -111,6 +111,14 @@
     <string name="library_categories">Subjects &amp; categories</string>
     <string name="library_recently_viewed">Recently viewed</string>
     <string name="library_all_books">Browse all books</string>
+    <string name="library_subtitle">Explore Islamic books, topics, and collections</string>
+    <string name="library_featured">Featured Collections</string>
+    <string name="library_view_all">View All</string>
+    <string name="library_categories_title">Subjects &amp; Categories</string>
+    <string name="library_featured_essential">Essential\nBooks</string>
+    <string name="library_featured_scholarly">Scholarly\nSeries</string>
+    <string name="library_featured_beginner">Beginner\nGuides</string>
+    <string name="cd_filter">Filter books</string>
     <string name="subject_books_title">%1$s</string>
     <string name="books_title_generic">Books</string>
     <string name="book_titles_count">%1$d titles</string>

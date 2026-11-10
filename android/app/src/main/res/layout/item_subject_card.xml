@@ -1,56 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Widget.IKP.CategoryCard"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp">
+    android:minHeight="112dp"
+    android:layout_margin="5dp"
+    android:foreground="@drawable/state_card_pressed"
+    app:cardBackgroundColor="@color/library_card"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/library_card_border"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="11dp">
 
-        <FrameLayout
-            android:layout_width="@dimen/category_icon"
-            android:layout_height="@dimen/category_icon"
-            android:background="@drawable/bg_category_badge">
+        <!-- Top Header row: Icon with badge on start, chevron arrow on end -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
-                android:textColor="@color/gold_dark" />
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/icon_badge_container"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
 
-        <LinearLayout
-            android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/iv_subject_icon"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="bottom|start"
+                    android:background="@drawable/bg_library_subject_icon"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_shortcut_books"
+                    android:tint="@color/library_gold_light"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/tv_position"
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_gravity="top|end"
+                    android:background="@drawable/bg_library_number"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_chevron_right"
+                android:tint="@color/library_green"
+                android:alpha="0.45"
+                android:contentDescription="@null" />
+        </RelativeLayout>
+
+        <!-- English Subject Title: Full card width available (150dp+) -->
+        <TextView
+            android:id="@+id/tv_subject_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/space_sm"
-            android:orientation="vertical">
+            android:layout_marginTop="7dp"
+            android:fontFamily="serif"
+            android:textColor="@color/library_ink"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:lineSpacingExtra="1dp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10.5sp"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeStepGranularity="0.5sp" />
 
-            <TextView
-                android:id="@+id/tv_subject_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.IKP.TitleMedium"
-                android:maxLines="2"
-                android:ellipsize="end" />
+        <!-- Arabic Subject Subtitle -->
+        <TextView
+            android:id="@+id/tv_subject_name_ar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/library_green_muted"
+            android:textSize="11.5sp"
+            android:maxLines="1"
+            android:ellipsize="end" />
 
-            <TextView
-                android:id="@+id/tv_subject_name_ar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.IKP.LabelSmall"
-                android:textColor="@color/text_secondary"
-                android:maxLines="1"
-                android:ellipsize="end" />
-        </LinearLayout>
-
-        <ImageView style="@style/SettingsRowChevron" android:src="@drawable/ic_chevron_right"
-            android:importantForAccessibility="no" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

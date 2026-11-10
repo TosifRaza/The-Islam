@@ -78,4 +78,13 @@
     <color name="quran_text_olive">#5C7367</color>
     <color name="quran_text_title">#0C2F24</color>
     <color name="quran_bg_page">#F6F2EA</color>
+    <color name="library_ivory">#FBF8F1</color>
+    <color name="library_card">#FFFCF7</color>
+    <color name="library_card_border">#E8C985</color>
+    <color name="library_green">#064936</color>
+    <color name="library_green_muted">#506A60</color>
+    <color name="library_ink">#10271F</color>
+    <color name="library_gold">#D0A23E</color>
+    <color name="library_gold_light">#F6D98B</color>
+    <color name="library_gold_faint">#EBDDBE</color>
 </resources>

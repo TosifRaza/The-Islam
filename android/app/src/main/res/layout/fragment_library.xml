@@ -1,113 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- Search entry -->
-        <LinearLayout
-            android:id="@+id/library_search_entry"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_target_min"
-            android:layout_margin="@dimen/space_md"
-            android:background="@drawable/bg_search_field"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/space_md"
-            android:paddingEnd="@dimen/space_md"
-            android:contentDescription="@string/cd_search">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_search"
-                android:importantForAccessibility="no" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/space_sm"
-                android:text="@string/library_search_hint"
-                android:textAppearance="@style/TextAppearance.IKP.BodyMedium"
-                android:textColor="@color/text_secondary" />
-        </LinearLayout>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/space_lg">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.ikp.dev.app.ui.common.StateView
-                            android:id="@+id/library_state"
-                            android:layout_width="match_parent"
-                            android:layout_height="280dp" />
-
-                        <LinearLayout
-                            android:id="@+id/library_sections"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                style="@style/SectionHeader"
-                                android:text="@string/library_categories" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_subjects"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="@dimen/space_md"
-                                android:paddingEnd="@dimen/space_md"
-                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                                app:spanCount="2" />
-
-                            <TextView
-                                style="@style/SectionHeader"
-                                android:text="@string/library_recently_viewed" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_recent"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:clipToPadding="false"
-                                android:paddingStart="@dimen/space_md"
-                                android:paddingEnd="@dimen/space_md"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-                            <Button
-                                android:id="@+id/btn_browse_all"
-                                style="@style/Widget.IKP.Button.Gold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/space_md"
-                                android:text="@string/library_all_books" />
-                        </LinearLayout>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_refresh" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/library_ivory">
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" android:clipToPadding="false">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingBottom="100dp">
+            <FrameLayout android:layout_width="match_parent" android:layout_height="214dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="190dp" android:scaleType="centerCrop" android:src="@drawable/bg_library_hero" android:contentDescription="@null" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="top" android:layout_marginStart="28dp" android:layout_marginTop="58dp" android:layout_marginEnd="120dp" android:orientation="vertical">
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="34dp" android:layout_height="34dp" android:src="@drawable/ic_shortcut_books" android:tint="@color/library_gold" android:contentDescription="@null" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:fontFamily="serif" android:text="@string/library_title" android:textColor="@color/white" android:textSize="30sp" android:textStyle="bold" />
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="@string/library_subtitle" android:textColor="#F0F3EE" android:textSize="12.5sp" android:maxLines="2" />
+                </LinearLayout>
+                <LinearLayout android:id="@+id/library_search_entry" android:layout_width="match_parent" android:layout_height="54dp" android:layout_gravity="bottom" android:layout_marginStart="18dp" android:layout_marginEnd="18dp" android:background="@drawable/bg_library_search" android:elevation="8dp" android:gravity="center_vertical" android:orientation="horizontal" android:paddingStart="17dp" android:paddingEnd="7dp" android:contentDescription="@string/cd_search">
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_search" android:tint="@color/library_green" android:contentDescription="@null" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="13dp" android:text="@string/library_search_hint" android:textColor="#53645D" android:textSize="14sp" android:maxLines="1" android:ellipsize="end" />
+                    <FrameLayout android:layout_width="43dp" android:layout_height="43dp" android:background="@drawable/bg_library_filter">
+                        <ImageView android:layout_width="25dp" android:layout_height="25dp" android:layout_gravity="center" android:src="@drawable/ic_filter_sliders" android:tint="@color/white" android:contentDescription="@string/cd_filter" />
                     </FrameLayout>
                 </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            </FrameLayout>
+            <LinearLayout android:id="@+id/library_sections" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="20dp" android:layout_marginTop="14dp" android:layout_marginEnd="20dp" android:gravity="center_vertical" android:orientation="horizontal">
+                    <TextView android:layout_width="28dp" android:layout_height="28dp" android:gravity="center" android:text="✦" android:textColor="@color/library_gold" android:textSize="24sp" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:fontFamily="serif" android:text="@string/library_featured" android:textColor="@color/library_ink" android:textSize="19sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/btn_browse_all" android:layout_width="wrap_content" android:layout_height="48dp" android:gravity="center" android:text="@string/library_view_all" android:textColor="@color/library_green" android:textSize="13sp" />
+                    <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_chevron_right" android:tint="@color/library_green" android:contentDescription="@null" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="78dp" android:layout_marginStart="16dp" android:layout_marginTop="5dp" android:layout_marginEnd="16dp" android:orientation="horizontal" android:weightSum="3">
+                    <include android:id="@+id/featured_essential" layout="@layout/item_featured_collection" />
+                    <include android:id="@+id/featured_scholarly" layout="@layout/item_featured_collection" />
+                    <include android:id="@+id/featured_beginner" layout="@layout/item_featured_collection" />
+                </LinearLayout>
+                <ImageView android:layout_width="match_parent" android:layout_height="22dp" android:layout_marginStart="70dp" android:layout_marginTop="10dp" android:layout_marginEnd="70dp" android:src="@drawable/ic_arabesque_divider" android:tint="@color/library_gold" android:contentDescription="@null" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="20dp" android:layout_marginTop="2dp" android:layout_marginBottom="7dp" android:gravity="center_vertical" android:orientation="horizontal">
+                    <ImageView android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/ic_shortcut_books" android:tint="@color/library_green" android:contentDescription="@null" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:fontFamily="serif" android:text="@string/library_categories_title" android:textColor="@color/library_ink" android:textSize="19sp" android:textStyle="bold" />
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_subjects" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingStart="10dp" android:paddingEnd="10dp" android:clipToPadding="false" android:nestedScrollingEnabled="false" />
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_recent" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone" />
+            </LinearLayout>
+            <com.ikp.dev.app.ui.common.StateView android:id="@+id/library_state" android:layout_width="match_parent" android:layout_height="280dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
