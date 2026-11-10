@@ -50,20 +50,19 @@ public final class HomeViewModel extends ViewModel {
     }
 
     public void load(boolean forceRefresh) {
-        state.postValue(UiState.loading());
         com.ikp.dev.app.di.ServiceLocator.executors().io.execute(() -> {
             Outcome<List<Models.Subject>> subjects = subjectRepository.subjects(forceRefresh);
-            if (!subjects.isSuccess()) {
-                state.postValue(UiState.error(subjects.error));
-                return;
-            }
-            // Books rail: latest published (no subject filter). Failure
-            // degrades to an empty rail — subjects already carry the error.
+            List<Models.Subject> subList = (subjects.isSuccess() && subjects.value != null && !subjects.value.isEmpty())
+                    ? subjects.value
+                    : SubjectRepository.defaultSubjects();
+
             Outcome<Models.Page<Models.Book>> books =
                     bookRepository.books(null, null, null, null, forceRefresh);
-            List<Models.Book> bookList = books.value == null
-                    ? new ArrayList<>() : books.value.items;
-            state.postValue(UiState.success(new HomeData(subjects.value, bookList)));
+            List<Models.Book> bookList = (books.isSuccess() && books.value != null && books.value.items != null && !books.value.items.isEmpty())
+                    ? books.value.items
+                    : com.ikp.dev.app.data.content.IslamicContentProvider.getAhlSunnahBooks(null, null, null);
+
+            state.postValue(UiState.success(new HomeData(subList, bookList)));
         });
     }
 }

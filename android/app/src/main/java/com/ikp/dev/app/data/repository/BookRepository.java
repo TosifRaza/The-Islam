@@ -64,6 +64,14 @@ public final class BookRepository {
             return Outcome.ok(new Models.Page<>(fromEntities(cached), null));
         }
 
+        // Cache empty: seed local Room DB immediately with bundled Ahl-e-Sunnah books for instant display
+        if (!forceRefresh && cursor == null) {
+            List<Models.Book> ahlSunnah = com.ikp.dev.app.data.content.IslamicContentProvider.getAhlSunnahBooks(subject, language, q);
+            persist(key, ahlSunnah, now);
+            com.ikp.dev.app.di.ServiceLocator.executors().io.execute(() -> syncBooksSilently(key, subject, language, q, now));
+            return Outcome.ok(new Models.Page<>(ahlSunnah, null));
+        }
+
         try {
             Response<ApiResponse<List<LibraryDtos.BookRowDto>>> res = api
                     .books(subject, language, emptyToNull(q), null, DEFAULT_LIMIT, cursor)
@@ -90,6 +98,20 @@ public final class BookRepository {
         persist(key, ahlSunnah, now);
         List<CacheEntities.BookEntity> freshlyLoaded = db.libraryDao().booksForQuery(key);
         return Outcome.ok(new Models.Page<>(fromEntities(freshlyLoaded), null));
+    }
+
+    private void syncBooksSilently(String key, @Nullable String subject, @Nullable String language, @Nullable String q, long now) {
+        try {
+            Response<ApiResponse<List<LibraryDtos.BookRowDto>>> res = api
+                    .books(subject, language, emptyToNull(q), null, DEFAULT_LIMIT, null)
+                    .execute();
+            if (res.isSuccessful() && res.body() != null && res.body().data != null && !res.body().data.isEmpty()) {
+                List<Models.Book> rows = Mappers.toBooks(ApiResponse.listOrEmpty(res.body().data));
+                db.libraryDao().clearQuery(key);
+                persist(key, rows, now);
+            }
+        } catch (Exception ignored) {
+        }
     }
 
     /** Published book detail (from DB if offline). */

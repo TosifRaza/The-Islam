@@ -174,6 +174,25 @@ public final class HomeFragment extends Fragment {
 
     /** M4 dashboard: hijri today + daily slots from published records only. */
     private void loadDaily() {
+        if (hijriText != null) {
+            hijriText.setText(getString(R.string.home_hijri_date, 16, 11, 1446));
+        }
+        if (dailyBlock != null) {
+            dailyBlock.setVisibility(View.VISIBLE);
+            if (ayahOfDayText != null) {
+                ayahOfDayText.setText("قُلْ يَٰعِبَادِىَ ٱلَّذِينَ أَسْرَفُوا۟ عَلَىٰٓ أَنفُسِهِمْ لَا تَقْنَطُوا۟ مِن رَّحْمَةِ ٱللَّهِ ۚ إِنَّ ٱللَّهَ يَغْفِرُ ٱلذُّنُوبَ جَمِيعًا");
+            }
+            if (ayahOfDayAttr != null) {
+                ayahOfDayAttr.setText("Surah Az-Zumar (39:53)");
+            }
+            if (hadithOfDayText != null) {
+                hadithOfDayText.setText("Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise.");
+            }
+            if (hadithOfDayAttr != null) {
+                hadithOfDayAttr.setText("Sahih Muslim (2699)");
+            }
+        }
+
         String today = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
                 .format(new java.util.Date());
         ServiceLocator.executors().io.execute(() -> {

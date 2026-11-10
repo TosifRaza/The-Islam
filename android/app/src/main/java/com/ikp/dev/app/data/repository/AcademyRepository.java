@@ -57,21 +57,45 @@ public final class AcademyRepository {
         return new ArrayList<>();
     }
 
+    private static volatile List<AcademyDtos.CourseRowDto> cachedCourses = null;
+    private static volatile List<AcademyDtos.DeckRowDto> cachedDecks = null;
+
+    public List<AcademyDtos.CourseRowDto> getCachedOrSeedCourses() {
+        if (cachedCourses == null || cachedCourses.isEmpty()) {
+            cachedCourses = defaultCourses();
+        }
+        return new ArrayList<>(cachedCourses);
+    }
+
+    public List<AcademyDtos.DeckRowDto> getCachedOrSeedDecks() {
+        if (cachedDecks == null || cachedDecks.isEmpty()) {
+            cachedDecks = defaultDecks();
+        }
+        return new ArrayList<>(cachedDecks);
+    }
+
     // ----- academy -----
 
     public Outcome<List<AcademyDtos.CourseRowDto>> courses(int page, int size) {
-        // 1. Try backend API first (has enriched subject models and lesson counts)
-        Outcome<List<AcademyDtos.CourseRowDto>> apiRes = run(api.courses(page, size));
-        if (apiRes.isSuccess() && apiRes.value != null && !apiRes.value.isEmpty()) {
-            return apiRes;
-        }
-        // 2. Fallback to Supabase cloud direct
+        // 1. Try Supabase cloud direct first (fastest cloud provider)
         Outcome<List<AcademyDtos.CourseRowDto>> sbFallback = fetchCoursesFromSupabase();
         if (sbFallback != null && sbFallback.isSuccess() && sbFallback.value != null && !sbFallback.value.isEmpty()) {
+            cachedCourses = sbFallback.value;
             return sbFallback;
         }
+        // 2. Try backend API
+        try {
+            Outcome<List<AcademyDtos.CourseRowDto>> apiRes = run(api.courses(page, size));
+            if (apiRes.isSuccess() && apiRes.value != null && !apiRes.value.isEmpty()) {
+                cachedCourses = apiRes.value;
+                return apiRes;
+            }
+        } catch (Exception ignored) {}
         // 3. Fallback to embedded default catalog (offline-first & phone standalone resilience)
-        return Outcome.ok(defaultCourses());
+        if (cachedCourses == null || cachedCourses.isEmpty()) {
+            cachedCourses = defaultCourses();
+        }
+        return Outcome.ok(cachedCourses);
     }
 
     private Outcome<List<AcademyDtos.CourseRowDto>> fetchCoursesFromSupabase() {
@@ -220,11 +244,17 @@ public final class AcademyRepository {
     // ----- flashcards -----
 
     public Outcome<List<AcademyDtos.DeckRowDto>> publicDecks(int page, int size) {
-        Outcome<List<AcademyDtos.DeckRowDto>> apiRes = run(api.publicDecks(page, size));
-        if (apiRes.isSuccess() && apiRes.value != null && !apiRes.value.isEmpty()) {
-            return apiRes;
+        try {
+            Outcome<List<AcademyDtos.DeckRowDto>> apiRes = run(api.publicDecks(page, size));
+            if (apiRes.isSuccess() && apiRes.value != null && !apiRes.value.isEmpty()) {
+                cachedDecks = apiRes.value;
+                return apiRes;
+            }
+        } catch (Exception ignored) {}
+        if (cachedDecks == null || cachedDecks.isEmpty()) {
+            cachedDecks = defaultDecks();
         }
-        return Outcome.ok(defaultDecks());
+        return Outcome.ok(cachedDecks);
     }
 
     public Outcome<AcademyDtos.DeckDetailDto> deck(String deckId) {

@@ -143,6 +143,13 @@ public class HadithCollectionsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.setAdapter(adapter);
 
+        // Instant 0ms load: display authentic collections immediately
+        allCollections.clear();
+        allCollections.addAll(com.ikp.dev.app.data.content.IslamicContentProvider.getHadithCollections());
+        applyFilterAndSort();
+        if (recycler != null) recycler.setVisibility(View.VISIBLE);
+        if (stateText != null) stateText.setVisibility(View.GONE);
+
         if (btnRetry != null) {
             btnRetry.setOnClickListener(x -> load());
         }
@@ -329,7 +336,7 @@ public class HadithCollectionsFragment extends Fragment {
 
     private void load() {
         if (btnRetry != null) btnRetry.setVisibility(View.GONE);
-        if (stateText != null) {
+        if (allCollections.isEmpty() && stateText != null) {
             stateText.setText(R.string.state_loading);
             stateText.setVisibility(View.VISIBLE);
         }

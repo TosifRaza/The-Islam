@@ -299,8 +299,12 @@ public final class AcademyFragment extends Fragment {
     private void render(UiState<AcademyViewModel.AcademyData> state) {
         switch (state.kind) {
             case LOADING -> {
-                stateView.setVisibility(View.VISIBLE);
-                stateView.renderLoading();
+                if (currentCourses.isEmpty()) {
+                    stateView.setVisibility(View.VISIBLE);
+                    stateView.renderLoading();
+                } else {
+                    stateView.setVisibility(View.GONE);
+                }
             }
             case SUCCESS -> {
                 stateView.setVisibility(View.GONE);

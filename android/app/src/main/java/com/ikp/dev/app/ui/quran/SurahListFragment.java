@@ -93,6 +93,13 @@ public class SurahListFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.setAdapter(adapter);
 
+        // Instant 0ms load: display all 114 Surahs immediately from local provider
+        all.clear();
+        all.addAll(com.ikp.dev.app.data.content.IslamicContentProvider.getAllSurahs());
+        adapter.submit(all);
+        if (recycler != null) recycler.setVisibility(View.VISIBLE);
+        if (progressBar != null) progressBar.setVisibility(View.GONE);
+
         // Header back button
         v.findViewById(R.id.btn_back).setOnClickListener(x -> {
             if (!NavHostFragment.findNavController(this).popBackStack()) {
@@ -266,9 +273,11 @@ public class SurahListFragment extends Fragment {
     }
 
     private void load(boolean force) {
-        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
-        if (stateText != null) stateText.setVisibility(View.GONE);
-        if (recycler != null) recycler.setVisibility(View.GONE);
+        if (all.isEmpty()) {
+            if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
+            if (stateText != null) stateText.setVisibility(View.GONE);
+            if (recycler != null) recycler.setVisibility(View.GONE);
+        }
         final View root = getView();
         if (root != null) {
             View retryBtn = root.findViewById(R.id.btn_retry);

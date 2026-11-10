@@ -51,17 +51,24 @@ public final class SubjectRepository {
     public Outcome<List<Models.Subject>> subjects(boolean forceRefresh) {
         long now = System.currentTimeMillis();
 
-        // 1. Try Supabase cloud first
+        List<CacheEntities.SubjectEntity> cached = db.libraryDao().subjectsInOrder();
+        if (!forceRefresh && !cached.isEmpty()) {
+            return Outcome.ok(Mappers.toSubjects(toDtos(cached)));
+        }
+
+        // Cache empty: seed local Room DB immediately with default seed subjects for instant render
+        if (!forceRefresh) {
+            List<Models.Subject> fallback = defaultSubjects();
+            persist(fallback, now);
+            // Revalidate in background without blocking caller
+            com.ikp.dev.app.di.ServiceLocator.executors().io.execute(() -> syncSilently(now));
+            return Outcome.ok(fallback);
+        }
+
+        // If force refresh requested:
         Outcome<List<Models.Subject>> supabaseFallback = fetchFromSupabase(now);
         if (supabaseFallback != null && supabaseFallback.isSuccess()) {
             return supabaseFallback;
-        }
-
-        List<CacheEntities.SubjectEntity> cached = db.libraryDao().subjectsInOrder();
-        boolean fresh = db.libraryDao().countFreshSubjects(now - ttlMs) > 0;
-
-        if (!forceRefresh && fresh && !cached.isEmpty()) {
-            return Outcome.ok(Mappers.toSubjects(toDtos(cached)));
         }
 
         try {
@@ -77,20 +84,27 @@ public final class SubjectRepository {
             List<Models.Subject> fallback = defaultSubjects();
             persist(fallback, now);
             return Outcome.ok(fallback);
-        } catch (IOException offline) {
+        } catch (Exception offline) {
             if (!cached.isEmpty()) {
                 return Outcome.ok(Mappers.toSubjects(toDtos(cached)));
             }
             List<Models.Subject> fallback = defaultSubjects();
             persist(fallback, now);
             return Outcome.ok(fallback);
-        } catch (RuntimeException e) {
-            if (!cached.isEmpty()) {
-                return Outcome.ok(Mappers.toSubjects(toDtos(cached)));
+        }
+    }
+
+    private void syncSilently(long now) {
+        try {
+            Outcome<List<Models.Subject>> sb = fetchFromSupabase(now);
+            if (sb != null && sb.isSuccess()) return;
+
+            Response<ApiResponse<List<LibraryDtos.SubjectDto>>> res = api.subjects().execute();
+            if (res.isSuccessful() && res.body() != null && res.body().data != null) {
+                List<Models.Subject> subjects = Mappers.toSubjects(ApiResponse.listOrEmpty(res.body().data));
+                persist(subjects, now);
             }
-            List<Models.Subject> fallback = defaultSubjects();
-            persist(fallback, now);
-            return Outcome.ok(fallback);
+        } catch (Exception ignored) {
         }
     }
 

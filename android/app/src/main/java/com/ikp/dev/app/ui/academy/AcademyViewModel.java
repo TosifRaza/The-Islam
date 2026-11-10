@@ -113,15 +113,40 @@ public final class AcademyViewModel extends ViewModel {
     }
 
     public void reload() {
-        state.postValue(UiState.loading());
+        // 1. Instant local render: populate seed/cached data immediately so the UI is ready with ZERO delay
+        if (rawCourses.isEmpty()) {
+            rawCourses.addAll(repository.getCachedOrSeedCourses());
+        }
+        if (rawCategories.isEmpty()) {
+            rawCategories.add(new CategoryChipAdapter.ChipItem(null, "All"));
+            for (Models.Subject s : SubjectRepository.defaultSubjects()) {
+                rawCategories.add(new CategoryChipAdapter.ChipItem(s.slug, s.name));
+            }
+        }
+        if (rawDecks.isEmpty()) {
+            rawDecks.addAll(repository.getCachedOrSeedDecks());
+        }
+        if (rawDailyLesson == null) {
+            String firstCourseId = !rawCourses.isEmpty() ? rawCourses.get(0).courseId : "c0000001-0000-0000-0000-000000000001";
+            rawDailyLesson = new DailyLessonInfo(
+                    "The Excellence of Seeking Knowledge",
+                    "Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise. (Sahih Muslim)",
+                    "3 min read",
+                    firstCourseId,
+                    null
+            );
+        }
+        publishFilteredState();
+
+        // 2. Fetch fresh remote data asynchronously in the background without blocking the screen
         ServiceLocator.executors().io.execute(() -> {
             boolean signedIn = ServiceLocator.sessionManager().isSignedIn();
             isMember = signedIn;
 
             // 1. Fetch courses
             Outcome<List<AcademyDtos.CourseRowDto>> coursesOutcome = repository.courses(1, 50);
-            rawCourses.clear();
-            if (coursesOutcome.isSuccess() && coursesOutcome.value != null) {
+            if (coursesOutcome.isSuccess() && coursesOutcome.value != null && !coursesOutcome.value.isEmpty()) {
+                rawCourses.clear();
                 rawCourses.addAll(coursesOutcome.value);
             }
 
@@ -137,9 +162,9 @@ public final class AcademyViewModel extends ViewModel {
             }
 
             // 3. Fetch subjects / categories
-            rawCategories.clear();
-            rawCategories.add(new CategoryChipAdapter.ChipItem(null, "All"));
             Set<String> seenSlugs = new HashSet<>();
+            List<CategoryChipAdapter.ChipItem> freshCategories = new ArrayList<>();
+            freshCategories.add(new CategoryChipAdapter.ChipItem(null, "All"));
             try {
                 if (subjectRepository != null) {
                     Outcome<List<Models.Subject>> subjectsOutcome = subjectRepository.subjects(false);
@@ -147,7 +172,7 @@ public final class AcademyViewModel extends ViewModel {
                         for (Models.Subject s : subjectsOutcome.value) {
                             if (s.slug != null && !seenSlugs.contains(s.slug)) {
                                 seenSlugs.add(s.slug);
-                                rawCategories.add(new CategoryChipAdapter.ChipItem(s.slug, s.name));
+                                freshCategories.add(new CategoryChipAdapter.ChipItem(s.slug, s.name));
                             }
                         }
                     }
@@ -159,37 +184,22 @@ public final class AcademyViewModel extends ViewModel {
             for (AcademyDtos.CourseRowDto c : rawCourses) {
                 if (c.subject != null && c.subject.slug != null && !seenSlugs.contains(c.subject.slug)) {
                     seenSlugs.add(c.subject.slug);
-                    rawCategories.add(new CategoryChipAdapter.ChipItem(c.subject.slug, c.subject.name));
+                    freshCategories.add(new CategoryChipAdapter.ChipItem(c.subject.slug, c.subject.name));
                 }
+            }
+            if (!freshCategories.isEmpty()) {
+                rawCategories.clear();
+                rawCategories.addAll(freshCategories);
             }
 
             // 4. Fetch flashcard decks
-            rawDecks.clear();
             try {
                 Outcome<List<AcademyDtos.DeckRowDto>> decksOutcome = repository.publicDecks(1, 10);
-                if (decksOutcome.isSuccess() && decksOutcome.value != null) {
+                if (decksOutcome.isSuccess() && decksOutcome.value != null && !decksOutcome.value.isEmpty()) {
+                    rawDecks.clear();
                     rawDecks.addAll(decksOutcome.value);
                 }
             } catch (Exception ignored) {
-            }
-
-            // 5. Default or loaded daily lesson
-            String firstCourseId = !rawCourses.isEmpty() ? rawCourses.get(0).courseId : "c0000005-0000-0000-0000-000000000005";
-            rawDailyLesson = new DailyLessonInfo(
-                    "The Excellence of Seeking Knowledge",
-                    "Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise. (Sahih Muslim)",
-                    "3 min read",
-                    firstCourseId,
-                    null
-            );
-
-            if (rawCourses.isEmpty() && rawCategories.isEmpty() && rawDecks.isEmpty()) {
-                if (!coursesOutcome.isSuccess()) {
-                    state.postValue(UiState.error(coursesOutcome.error));
-                } else {
-                    state.postValue(UiState.empty());
-                }
-                return;
             }
 
             publishFilteredState();

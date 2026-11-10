@@ -61,9 +61,9 @@ public final class ApiClient {
         };
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(4, TimeUnit.SECONDS)
+                .writeTimeout(4, TimeUnit.SECONDS)
                 .addInterceptor(emulatorGuard)
                 .addInterceptor(logging)
                 .addInterceptor(new AuthInterceptor(tokenStore))
@@ -95,9 +95,9 @@ public final class ApiClient {
             return chain.proceed(req);
         };
         return new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(4, TimeUnit.SECONDS)
+                .writeTimeout(4, TimeUnit.SECONDS)
                 .addInterceptor(emulatorGuard)
                 .addInterceptor(logging)
                 .build();
