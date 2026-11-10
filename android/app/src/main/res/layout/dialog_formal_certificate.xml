@@ -1,183 +1,320 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="20dp"
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:scrollbars="none"
     android:background="@android:color/transparent">
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="6dp"
-        app:cardBackgroundColor="#FAF7F2"
-        app:strokeColor="#C9A45A"
-        app:strokeWidth="2.5dp">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp">
 
+        <!-- PURE CERTIFICATE VIEW THAT GETS RENDERED & SHARED AS AN IMAGE -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_formal_certificate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FAF7F2"
+            app:strokeColor="#C9A45A"
+            app:strokeWidth="2.5dp">
+
+            <!-- Inner Gold Frame -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/bg_certificate_inner_border"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <!-- Bismillah Calligraphy -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
+                    android:textColor="#0D3B2E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- Gold Divider Accent -->
+                <View
+                    android:layout_width="70dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#C9A45A" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ISLAMIC KNOWLEDGE PLATFORM"
+                    android:textColor="#7A8880"
+                    android:textSize="9.5sp"
+                    android:letterSpacing="0.16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="ACADEMY OF SCHOLARLY ISLAMIC SCIENCES"
+                    android:textColor="#C9A45A"
+                    android:textSize="8.5sp"
+                    android:letterSpacing="0.12"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="CERTIFICATE OF ACHIEVEMENT"
+                    android:fontFamily="serif"
+                    android:textColor="#0D3B2E"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="شَهَادَةُ إِتْمَامٍ وَتَقْدِيرٍ"
+                    android:textColor="#5A6D63"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="This is proudly awarded to"
+                    android:textColor="#5A6D63"
+                    android:textSize="11.5sp"
+                    android:fontStyle="italic" />
+
+                <!-- Recipient / Student Name -->
+                <TextView
+                    android:id="@+id/tv_cert_student_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="serif"
+                    android:text="Student of Knowledge"
+                    android:textColor="#0D3B2E"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="140dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="#C9A45A" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="for successfully completing the scholarly curriculum, practical recitations, and passing the comprehensive examination with highest honors in"
+                    android:textColor="#5A6D63"
+                    android:textSize="10.5sp" />
+
+                <!-- Course Title -->
+                <TextView
+                    android:id="@+id/tv_cert_course_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:fontFamily="serif"
+                    android:text="Tajweed al-Quran &amp; Recitation Excellence"
+                    android:textColor="#0D3B2E"
+                    android:textSize="14.5sp"
+                    android:textStyle="bold" />
+
+                <!-- Seal & Distinction Grade -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_quick_certificates"
+                        android:importantForAccessibility="no" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_cert_grade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Grade: 98% (Mumtaz - Distinction)"
+                            android:textColor="#C9A45A"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_cert_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Certificate ID: IKP-1446-0891"
+                            android:textColor="#7A8880"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="#EAE3D5" />
+
+                <!-- Signature & Verification Accreditation Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Dean Signature -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sheikh Ahmad Al-Azhari"
+                            android:fontFamily="serif"
+                            android:textColor="#0D3B2E"
+                            android:textSize="10.5sp"
+                            android:textStyle="bold|italic" />
+
+                        <View
+                            android:layout_width="90dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="2dp"
+                            android:background="#C9A45A" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Academic Dean"
+                            android:textColor="#7A8880"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <!-- Accreditation Stamp -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✓ Verified Authentic"
+                            android:textColor="#0D3B2E"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_cert_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="15 Ramadan 1446 AH"
+                            android:textColor="#7A8880"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="verify.ikp.academy/cert"
+                            android:textColor="#C9A45A"
+                            android:textSize="8.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ACTION BUTTONS: Outside the certificate card so they are NOT in the shared image -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="24dp">
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <!-- Bismillah Calligraphy text -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
-                android:textColor="#0D3B2E"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="80dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="12dp"
-                android:background="#C9A45A" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ISLAMIC KNOWLEDGE PLATFORM"
-                android:textColor="#7A8880"
-                android:textSize="10sp"
-                android:letterSpacing="0.15"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="CERTIFICATE OF ACHIEVEMENT"
+            <!-- Share Image Button -->
+            <Button
+                android:id="@+id/btn_share_cert"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#C9A45A"
                 android:fontFamily="serif"
-                android:textColor="#0D3B2E"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:text="This is to certify that"
-                android:textColor="#5A6D63"
-                android:textSize="12sp"
-                android:fontStyle="italic" />
-
-            <!-- Student Name -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="serif"
-                android:text="Student of Knowledge"
+                android:text="Share Image"
                 android:textColor="#12291F"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/ic_share_outline"
+                app:iconTint="#12291F"
+                app:iconGravity="textStart" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="has successfully fulfilled all scholarly curriculum requirements and passed the chapter examinations with honors in"
-                android:textColor="#5A6D63"
-                android:textSize="11sp" />
-
-            <!-- Course Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
+            <!-- Save to Gallery Button -->
+            <Button
+                android:id="@+id/btn_save_cert"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="#0D3B2E"
                 android:fontFamily="serif"
-                android:text="Tajweed al-Quran &amp; Quranic Recitation"
-                android:textColor="#0D3B2E"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <!-- Seal & Grade Badge -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_quick_certificates"
-                    android:importantForAccessibility="no" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Grade: 98% (Mumtaz - Distinction)"
-                        android:textColor="#C9A45A"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Certificate ID: IKP-1446-0891"
-                        android:textColor="#7A8880"
-                        android:textSize="10sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="16dp"
-                android:background="#EAE3D5" />
-
-            <!-- Actions -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_share_cert"
-                    android:layout_width="0dp"
-                    android:layout_height="42dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="#C9A45A"
-                    android:fontFamily="serif"
-                    android:text="Share / Save"
-                    android:textColor="#12291F"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="10dp" />
-
-                <Button
-                    android:id="@+id/btn_close_cert_modal"
-                    android:layout_width="0dp"
-                    android:layout_height="42dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#0D3B2E"
-                    android:fontFamily="serif"
-                    android:text="Close"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    app:cornerRadius="10dp" />
-            </LinearLayout>
-
+                android:text="Save Image"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/ic_surah_download"
+                app:iconTint="#FFFFFF"
+                app:iconGravity="textStart" />
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
-</LinearLayout>
+        <!-- Close Button -->
+        <Button
+            android:id="@+id/btn_close_cert_modal"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="serif"
+            android:text="Close"
+            android:textColor="#FAF7F2"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</ScrollView>

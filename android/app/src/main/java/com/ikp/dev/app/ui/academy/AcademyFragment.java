@@ -1,12 +1,19 @@
 package com.ikp.dev.app.ui.academy;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,6 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavOptions;
@@ -37,6 +45,9 @@ import com.ikp.dev.app.data.remote.dto.AcademyDtos;
 import com.ikp.dev.app.di.ServiceLocator;
 import com.ikp.dev.app.ui.common.StateView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -669,22 +680,142 @@ public final class AcademyFragment extends Fragment {
             certDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
 
+        View certCard = v.findViewById(R.id.card_formal_certificate);
+
         View btnClose = v.findViewById(R.id.btn_close_cert_modal);
         if (btnClose != null) btnClose.setOnClickListener(x -> certDialog.dismiss());
 
         View btnShare = v.findViewById(R.id.btn_share_cert);
         if (btnShare != null) {
-            btnShare.setOnClickListener(x -> {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT,
-                        "I have earned an accredited Islamic Knowledge Platform certificate in Tajweed al-Quran with a grade of 98% (Mumtaz - Distinction)!\n\nVerify certificate ID: IKP-1446-0891");
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, "Share Islamic Certificate"));
-            });
+            btnShare.setOnClickListener(x -> shareCertificateImage(certCard));
+        }
+
+        View btnSave = v.findViewById(R.id.btn_save_cert);
+        if (btnSave != null) {
+            btnSave.setOnClickListener(x -> saveCertificateImage(certCard));
         }
 
         certDialog.show();
+    }
+
+    private Bitmap renderViewToBitmap(View view) {
+        int width = view.getWidth();
+        int height = view.getHeight();
+        if (width <= 0 || height <= 0) {
+            view.measure(
+                View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            );
+            width = view.getMeasuredWidth();
+            height = view.getMeasuredHeight();
+            view.layout(0, 0, width, height);
+        }
+
+        // Render at crisp high resolution (at least 1080px wide)
+        float scale = width < 1080 ? 1080f / (float) width : 1.0f;
+        int targetW = Math.round(width * scale);
+        int targetH = Math.round(height * scale);
+
+        Bitmap bitmap = Bitmap.createBitmap(targetW, targetH, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        if (scale != 1.0f) {
+            canvas.scale(scale, scale);
+        }
+        view.draw(canvas);
+        return bitmap;
+    }
+
+    private void shareCertificateImage(View certCard) {
+        if (getContext() == null || certCard == null) return;
+        try {
+            Bitmap bitmap = renderViewToBitmap(certCard);
+            File cacheDir = new File(requireContext().getCacheDir(), "certificates");
+            if (!cacheDir.exists()) {
+                //noinspection ResultOfMethodCallIgnored
+                cacheDir.mkdirs();
+            }
+            File certFile = new File(cacheDir, "IKP_Certificate_Tajweed_1446.png");
+            try (FileOutputStream out = new FileOutputStream(certFile)) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+            }
+
+            Uri contentUri = FileProvider.getUriForFile(
+                requireContext(),
+                requireContext().getPackageName() + ".fileprovider",
+                certFile
+            );
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/png");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Tajweed al-Quran Certificate of Achievement");
+            shareIntent.putExtra(Intent.EXTRA_TEXT,
+                "Alhamdulillah! Here is my official Certificate of Achievement in Tajweed al-Quran & Recitation Excellence from Islamic Knowledge Platform (Grade: 98% Mumtaz).\n\nVerify certificate ID: IKP-1446-0891");
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            startActivity(Intent.createChooser(shareIntent, "Share Certificate Image"));
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Failed to share certificate image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveCertificateImage(View certCard) {
+        if (getContext() == null || certCard == null) return;
+        try {
+            Bitmap bitmap = renderViewToBitmap(certCard);
+            String fileName = "IKP_Certificate_Tajweed_" + System.currentTimeMillis() + ".png";
+            boolean saved = false;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+                values.put(MediaStore.Images.Media.RELATIVE_PATH,
+                    Environment.DIRECTORY_PICTURES + "/IslamicKnowledgePlatform");
+                values.put(MediaStore.Images.Media.IS_PENDING, 1);
+
+                Uri uri = requireContext().getContentResolver().insert(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                if (uri != null) {
+                    try (OutputStream out = requireContext().getContentResolver().openOutputStream(uri)) {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    }
+                    values.clear();
+                    values.put(MediaStore.Images.Media.IS_PENDING, 0);
+                    requireContext().getContentResolver().update(uri, values, null, null);
+                    saved = true;
+                }
+            } else {
+                File picturesDir = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+                File ikpDir = new File(picturesDir, "IslamicKnowledgePlatform");
+                if (!ikpDir.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    ikpDir.mkdirs();
+                }
+                File destFile = new File(ikpDir, fileName);
+                try (FileOutputStream out = new FileOutputStream(destFile)) {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    out.flush();
+                    saved = true;
+                }
+                android.media.MediaScannerConnection.scanFile(
+                    requireContext(),
+                    new String[]{destFile.getAbsolutePath()},
+                    new String[]{"image/png"},
+                    null
+                );
+            }
+
+            if (saved) {
+                Toast.makeText(requireContext(), "✓ Certificate saved to Gallery / Pictures!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(requireContext(), "Could not save certificate image.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Error saving certificate: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showProgressBottomSheet() {
