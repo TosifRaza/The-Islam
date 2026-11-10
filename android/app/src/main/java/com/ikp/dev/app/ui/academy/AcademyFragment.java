@@ -698,6 +698,19 @@ public final class AcademyFragment extends Fragment {
         certDialog.show();
     }
 
+    private Bitmap getCertificateMasterBitmap(View certCard) {
+        if (certCard != null) {
+            android.widget.ImageView iv = certCard.findViewById(R.id.img_certificate_artwork);
+            if (iv != null && iv.getDrawable() instanceof android.graphics.drawable.BitmapDrawable) {
+                Bitmap bmp = ((android.graphics.drawable.BitmapDrawable) iv.getDrawable()).getBitmap();
+                if (bmp != null) {
+                    return bmp;
+                }
+            }
+        }
+        return renderViewToBitmap(certCard);
+    }
+
     private Bitmap renderViewToBitmap(View view) {
         int width = view.getWidth();
         int height = view.getHeight();
@@ -728,7 +741,7 @@ public final class AcademyFragment extends Fragment {
     private void shareCertificateImage(View certCard) {
         if (getContext() == null || certCard == null) return;
         try {
-            Bitmap bitmap = renderViewToBitmap(certCard);
+            Bitmap bitmap = getCertificateMasterBitmap(certCard);
             File cacheDir = new File(requireContext().getCacheDir(), "certificates");
             if (!cacheDir.exists()) {
                 //noinspection ResultOfMethodCallIgnored
@@ -740,6 +753,8 @@ public final class AcademyFragment extends Fragment {
                 out.flush();
             }
 
+            certFile.setReadable(true, false);
+
             Uri contentUri = FileProvider.getUriForFile(
                 requireContext(),
                 requireContext().getPackageName() + ".fileprovider",
@@ -749,12 +764,15 @@ public final class AcademyFragment extends Fragment {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("image/png");
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            shareIntent.setClipData(android.content.ClipData.newRawUri("Certificate", contentUri));
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Tajweed al-Quran Certificate of Achievement");
             shareIntent.putExtra(Intent.EXTRA_TEXT,
                 "Alhamdulillah! Here is my official Certificate of Achievement in Tajweed al-Quran & Recitation Excellence from Islamic Knowledge Platform (Grade: 98% Mumtaz).\n\nVerify certificate ID: IKP-1446-0891");
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-            startActivity(Intent.createChooser(shareIntent, "Share Certificate Image"));
+            Intent chooser = Intent.createChooser(shareIntent, "Share Certificate Image");
+            chooser.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(chooser);
         } catch (Exception e) {
             Toast.makeText(requireContext(), "Failed to share certificate image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -763,7 +781,7 @@ public final class AcademyFragment extends Fragment {
     private void saveCertificateImage(View certCard) {
         if (getContext() == null || certCard == null) return;
         try {
-            Bitmap bitmap = renderViewToBitmap(certCard);
+            Bitmap bitmap = getCertificateMasterBitmap(certCard);
             String fileName = "IKP_Certificate_Tajweed_" + System.currentTimeMillis() + ".png";
             boolean saved = false;
 
