@@ -651,6 +651,20 @@ public final class AcademyFragment extends Fragment {
         if (btnExam != null) {
             btnExam.setOnClickListener(v -> {
                 dialog.dismiss();
+                if (!ServiceLocator.tokenStore().hasSession()) {
+                    new MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Sign In Required for Examination")
+                            .setMessage("Taking official accredited examinations requires an account to verify your student identity and award your formal certificate.\n\nWould you like to sign in or register now?")
+                            .setPositiveButton("Sign In / Register", (d, which) -> {
+                                try {
+                                    NavHostFragment.findNavController(this).navigate(R.id.action_global_session_expired);
+                                } catch (Exception ignored) {
+                                }
+                            })
+                            .setNegativeButton("Continue Browsing", null)
+                            .show();
+                    return;
+                }
                 try {
                     NavHostFragment.findNavController(this).navigate(R.id.quizzesFragment);
                 } catch (Exception e) {

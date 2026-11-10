@@ -62,6 +62,18 @@ public final class QuizAttemptFragment extends Fragment {
         });
         viewModel.start().observe(getViewLifecycleOwner(), this::renderStart);
         viewModel.result().observe(getViewLifecycleOwner(), this::renderResult);
+
+        if (!ServiceLocator.tokenStore().hasSession()) {
+            stateView.setVisibility(View.VISIBLE);
+            stateView.renderAuthRequired(() -> {
+                try {
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_session_expired);
+                } catch (Exception ignored) {
+                }
+            });
+            return;
+        }
+
         viewModel.begin();
     }
 
@@ -88,9 +100,19 @@ public final class QuizAttemptFragment extends Fragment {
             }
             case EMPTY -> stateView.renderEmpty();
             case ERROR -> {
-                stateView.setVisibility(View.VISIBLE);
-                stateView.renderError(state.error);
-                stateView.setOnRetry(viewModel::begin);
+                if (state.error != null && ("AUTH-002".equals(state.error.code) || "AUTH-005".equals(state.error.code))) {
+                    stateView.setVisibility(View.VISIBLE);
+                    stateView.renderAuthRequired(() -> {
+                        try {
+                            NavHostFragment.findNavController(this).navigate(R.id.action_global_session_expired);
+                        } catch (Exception ignored) {
+                        }
+                    });
+                } else {
+                    stateView.setVisibility(View.VISIBLE);
+                    stateView.renderError(state.error);
+                    stateView.setOnRetry(viewModel::begin);
+                }
             }
         }
     }

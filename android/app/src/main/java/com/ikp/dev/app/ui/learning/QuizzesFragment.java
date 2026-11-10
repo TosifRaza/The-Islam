@@ -50,6 +50,20 @@ public final class QuizzesFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new TwoLineAdapter((item, pos) -> {
             if (pos < 0 || pos >= shown.size()) return;
+            if (!com.ikp.dev.app.di.ServiceLocator.tokenStore().hasSession()) {
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Sign In Required to Start Quiz")
+                        .setMessage("Taking official quizzes and examinations requires an account to record your answers, track your score, and award certificates.\n\nWould you like to sign in or create an account now?")
+                        .setPositiveButton("Sign In / Register", (d, which) -> {
+                            try {
+                                NavHostFragment.findNavController(this).navigate(R.id.action_global_session_expired);
+                            } catch (Exception ignored) {
+                            }
+                        })
+                        .setNegativeButton("Continue Browsing", null)
+                        .show();
+                return;
+            }
             Bundle args = new Bundle();
             args.putString("quizId", shown.get(pos).quizId);
             NavOptions opts = new NavOptions.Builder().setLaunchSingleTop(true).build();

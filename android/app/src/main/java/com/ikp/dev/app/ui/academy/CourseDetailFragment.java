@@ -56,7 +56,23 @@ public final class CourseDetailFragment extends Fragment {
         viewModel.init(args == null ? null : args.getString("courseId"));
         view.findViewById(R.id.btn_back).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).popBackStack());
-        view.findViewById(R.id.btn_enrol).setOnClickListener(v -> viewModel.enrol());
+        view.findViewById(R.id.btn_enrol).setOnClickListener(v -> {
+            if (!ServiceLocator.sessionManager().isSignedIn()) {
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Sign In Required to Enrol")
+                        .setMessage("Enrolling in courses and saving your progress requires an account.\n\nWould you like to sign in or register now?")
+                        .setPositiveButton("Sign In / Register", (d, which) -> {
+                            try {
+                                NavHostFragment.findNavController(this).navigate(R.id.action_global_session_expired);
+                            } catch (Exception ignored) {
+                            }
+                        })
+                        .setNegativeButton("Continue Browsing", null)
+                        .show();
+                return;
+            }
+            viewModel.enrol();
+        });
         viewModel.state().observe(getViewLifecycleOwner(), this::render);
         viewModel.progress().observe(getViewLifecycleOwner(), p -> {
             if (p == null) return;
@@ -158,6 +174,20 @@ public final class CourseDetailFragment extends Fragment {
             }
             case "quiz" -> {
                 if (l.quizId != null) {
+                    if (!ServiceLocator.sessionManager().isSignedIn()) {
+                        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                                .setTitle("Sign In Required for Quiz")
+                                .setMessage("Taking lesson quizzes requires an account to record your score.\n\nWould you like to sign in or register now?")
+                                .setPositiveButton("Sign In / Register", (d, which) -> {
+                                    try {
+                                        NavHostFragment.findNavController(this).navigate(R.id.action_global_session_expired);
+                                    } catch (Exception ignored) {
+                                    }
+                                })
+                                .setNegativeButton("Continue Browsing", null)
+                                .show();
+                        return;
+                    }
                     Bundle args = new Bundle();
                     args.putString("quizId", l.quizId);
                     NavOptions opts = new NavOptions.Builder().setLaunchSingleTop(true).build();
