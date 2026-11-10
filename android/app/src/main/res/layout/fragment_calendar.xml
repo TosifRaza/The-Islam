@@ -1,28 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="?android:attr/colorBackground">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center_vertical">
-        <ImageButton android:id="@+id/btn_back" android:layout_width="@dimen/touch_target_min"
-            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_back" android:src="@drawable/ic_arrow_back" />
-        <TextView android:id="@+id/title" android:layout_width="0dp" android:layout_weight="1"
-            android:layout_height="wrap_content" android:text="@string/calendar_title"
-            android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_home_warm"
+    android:fillViewport="true"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="174dp"
+            android:background="@drawable/bg_quran_header">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_circle_back_gold"
+                android:contentDescription="@string/cd_back"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="78dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:text="@string/calendar_title"
+                    android:textColor="@color/white"
+                    android:textSize="27sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Hijri dates, Islamic events &amp; important occasions"
+                    android:textColor="@color/ivory"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="-12dp"
+            android:layout_marginEnd="18dp"
+            app:cardBackgroundColor="@color/library_card"
+            app:cardCornerRadius="26dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/library_card_border"
+            app:strokeWidth="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingTop="18dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="18dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView android:id="@+id/tv_hijri_day" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="@color/text_headline_dark" android:textSize="56sp" android:textStyle="bold" android:fontFamily="serif" />
+                    <TextView android:id="@+id/tv_hijri_month" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hijri date" android:textColor="@color/text_headline_dark" android:textSize="18sp" android:textStyle="bold" android:fontFamily="serif" />
+                    <TextView android:id="@+id/tv_hijri_year" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:background="@drawable/bg_pill_gold_active" android:paddingStart="12dp" android:paddingTop="3dp" android:paddingEnd="12dp" android:paddingBottom="3dp" android:text="---- AH" android:textColor="@color/text_headline_dark" android:textSize="13sp" />
+                </LinearLayout>
+                <View android:layout_width="1dp" android:layout_height="122dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:background="@color/quran_divider_gold" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_shortcut_calendar" android:contentDescription="@null" />
+                    <TextView android:id="@+id/tv_weekday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="—" android:textColor="@color/text_secondary" android:textSize="15sp" />
+                    <TextView android:id="@+id/tv_gregorian" android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:text="—" android:textColor="@color/text_headline_dark" android:textSize="21sp" android:textStyle="bold" android:fontFamily="serif" />
+                    <TextView android:id="@+id/tv_calculated" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center" android:text="Calculated date · not confirmed by local sighting" android:textColor="@color/text_secondary" android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="18dp"
+            app:cardBackgroundColor="@color/emerald_tint_container"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal" android:padding="12dp">
+                <ImageView android:layout_width="34dp" android:layout_height="34dp" android:src="@drawable/ic_shortcut_calendar" android:contentDescription="@null" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Local date adjustment" android:textColor="@color/text_headline_dark" android:textSize="16sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/tv_offset_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calculated date · 0 days" android:textColor="@color/text_secondary" android:textSize="13sp" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btn_offset" android:layout_width="wrap_content" android:layout_height="42dp" android:minWidth="0dp" android:text="Adjust" android:textColor="@color/white" app:backgroundTint="@color/brand_green_dark" app:cornerRadius="24dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="22dp" android:layout_marginTop="22dp" android:layout_marginEnd="18dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_shortcut_calendar" android:contentDescription="@null" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:layout_weight="1" android:fontFamily="serif" android:text="Important Islamic Dates" android:textColor="@color/text_headline_dark" android:textSize="21sp" android:textStyle="bold" />
+            <TextView android:id="@+id/btn_view_all" android:layout_width="wrap_content" android:layout_height="48dp" android:gravity="center" android:clickable="true" android:focusable="true" android:paddingStart="8dp" android:paddingEnd="4dp" android:text="View all  ›" android:textColor="@color/emerald_deep" android:textSize="14sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/state_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:padding="10dp"
+            android:text="@string/state_loading"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_retry"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/retry"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp" />
     </LinearLayout>
-    <TextView android:id="@+id/tv_today" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="@dimen/space_md"
-        android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
-    <Button android:id="@+id/btn_offset" style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/calendar_offset_title" />
-    <TextView android:id="@+id/state_text" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="@dimen/space_md"
-        android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
-    <Button android:id="@+id/btn_retry" style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/retry" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler"
-        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

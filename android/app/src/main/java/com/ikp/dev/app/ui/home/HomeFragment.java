@@ -106,7 +106,8 @@ public final class HomeFragment extends Fragment {
         View btnNotif = view.findViewById(R.id.btn_notifications);
         if (btnNotif != null) {
             btnNotif.setOnClickListener(v ->
-                    android.widget.Toast.makeText(requireContext(), "No new notifications", android.widget.Toast.LENGTH_SHORT).show());
+                    NavHostFragment.findNavController(this).navigate(R.id.action_global_notifications));
+            btnNotif.setContentDescription(getString(R.string.notifications_open));
         }
         View cardContinue = view.findViewById(R.id.card_continue_reading);
         if (cardContinue != null) {

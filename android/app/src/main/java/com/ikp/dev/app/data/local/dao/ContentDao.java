@@ -61,4 +61,7 @@ public interface ContentDao {
 
     @Query("SELECT * FROM tasbih_daily_history ORDER BY day DESC LIMIT :limit")
     List<TasbihDailyEntity> dailyHistory(int limit);
+
+    @Query("SELECT COALESCE(SUM(total), 0) FROM tasbih_daily_history")
+    long lifetimeDhikrTotal();
 }

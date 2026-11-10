@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.ikp.dev.app.core.common.UiState;
 import com.ikp.dev.app.core.security.SessionManager;
 import com.ikp.dev.app.di.ServiceLocator;
 import com.ikp.dev.app.domain.model.Models;
+import com.ikp.dev.app.ui.common.MessageKeys;
 import com.ikp.dev.app.ui.common.StateView;
 
 /**
@@ -56,7 +58,7 @@ public final class BookDetailFragment extends Fragment {
         ImageButton back = view.findViewById(R.id.btn_back);
         back.setOnClickListener(v -> NavHostFragment.findNavController(this).popBackStack());
 
-        btnDownload.setOnClickListener(v -> showDownloadNotAvailable());
+        btnDownload.setOnClickListener(v -> startDownload());
 
         Bundle args = getArguments();
         String bookId = args == null ? null : args.getString("bookId");
@@ -127,17 +129,31 @@ public final class BookDetailFragment extends Fragment {
         }
     }
 
-    /**
-     * Honest handling of the download contract gap: the public book payload
-     * exposes format NAMES but not file UUIDs, so /download-token cannot be
-     * called by any client. Recorded in docs-m3/m3-api-integration-report.md.
-     */
-    private void showDownloadNotAvailable() {
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.book_download_action)
-                .setMessage(R.string.book_download_failed)
-                .setPositiveButton(R.string.action_ok, null)
-                .show();
+    private void startDownload() {
+        Bundle args = getArguments();
+        String bookId = args == null ? null : args.getString("bookId");
+        if (bookId == null || bookId.isEmpty()) return;
+        btnDownload.setEnabled(false);
+        btnDownload.setText(R.string.download_in_progress);
+        String bookTitle = ((TextView) requireView().findViewById(R.id.tv_title)).getText().toString();
+        ServiceLocator.executors().io.execute(() -> {
+            com.ikp.dev.app.core.common.Outcome<com.ikp.dev.app.data.local.entity.UserDataEntities.DownloadMetadataEntity>
+                    result = ServiceLocator.offlineDownloadsRepository().downloadBook(bookId, bookTitle);
+            if (!isAdded()) return;
+            requireActivity().runOnUiThread(() -> {
+                if (!isAdded()) return;
+                btnDownload.setEnabled(true);
+                btnDownload.setText(R.string.book_download_action);
+                if (result.isSuccess()) {
+                    Toast.makeText(requireContext(), R.string.download_saved,
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    String key = result.error == null ? "error_unknown" : result.error.messageKey;
+                    Toast.makeText(requireContext(), MessageKeys.resIdForKey(key),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        });
     }
 
     private static String orDash(String s) {

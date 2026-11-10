@@ -38,7 +38,7 @@ public final class ProfileViewModel extends ViewModel {
 
     private final MutableLiveData<UiState<Models.User>> profileState = new MutableLiveData<>();
     private final MutableLiveData<Boolean> logoutDone = new MutableLiveData<>();
-    private final MutableLiveData<ProfileStats> stats = new MutableLiveData<>(new ProfileStats(12, 48, 26, 7));
+    private final MutableLiveData<ProfileStats> stats = new MutableLiveData<>(new ProfileStats(0, 0, 0, 0));
 
     private final AuthRepository authRepository;
     private final SessionManager sessionManager;
@@ -71,7 +71,9 @@ public final class ProfileViewModel extends ViewModel {
     public void loadProfile() {
         if (!isSignedIn()) {
             profileState.postValue(UiState.success(null));
-            stats.postValue(new ProfileStats(12, 48, 26, 7));
+            ServiceLocator.executors().io.execute(() -> {
+                stats.postValue(new ProfileStats(0, 0, localDownloadCount(), 0));
+            });
             return;
         }
         profileState.postValue(UiState.loading());
@@ -87,34 +89,45 @@ public final class ProfileViewModel extends ViewModel {
 
             // Also load user metrics asynchronously
             try {
-                int bookmarkCount = 48;
+                int bookmarkCount = 0;
                 UserContentRepository ucRepo = ServiceLocator.userContentRepository();
                 Outcome<List<ContentDtos.BookmarkDto>> bmRes = ucRepo.bookmarks();
-                if (bmRes.isSuccess() && bmRes.value != null && !bmRes.value.isEmpty()) {
+                if (bmRes.isSuccess() && bmRes.value != null) {
                     bookmarkCount = bmRes.value.size();
                 }
 
-                int downloadCount = 26;
-                PersonalLibraryRepository plRepo = ServiceLocator.personalLibraryRepository();
-                Outcome<List<ContentDtos.PersonalBookDto>> plRes = plRepo.books(null, 1, 50);
-                if (plRes.isSuccess() && plRes.value != null && !plRes.value.isEmpty()) {
-                    downloadCount = plRes.value.size();
-                }
+                int downloadCount = localDownloadCount();
 
-                int coursesCount = 12;
+                int coursesCount = 0;
                 AcademyRepository acRepo = ServiceLocator.academyRepository();
                 if (acRepo != null) {
-                    var cRes = acRepo.courses(1, 20);
-                    if (cRes.isSuccess() && cRes.value != null && !cRes.value.isEmpty()) {
-                        coursesCount = Math.max(cRes.value.size(), 5);
+                    var cRes = acRepo.courses(1, 100);
+                    if (cRes.isSuccess() && cRes.value != null) {
+                        coursesCount = cRes.value.size();
                     }
                 }
 
-                stats.postValue(new ProfileStats(coursesCount, bookmarkCount, downloadCount, 7));
+                stats.postValue(new ProfileStats(coursesCount, bookmarkCount, downloadCount, 0));
             } catch (Exception ignored) {
-                stats.postValue(new ProfileStats(12, 48, 26, 7));
+                stats.postValue(new ProfileStats(0, 0, localDownloadCount(), 0));
             }
         });
+    }
+
+    private int localDownloadCount() {
+        int count = 0;
+        try {
+            for (com.ikp.dev.app.data.local.entity.UserDataEntities.DownloadMetadataEntity row
+                    : ServiceLocator.database().userDataDao().downloads()) {
+                if (row.filePath != null && new java.io.File(row.filePath).isFile()) {
+                    count++;
+                } else if (row.mediaId != null) {
+                    ServiceLocator.database().userDataDao().deleteDownload(row.mediaId);
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        return count;
     }
 
     public void logout() {

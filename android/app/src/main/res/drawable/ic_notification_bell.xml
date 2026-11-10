@@ -7,8 +7,4 @@
     <path
         android:fillColor="#0D3B2E"
         android:pathData="M12,2A2,2 0 0,0 10,4A6,6 0 0,0 6,10V15L4,17V18H20V17L18,15V10A6,6 0 0,0 14,4A2,2 0 0,0 12,2M10,19A2,2 0 0,0 12,21A2,2 0 0,0 14,19H10Z" />
-    <!-- Notification Red Dot Badge -->
-    <path
-        android:fillColor="#E53935"
-        android:pathData="M 18,3 A 3,3 0 1,0 18,9 A 3,3 0 1,0 18,3 Z" />
 </vector>

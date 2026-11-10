@@ -20,6 +20,7 @@ import com.ikp.dev.app.data.repository.AuthRepository.ServiceLocatorBridge;
 import com.ikp.dev.app.data.repository.BookRepository;
 import com.ikp.dev.app.data.repository.ContentRepository;
 import com.ikp.dev.app.data.repository.PersonalLibraryRepository;
+import com.ikp.dev.app.data.repository.OfflineDownloadsRepository;
 import com.ikp.dev.app.data.repository.UserContentRepository;
 import com.ikp.dev.app.data.repository.SubjectRepository;
 
@@ -51,6 +52,7 @@ public final class ServiceLocator {
     private static ContentRepository contentRepository;
     private static UserContentRepository userContentRepository;
     private static PersonalLibraryRepository personalLibraryRepository;
+    private static OfflineDownloadsRepository offlineDownloadsRepository;
     private static AcademyRepository academyRepository;
     private static com.ikp.dev.app.data.repository.AssistantRepository assistantRepository;
     private static ExecutorService ioExecutor;
@@ -90,6 +92,7 @@ public final class ServiceLocator {
             contentRepository = new ContentRepository(apiClient, database);
             userContentRepository = new UserContentRepository(apiClient);
             personalLibraryRepository = new PersonalLibraryRepository(apiClient);
+            offlineDownloadsRepository = new OfflineDownloadsRepository(app, apiClient, database);
             academyRepository = new AcademyRepository(apiClient.create(AcademyApi.class));
             assistantRepository = new com.ikp.dev.app.data.repository.AssistantRepository(
                     apiClient.create(com.ikp.dev.app.data.remote.AssistantApi.class),
@@ -139,6 +142,10 @@ public final class ServiceLocator {
         return personalLibraryRepository;
     }
 
+    public static OfflineDownloadsRepository offlineDownloadsRepository() {
+        return offlineDownloadsRepository;
+    }
+
     /** M5: learning & research surface (academy, quizzes, flashcards, research,
      *  scholars, fatwas — one API client, one repository). */
     public static AcademyRepository academyRepository() {
@@ -184,6 +191,7 @@ public final class ServiceLocator {
         contentRepository = null;
         userContentRepository = null;
         personalLibraryRepository = null;
+        offlineDownloadsRepository = null;
         academyRepository = null;
         assistantRepository = null;
         appExecutors = null;

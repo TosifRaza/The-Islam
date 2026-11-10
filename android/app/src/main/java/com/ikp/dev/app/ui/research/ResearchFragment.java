@@ -184,10 +184,18 @@ public final class ResearchFragment extends Fragment {
         if (bookmarkBtn != null) {
             bookmarkBtn.setOnClickListener(v -> {
                 if (!ServiceLocator.sessionManager().isSignedIn()) {
-                    Toast.makeText(requireContext(), R.string.signin_required, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(requireContext(), "Saved Research & Bookmarks", Toast.LENGTH_SHORT).show();
+                    new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.signin_required)
+                            .setMessage(R.string.profile_guest_prompt)
+                            .setPositiveButton(R.string.personal_sign_in, (dialog, which) ->
+                                    NavHostFragment.findNavController(this).navigate(R.id.loginFragment))
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
+                    return;
                 }
+                Bundle args = new Bundle();
+                args.putString("section", com.ikp.dev.app.ui.profile.SavedContentFragment.SECTION_BOOKMARKS);
+                NavHostFragment.findNavController(this).navigate(R.id.savedContentFragment, args);
             });
         }
     }

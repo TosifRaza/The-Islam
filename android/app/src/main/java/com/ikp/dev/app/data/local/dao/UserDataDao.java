@@ -65,4 +65,10 @@ public interface UserDataDao {
 
     @Query("SELECT * FROM download_metadata ORDER BY downloadedAtEpochMs DESC")
     List<DownloadMetadataEntity> downloads();
+
+    @Query("SELECT * FROM download_metadata WHERE mediaId = :mediaId LIMIT 1")
+    DownloadMetadataEntity download(String mediaId);
+
+    @Query("DELETE FROM download_metadata WHERE mediaId = :mediaId")
+    void deleteDownload(String mediaId);
 }

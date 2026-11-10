@@ -15,9 +15,8 @@ import retrofit2.http.Query;
 
 /**
  * Public library APIs — exact M1/M2 backend contract (docs/05 §3.4/§3.5).
- * The public book list/detail payload does NOT expose file UUIDs (format
- * names only), so the download-token flow cannot be completed by any client;
- * the Android UI treats download as a documented-unavailable capability.
+ * The book detail payload includes per-format file references; download-token
+ * access remains authenticated and licence-gated by the backend.
  */
 public interface LibraryApi {
 

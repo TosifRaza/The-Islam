@@ -61,6 +61,14 @@ public final class UserContentRepository {
         return run(api.putNote(body));
     }
 
+    public Outcome<List<ContentDtos.NoteDto>> notes() {
+        return run(api.notes());
+    }
+
+    public Outcome<Map<String, Object>> deleteNote(String refKey) {
+        return run(api.deleteNote(refKey));
+    }
+
     public Outcome<Map<String, Object>> putFavourite(String refKey) {
         Map<String, String> body = new HashMap<>();
         body.put("refKey", refKey);

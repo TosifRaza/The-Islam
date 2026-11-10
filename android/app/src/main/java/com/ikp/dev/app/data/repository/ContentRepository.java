@@ -352,6 +352,11 @@ public final class ContentRepository {
         return run(api.calendarEvents(hijriYear, null, null));
     }
 
+    public Outcome<List<ContentDtos.IslamicEventDto>> calendarEvents(
+            @Nullable Integer hijriYear, @Nullable Integer offsetDays) {
+        return run(api.calendarEvents(hijriYear, null, offsetDays));
+    }
+
     public Outcome<List<Map<String, Object>>> prayerMethods() {
         return run(api.prayerMethods());
     }

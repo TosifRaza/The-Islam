@@ -2,9 +2,7 @@ package com.ikp.dev.app.ui.academy;
 
 import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -49,7 +47,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,9 +57,6 @@ import java.util.Set;
  * debounced search, continue-learning rail, flashcard decks, and daily lesson.
  */
 public final class AcademyFragment extends Fragment {
-
-    private static final String PREFS_NAME = "academy_prefs";
-    private static final String KEY_BOOKMARKS = "bookmarked_courses";
 
     private AcademyViewModel viewModel;
     private StateView stateView;
@@ -87,6 +81,7 @@ public final class AcademyFragment extends Fragment {
     private Button dailyStartBtn;
 
     private boolean isBookmarkFilterActive = false;
+    private final Set<String> bookmarkedCourseIds = new HashSet<>();
     private final List<AcademyDtos.CourseRowDto> currentCourses = new ArrayList<>();
     private final List<CategoryChipAdapter.ChipItem> currentCategories = new ArrayList<>();
 
@@ -207,28 +202,12 @@ public final class AcademyFragment extends Fragment {
 
             @Override
             public void onBookmarkClick(@NonNull AcademyDtos.CourseRowDto course) {
-                if (course.courseId == null) return;
-                SharedPreferences sp = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-                Set<String> updated = new HashSet<>(sp.getStringSet(KEY_BOOKMARKS, Collections.emptySet()));
-                if (updated.contains(course.courseId)) {
-                    updated.remove(course.courseId);
-                    Toast.makeText(requireContext(), "Removed " + (course.title != null ? course.title : "course") + " from bookmarks", Toast.LENGTH_SHORT).show();
-                } else {
-                    updated.add(course.courseId);
-                    Toast.makeText(requireContext(), "Saved " + (course.title != null ? course.title : "course") + " to bookmarks", Toast.LENGTH_SHORT).show();
-                }
-                sp.edit().putStringSet(KEY_BOOKMARKS, updated).apply();
-                courseAdapter.setBookmarkedIds(updated);
-                if (isBookmarkFilterActive) {
-                    updateBookmarkFilterUI();
-                }
+                toggleCourseBookmark(course);
             }
         });
         coursesRv.setAdapter(courseAdapter);
 
-        // Initial load of bookmarked course IDs
-        SharedPreferences initPrefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        courseAdapter.setBookmarkedIds(initPrefs.getStringSet(KEY_BOOKMARKS, Collections.emptySet()));
+        loadCourseBookmarks();
 
         // Search Input & Clear
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -359,8 +338,6 @@ public final class AcademyFragment extends Fragment {
 
     private void updateBookmarkFilterUI() {
         if (btnHeaderBookmark == null || !isAdded()) return;
-        SharedPreferences sp = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        Set<String> bookmarked = sp.getStringSet(KEY_BOOKMARKS, Collections.emptySet());
 
         if (isBookmarkFilterActive) {
             btnHeaderBookmark.setImageResource(R.drawable.ic_bookmark_filled);
@@ -369,7 +346,7 @@ public final class AcademyFragment extends Fragment {
 
             List<AcademyDtos.CourseRowDto> bookmarkedList = new ArrayList<>();
             for (AcademyDtos.CourseRowDto c : currentCourses) {
-                if (c.courseId != null && bookmarked.contains(c.courseId)) {
+                if (c.courseId != null && bookmarkedCourseIds.contains(c.courseId)) {
                     bookmarkedList.add(c);
                 }
             }
@@ -382,7 +359,6 @@ public final class AcademyFragment extends Fragment {
                 noCoursesHint.setVisibility(View.GONE);
             }
             activeFilterHint.setText("Bookmarks (" + bookmarkedList.size() + ")");
-            Toast.makeText(requireContext(), "Showing bookmarked courses (" + bookmarkedList.size() + ")", Toast.LENGTH_SHORT).show();
         } else {
             btnHeaderBookmark.setImageResource(R.drawable.ic_bookmark_outline);
             androidx.core.widget.ImageViewCompat.setImageTintList(btnHeaderBookmark,
@@ -397,8 +373,70 @@ public final class AcademyFragment extends Fragment {
                 noCoursesHint.setVisibility(View.GONE);
             }
             courseAdapter.submitList(currentCourses);
-            Toast.makeText(requireContext(), "Showing all courses", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void loadCourseBookmarks() {
+        if (!ServiceLocator.sessionManager().isSignedIn()) {
+            bookmarkedCourseIds.clear();
+            courseAdapter.setBookmarkedIds(bookmarkedCourseIds);
+            return;
+        }
+        ServiceLocator.executors().io.execute(() -> {
+            com.ikp.dev.app.core.common.Outcome<List<com.ikp.dev.app.data.remote.dto.ContentDtos.BookmarkDto>> result =
+                    ServiceLocator.userContentRepository().bookmarks();
+            if (!result.isSuccess() || result.value == null || !isAdded()) return;
+            Set<String> ids = new HashSet<>();
+            for (com.ikp.dev.app.data.remote.dto.ContentDtos.BookmarkDto item : result.value) {
+                if (item.refKey != null && item.refKey.startsWith("course:")) {
+                    ids.add(item.refKey.substring("course:".length()));
+                }
+            }
+            requireActivity().runOnUiThread(() -> {
+                if (!isAdded()) return;
+                bookmarkedCourseIds.clear();
+                bookmarkedCourseIds.addAll(ids);
+                courseAdapter.setBookmarkedIds(bookmarkedCourseIds);
+                if (isBookmarkFilterActive) updateBookmarkFilterUI();
+            });
+        });
+    }
+
+    private void toggleCourseBookmark(@NonNull AcademyDtos.CourseRowDto course) {
+        if (course.courseId == null || course.courseId.trim().isEmpty()) return;
+        if (!ServiceLocator.sessionManager().isSignedIn()) {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.signin_required)
+                    .setMessage(R.string.profile_guest_prompt)
+                    .setPositiveButton(R.string.personal_sign_in, (dialog, which) ->
+                            NavHostFragment.findNavController(this).navigate(R.id.loginFragment))
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+            return;
+        }
+        boolean remove = bookmarkedCourseIds.contains(course.courseId);
+        String refKey = "course:" + course.courseId;
+        ServiceLocator.executors().io.execute(() -> {
+            com.ikp.dev.app.core.common.Outcome<?> result = remove
+                    ? ServiceLocator.userContentRepository().deleteBookmark(refKey)
+                    : ServiceLocator.userContentRepository().putBookmark(refKey, null);
+            if (!isAdded()) return;
+            requireActivity().runOnUiThread(() -> {
+                if (!isAdded()) return;
+                if (!result.isSuccess()) {
+                    String key = result.error == null ? "error_unknown" : result.error.messageKey;
+                    Toast.makeText(requireContext(), com.ikp.dev.app.ui.common.MessageKeys.resIdForKey(key),
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (remove) bookmarkedCourseIds.remove(course.courseId);
+                else bookmarkedCourseIds.add(course.courseId);
+                courseAdapter.setBookmarkedIds(bookmarkedCourseIds);
+                if (isBookmarkFilterActive) updateBookmarkFilterUI();
+                Toast.makeText(requireContext(), remove ? R.string.saved_item_removed
+                                : R.string.bookmark_saved, Toast.LENGTH_SHORT).show();
+            });
+        });
     }
 
     private void showCategoryFilterMenu(@NonNull View anchor) {
@@ -523,8 +561,6 @@ public final class AcademyFragment extends Fragment {
                                           int filterType) {
         if (container == null || getContext() == null) return;
         container.removeAllViews();
-        SharedPreferences sp = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        Set<String> bookmarked = sp.getStringSet(KEY_BOOKMARKS, Collections.emptySet());
 
         List<AcademyDtos.CourseRowDto> filtered = new ArrayList<>();
         for (int i = 0; i < allList.size(); i++) {
@@ -532,9 +568,9 @@ public final class AcademyFragment extends Fragment {
             if (filterType == 0) {
                 filtered.add(c);
             } else if (filterType == 1) {
-                if (i < 2 || (c.courseId != null && bookmarked.contains(c.courseId))) filtered.add(c);
+                if (i < 2 || (c.courseId != null && bookmarkedCourseIds.contains(c.courseId))) filtered.add(c);
             } else if (filterType == 2) {
-                if (c.courseId != null && bookmarked.contains(c.courseId)) filtered.add(c);
+                if (c.courseId != null && bookmarkedCourseIds.contains(c.courseId)) filtered.add(c);
             }
         }
 

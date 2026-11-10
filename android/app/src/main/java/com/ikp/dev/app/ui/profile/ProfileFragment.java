@@ -105,21 +105,11 @@ public final class ProfileFragment extends Fragment {
         });
 
         // Two-Column Section: Saved & Library
-        view.findViewById(R.id.row_bookmarks).setOnClickListener(v -> {
-            try {
-                NavHostFragment.findNavController(this).navigate(R.id.action_global_personal_library);
-            } catch (Exception e) {
-                Toast.makeText(requireContext(), "Opening Bookmarks...", Toast.LENGTH_SHORT).show();
-            }
-        });
+        view.findViewById(R.id.row_bookmarks).setOnClickListener(v ->
+                openSavedSection(SavedContentFragment.SECTION_BOOKMARKS));
 
-        view.findViewById(R.id.row_downloads).setOnClickListener(v -> {
-            try {
-                NavHostFragment.findNavController(this).navigate(R.id.action_global_personal_library);
-            } catch (Exception e) {
-                Toast.makeText(requireContext(), "Opening Downloads...", Toast.LENGTH_SHORT).show();
-            }
-        });
+        view.findViewById(R.id.row_downloads).setOnClickListener(v ->
+                openSavedSection(SavedContentFragment.SECTION_DOWNLOADS));
 
         view.findViewById(R.id.row_flashcards).setOnClickListener(v -> {
             try {
@@ -129,13 +119,8 @@ public final class ProfileFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.row_notes).setOnClickListener(v -> {
-            try {
-                NavHostFragment.findNavController(this).navigate(R.id.action_global_personal_library);
-            } catch (Exception e) {
-                Toast.makeText(requireContext(), "Opening Notes...", Toast.LENGTH_SHORT).show();
-            }
-        });
+        view.findViewById(R.id.row_notes).setOnClickListener(v ->
+                openSavedSection(SavedContentFragment.SECTION_NOTES));
 
         view.findViewById(R.id.row_history).setOnClickListener(v -> showStudyHistoryDialog());
 
@@ -226,7 +211,18 @@ public final class ProfileFragment extends Fragment {
             }
         });
 
-        viewModel.loadProfile();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewModel != null) viewModel.loadProfile();
+    }
+
+    private void openSavedSection(String section) {
+        Bundle args = new Bundle();
+        args.putString("section", section);
+        NavHostFragment.findNavController(this).navigate(R.id.savedContentFragment, args);
     }
 
     /**
@@ -234,18 +230,18 @@ public final class ProfileFragment extends Fragment {
      * "Abdullah Rahman" • "abdullah.rahman@email.com" • 👑 Member • 12 / 48 / 26 / 7 stats.
      */
     private void renderDefaultProfile() {
-        tvName.setText("Abdullah Rahman");
-        tvEmail.setText("abdullah.rahman@email.com");
-        layoutMemberBadge.setVisibility(View.VISIBLE);
-        tvGuestBadge.setVisibility(View.GONE);
+        tvName.setText(R.string.profile_guest_name);
+        tvEmail.setText(R.string.profile_guest_subtitle);
+        layoutMemberBadge.setVisibility(View.GONE);
+        tvGuestBadge.setVisibility(View.VISIBLE);
 
-        btnSignOut.setVisibility(View.VISIBLE);
-        btnSignIn.setVisibility(View.GONE);
+        btnSignOut.setVisibility(View.GONE);
+        btnSignIn.setVisibility(View.VISIBLE);
 
-        tvCoursesCount.setText("12");
-        tvBookmarksCount.setText("48");
-        tvDownloadsCount.setText("26");
-        tvStreakCount.setText("7");
+        tvCoursesCount.setText("0");
+        tvBookmarksCount.setText("0");
+        tvDownloadsCount.setText("0");
+        tvStreakCount.setText("0");
     }
 
     private void renderUser(Models.User user) {

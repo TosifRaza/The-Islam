@@ -1,26 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="?android:attr/colorBackground">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center_vertical">
-        <ImageButton android:id="@+id/btn_back" android:layout_width="@dimen/touch_target_min"
-            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_back" android:src="@drawable/ic_arrow_back" />
-        <TextView android:id="@+id/title" android:layout_width="0dp" android:layout_weight="1"
-            android:layout_height="wrap_content" android:text="@string/tasbih_title"
-            android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_home_warm"
+    android:fillViewport="true"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="168dp"
+            android:background="@drawable/bg_quran_header">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_circle_back_gold"
+                android:contentDescription="@string/cd_back"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="82dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:text="۞  Tasbih"
+                    android:textColor="@color/white"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="────────  ◆  ────────"
+                    android:textColor="@color/brand_gold_accent"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                app:cardBackgroundColor="@color/library_card"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/card_border_subtle"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" android:text="Today" android:textColor="@color/text_primary" android:textSize="12sp" />
+                    <TextView android:id="@+id/tv_daily" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/text_headline_dark" android:textSize="23sp" android:textStyle="bold" android:fontFamily="serif" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                app:cardBackgroundColor="@color/library_card"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/card_border_subtle"
+                app:strokeWidth="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" android:text="Total Dhikr" android:textColor="@color/text_primary" android:textSize="12sp" />
+                    <TextView android:id="@+id/tv_total" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/text_headline_dark" android:textSize="23sp" android:textStyle="bold" android:fontFamily="serif" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardBackgroundColor="@color/library_card"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/card_border_subtle"
+                app:strokeWidth="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" android:text="Current Target" android:textColor="@color/text_primary" android:textSize="12sp" />
+                    <TextView android:id="@+id/tv_target_stat" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="100" android:textColor="@color/text_headline_dark" android:textSize="23sp" android:textStyle="bold" android:fontFamily="serif" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_session"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="22dp"
+            android:background="@drawable/bg_emerald_banner_arched"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp">
+            <ImageView android:layout_width="42dp" android:layout_height="42dp" android:src="@drawable/ic_gold_dome_silhouette" android:contentDescription="@null" />
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                <TextView android:id="@+id/tv_session_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SubhanAllah" android:textColor="@color/white" android:textSize="23sp" android:textStyle="bold" android:fontFamily="serif" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Current Session  ⌄" android:textColor="@color/ivory" android:textSize="14sp" />
+            </LinearLayout>
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_chevron_down" android:contentDescription="Choose session" app:tint="@color/brand_gold_accent" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/btn_count"
+            android:layout_width="292dp"
+            android:layout_height="292dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_tasbih_counter"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/tasbih_count_cd">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                <TextView android:id="@+id/tv_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/white" android:textSize="72sp" android:textStyle="bold" android:fontFamily="serif" />
+                <TextView android:id="@+id/tv_progress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="of 100" android:textColor="@color/ivory" android:textSize="20sp" android:fontFamily="serif" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_tap_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:text="☞  Tap to count"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:backgroundTint="@color/brand_green_dark"
+            app:cornerRadius="26dp"
+            app:strokeColor="@color/brand_gold_accent"
+            app:strokeWidth="2dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_marginTop="4dp" android:text="Tap anywhere on the circle to increase" android:textColor="@color/text_secondary" android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton android:id="@+id/btn_reset" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="80dp" android:layout_marginEnd="2dp" android:layout_weight="1" android:minWidth="0dp" android:paddingStart="0dp" android:paddingEnd="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="↻&#10;Reset" android:textSize="10sp" android:textColor="@color/emerald_deep" app:cornerRadius="20dp" app:strokeColor="@color/outline_soft" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btn_save" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="80dp" android:layout_marginStart="2dp" android:layout_marginEnd="2dp" android:layout_weight="1" android:minWidth="0dp" android:paddingStart="0dp" android:paddingEnd="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="▣&#10;Save" android:textSize="10sp" android:textColor="@color/emerald_deep" app:cornerRadius="20dp" app:strokeColor="@color/outline_soft" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btn_new_counter" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="80dp" android:layout_marginStart="2dp" android:layout_marginEnd="2dp" android:layout_weight="1" android:minWidth="0dp" android:paddingStart="0dp" android:paddingEnd="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="＋&#10;New&#10;Counter" android:textSize="10sp" android:textColor="@color/emerald_deep" app:cornerRadius="20dp" app:strokeColor="@color/outline_soft" />
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="80dp" android:layout_marginStart="2dp" android:layout_marginEnd="2dp" android:layout_weight="1" app:cardBackgroundColor="@color/library_card" app:cardCornerRadius="20dp" app:strokeColor="@color/outline_soft" app:strokeWidth="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="♧" android:textColor="@color/emerald_deep" android:textSize="23sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Vibe" android:textColor="@color/emerald_deep" android:textSize="10sp" />
+                    <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switch_vibration" android:layout_width="wrap_content" android:layout_height="28dp" android:checked="true" android:scaleX="0.8" android:scaleY="0.8" android:contentDescription="Vibration" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.button.MaterialButton android:id="@+id/btn_history" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="80dp" android:layout_marginStart="2dp" android:layout_weight="1" android:minWidth="0dp" android:paddingStart="0dp" android:paddingEnd="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="◷&#10;History" android:textSize="10sp" android:textColor="@color/emerald_deep" app:cornerRadius="20dp" app:strokeColor="@color/outline_soft" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="24dp" android:layout_marginTop="18dp" android:layout_marginEnd="24dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="◎  Quick Target (Dhikr Count)" android:textColor="@color/text_headline_dark" android:textSize="16sp" android:textStyle="bold" android:fontFamily="serif" />
+            <View android:layout_width="0dp" android:layout_height="1dp" android:layout_marginStart="12dp" android:layout_weight="1" android:background="@color/quran_divider_gold" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="20dp" android:layout_marginTop="8dp" android:layout_marginEnd="20dp" android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton android:id="@+id/target_33" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="48dp" android:layout_marginEnd="2dp" android:layout_weight="1" android:minWidth="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="33" android:textSize="17sp" android:textColor="@color/text_headline_dark" app:cornerRadius="28dp" app:strokeColor="@color/outline_soft" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/target_99" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="48dp" android:layout_marginStart="2dp" android:layout_marginEnd="2dp" android:layout_weight="1" android:minWidth="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="99" android:textSize="17sp" android:textColor="@color/text_headline_dark" app:cornerRadius="28dp" app:strokeColor="@color/outline_soft" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/target_100" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="48dp" android:layout_marginStart="2dp" android:layout_marginEnd="2dp" android:layout_weight="1" android:minWidth="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="100" android:textSize="17sp" android:textColor="@color/text_headline_dark" app:cornerRadius="28dp" app:strokeColor="@color/outline_soft" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/target_1000" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="48dp" android:layout_marginStart="2dp" android:layout_weight="1" android:minWidth="0dp" android:paddingStart="0dp" android:paddingEnd="0dp" android:insetLeft="0dp" android:insetRight="0dp" android:text="1,000" android:textSize="13sp" android:textColor="@color/text_headline_dark" app:cornerRadius="28dp" app:strokeColor="@color/outline_soft" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="22dp"
+            app:cardBackgroundColor="@color/library_card"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/quran_card_border"
+            app:strokeWidth="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal" android:padding="14dp">
+                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_fire_streak" android:contentDescription="@null" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Your Streak" android:textColor="@color/text_primary" android:textSize="11sp" />
+                    <TextView android:id="@+id/tv_streak" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 days" android:textColor="@color/text_headline_dark" android:textSize="15sp" android:textStyle="bold" android:fontFamily="serif" />
+                </LinearLayout>
+                <View android:layout_width="1dp" android:layout_height="42dp" android:layout_marginStart="8dp" android:layout_marginEnd="12dp" android:background="@color/quran_divider_gold" />
+                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_chart_progress" android:contentDescription="@null" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:layout_weight="1.1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Last Session" android:textColor="@color/text_primary" android:textSize="11sp" />
+                    <TextView android:id="@+id/tv_last_session" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="2" android:ellipsize="end" android:text="No saved session" android:textColor="@color/text_headline_dark" android:textSize="14sp" android:textStyle="bold" android:fontFamily="serif" />
+                </LinearLayout>
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_chevron_right" android:contentDescription="@null" app:tint="@color/text_secondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-    <TextView android:id="@+id/tv_daily" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="@dimen/space_md"
-        android:textAppearance="@style/TextAppearance.IKP.LabelSmall" android:textColor="@color/text_secondary" />
-    <Button android:id="@+id/btn_count" android:layout_width="160dp" android:layout_height="160dp"
-        android:layout_gravity="center_horizontal" android:layout_marginTop="@dimen/space_md"
-        android:textSize="40sp" android:contentDescription="@string/tasbih_count_cd" />
-    <Button android:id="@+id/btn_new_counter" style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" android:text="@string/tasbih_new_counter" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler"
-        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
-</LinearLayout>
+</ScrollView>

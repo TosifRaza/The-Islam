@@ -188,6 +188,11 @@
         android:label="@string/settings_title" />
 
     <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.ikp.dev.app.ui.home.NotificationsFragment"
+        android:label="@string/notifications_title" />
+
+    <fragment
         android:id="@+id/sessionsFragment"
         android:name="com.ikp.dev.app.ui.profile.SessionsFragment"
         android:label="@string/sessions_title" />
@@ -230,6 +235,13 @@
         <argument android:name="format" app:argType="string" android:defaultValue="pdf" />
         <argument android:name="title" app:argType="string" android:defaultValue="" />
         <argument android:name="textSearchable" app:argType="boolean" android:defaultValue="false" />
+        <argument android:name="localPath" app:argType="string" app:nullable="true" android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedContentFragment"
+        android:name="com.ikp.dev.app.ui.profile.SavedContentFragment"
+        android:label="Saved content">
+        <argument android:name="section" app:argType="string" android:defaultValue="bookmarks" />
     </fragment>
     <fragment
         android:id="@+id/personalLibraryFragment"
@@ -238,6 +250,7 @@
     <action android:id="@+id/action_global_dictionary" app:destination="@id/dictionaryFragment" />
     <action android:id="@+id/action_global_duas" app:destination="@id/duasFragment" />
     <action android:id="@+id/action_global_calendar" app:destination="@id/calendarFragment" />
+    <action android:id="@+id/action_global_notifications" app:destination="@id/notificationsFragment" />
     <action android:id="@+id/action_global_utilities" app:destination="@id/utilitiesFragment" />
     <action android:id="@+id/action_global_personal_library" app:destination="@id/personalLibraryFragment" />
 

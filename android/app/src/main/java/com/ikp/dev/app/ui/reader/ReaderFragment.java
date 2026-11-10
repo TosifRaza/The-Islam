@@ -105,6 +105,19 @@ public class ReaderFragment extends Fragment {
             stateText.setText(R.string.state_loading);
             stateText.setVisibility(View.VISIBLE);
             final String fmt = format;
+            String localPath = args.getString("localPath");
+            if (localPath != null && !localPath.trim().isEmpty()) {
+                File localFile = new File(localPath);
+                if (!localFile.isFile()) {
+                    stateText.setText(R.string.reader_open_failed);
+                    return;
+                }
+                stateText.setVisibility(View.GONE);
+                if ("epub".equalsIgnoreCase(fmt)) openEpub(localFile);
+                else openPdf(localFile);
+                recordHistory();
+                return;
+            }
             ServiceLocator.executors().io.execute(() -> {
                 Outcome<ContentDtos.SignedUrlDto> token = "personal".equals(mode)
                         ? ServiceLocator.personalLibraryRepository().downloadToken(bookId)

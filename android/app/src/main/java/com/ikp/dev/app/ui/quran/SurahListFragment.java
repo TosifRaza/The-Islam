@@ -350,19 +350,17 @@ public class SurahListFragment extends Fragment {
     }
 
     private void showBookmarksDialog() {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Quran Bookmarks")
-                .setMessage("Your saved bookmarks and ayah positions are stored in your profile and offline database.")
-                .setPositiveButton("OK", null)
-                .show();
+        openSavedSection(com.ikp.dev.app.ui.profile.SavedContentFragment.SECTION_BOOKMARKS);
     }
 
     private void showNotesDialog() {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Quran Study Notes")
-                .setMessage("Take personal reflections and scholarly notes while reading any ayah.")
-                .setPositiveButton("OK", null)
-                .show();
+        openSavedSection(com.ikp.dev.app.ui.profile.SavedContentFragment.SECTION_NOTES);
+    }
+
+    private void openSavedSection(String section) {
+        Bundle args = new Bundle();
+        args.putString("section", section);
+        NavHostFragment.findNavController(this).navigate(R.id.savedContentFragment, args);
     }
 
     private void showDoDontDialog() {

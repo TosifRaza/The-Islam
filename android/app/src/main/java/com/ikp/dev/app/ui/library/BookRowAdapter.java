@@ -7,12 +7,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ikp.dev.app.R;
+import com.ikp.dev.app.core.common.Outcome;
+import com.ikp.dev.app.data.local.entity.UserDataEntities;
+import com.ikp.dev.app.di.ServiceLocator;
 import com.ikp.dev.app.domain.model.Models;
+import com.ikp.dev.app.ui.common.MessageKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,13 +113,84 @@ public final class BookRowAdapter extends RecyclerView.Adapter<BookRowAdapter.Ho
 
         // 5. Actions
         final String bookTitleFinal = engTitle;
+        holder.btnBookmark.setImageResource(R.drawable.ic_bookmark_outline);
         holder.btnBookmark.setOnClickListener(v -> {
-            v.setSelected(!v.isSelected());
-            Toast.makeText(v.getContext(), "Saved: " + bookTitleFinal, Toast.LENGTH_SHORT).show();
+            if (!ServiceLocator.sessionManager().isSignedIn()) {
+                Toast.makeText(v.getContext(), R.string.signin_required, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (b.bookId == null || b.bookId.trim().isEmpty()) return;
+            holder.btnBookmark.setEnabled(false);
+            ServiceLocator.executors().io.execute(() -> {
+                String refKey = "book:" + b.bookId;
+                Outcome<List<com.ikp.dev.app.data.remote.dto.ContentDtos.BookmarkDto>> current =
+                        ServiceLocator.userContentRepository().bookmarks();
+                boolean remove = false;
+                if (current.isSuccess() && current.value != null) {
+                    for (com.ikp.dev.app.data.remote.dto.ContentDtos.BookmarkDto saved : current.value) {
+                        if (refKey.equals(saved.refKey)) {
+                            remove = true;
+                            break;
+                        }
+                    }
+                }
+                if (!current.isSuccess()) {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        holder.btnBookmark.setEnabled(true);
+                        String key = current.error == null ? "error_unknown" : current.error.messageKey;
+                        Toast.makeText(v.getContext(), MessageKeys.resIdForKey(key),
+                                Toast.LENGTH_LONG).show();
+                    });
+                    return;
+                }
+                final boolean removed = remove;
+                Outcome<java.util.Map<String, Object>> result = removed
+                        ? ServiceLocator.userContentRepository().deleteBookmark(refKey)
+                        : ServiceLocator.userContentRepository().putBookmark(refKey, null);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    holder.btnBookmark.setEnabled(true);
+                    if (result.isSuccess()) {
+                        holder.btnBookmark.setImageResource(removed ? R.drawable.ic_bookmark_outline
+                                : R.drawable.ic_bookmark_filled);
+                        Toast.makeText(v.getContext(), removed ? R.string.saved_item_removed
+                                        : R.string.bookmark_saved,
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        String key = result.error == null ? "error_unknown" : result.error.messageKey;
+                        Toast.makeText(v.getContext(), MessageKeys.resIdForKey(key),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            });
         });
 
         holder.btnDownload.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "Downloading: " + bookTitleFinal + " (PDF)", Toast.LENGTH_SHORT).show();
+            if (!ServiceLocator.sessionManager().isSignedIn()) {
+                Toast.makeText(v.getContext(), R.string.signin_required, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!b.downloadAllowed) {
+                Toast.makeText(v.getContext(), R.string.book_download_not_allowed,
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+            holder.btnDownload.setEnabled(false);
+            Toast.makeText(v.getContext(), R.string.download_in_progress, Toast.LENGTH_SHORT).show();
+            ServiceLocator.executors().io.execute(() -> {
+                Outcome<UserDataEntities.DownloadMetadataEntity> result =
+                        ServiceLocator.offlineDownloadsRepository().downloadBook(b.bookId, bookTitleFinal);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    holder.btnDownload.setEnabled(true);
+                    if (result.isSuccess()) {
+                        Toast.makeText(v.getContext(), R.string.download_saved,
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        String key = result.error == null ? "error_unknown" : result.error.messageKey;
+                        Toast.makeText(v.getContext(), MessageKeys.resIdForKey(key),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            });
         });
 
         holder.itemView.setOnClickListener(v -> {

@@ -1,7 +1,5 @@
 package com.ikp.dev.app.ui.personal;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,9 +42,16 @@ public class PersonalLibraryFragment extends Fragment {
     private final List<ContentDtos.PersonalBookDto> books = new ArrayList<>();
     private PersonalBookAdapter adapter;
     private TextView stateText;
+    private TextView stateTitle;
     private TextView collectionsText;
     private RecyclerView recycler;
     private View progress;
+    private View stateContainer;
+    private View signInButton;
+    private View retryButton;
+    private View stateUploadButton;
+    private View uploadButton;
+    private View collectionsSection;
 
     private final ActivityResultLauncher<String[]> openDocument =
             registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
@@ -65,24 +69,47 @@ public class PersonalLibraryFragment extends Fragment {
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         stateText = v.findViewById(R.id.state_text);
+        stateTitle = v.findViewById(R.id.state_title);
         collectionsText = v.findViewById(R.id.text_collections);
         recycler = v.findViewById(R.id.recycler);
         progress = v.findViewById(R.id.progress);
+        stateContainer = v.findViewById(R.id.state_container);
+        signInButton = v.findViewById(R.id.btn_sign_in);
+        retryButton = v.findViewById(R.id.btn_retry);
+        stateUploadButton = v.findViewById(R.id.btn_state_upload);
+        uploadButton = v.findViewById(R.id.button_upload);
+        collectionsSection = v.findViewById(R.id.collections_section);
         adapter = new PersonalBookAdapter(this::open, this::actions);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.setAdapter(adapter);
         v.findViewById(R.id.btn_back).setOnClickListener(x ->
                 NavHostFragment.findNavController(this).popBackStack());
-        v.findViewById(R.id.button_upload).setOnClickListener(x ->
-                openDocument.launch(new String[]{"application/pdf", "application/epub+zip"}));
+        View.OnClickListener addBook = x -> openDocument.launch(
+                new String[]{"application/pdf", "application/epub+zip"});
+        uploadButton.setOnClickListener(addBook);
+        stateUploadButton.setOnClickListener(addBook);
         v.findViewById(R.id.button_new_collection).setOnClickListener(x -> newCollection());
         v.findViewById(R.id.btn_retry).setOnClickListener(x -> load());
+        v.findViewById(R.id.btn_sign_in).setOnClickListener(x ->
+                NavHostFragment.findNavController(this).navigate(R.id.loginFragment));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         load();
     }
 
     private void load() {
+        if (!isAdded() || getView() == null) return;
         progress.setVisibility(View.VISIBLE);
+        stateContainer.setVisibility(View.VISIBLE);
+        stateTitle.setVisibility(View.GONE);
         stateText.setVisibility(View.GONE);
+        signInButton.setVisibility(View.GONE);
+        retryButton.setVisibility(View.GONE);
+        stateUploadButton.setVisibility(View.GONE);
+        recycler.setVisibility(View.GONE);
         ServiceLocator.executors().io.execute(() -> {
             Outcome<List<ContentDtos.PersonalBookDto>> r =
                     ServiceLocator.personalLibraryRepository().books(null, 1, 50);
@@ -91,21 +118,32 @@ public class PersonalLibraryFragment extends Fragment {
             if (!isAdded()) return;
             requireActivity().runOnUiThread(() -> {
                 progress.setVisibility(View.GONE);
-                if (r.isSuccess() && r.value != null && !r.value.isEmpty()) {
+                boolean requiresLogin = requiresLogin(r) || requiresLogin(cols);
+                if (requiresLogin) {
+                    books.clear();
+                    adapter.submit(books);
+                    showState(R.string.personal_sign_in_title, R.string.personal_sign_in_body,
+                            R.drawable.ic_shield_security, true, false, false);
+                    setPrivateActionsVisible(false);
+                } else if (r.isSuccess() && r.value != null) {
                     books.clear();
                     books.addAll(r.value);
-                    adapter.notifyDataSetChanged();
-                    recycler.setVisibility(View.VISIBLE);
-                } else if (r.isSuccess()) {
-                    stateText.setVisibility(View.VISIBLE);
-                    stateText.setText(R.string.personal_empty_body);
+                    adapter.submit(books);
+                    setPrivateActionsVisible(true);
+                    if (books.isEmpty()) {
+                        showState(R.string.personal_empty_title, R.string.personal_empty_body,
+                                R.drawable.ic_shortcut_books, false, false, true);
+                    } else {
+                        stateContainer.setVisibility(View.GONE);
+                        recycler.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    stateText.setVisibility(View.VISIBLE);
-                    stateText.setText(r.error != null
-                            && "AUTH-002".equals(r.error.code)
-                            ? getString(R.string.personal_requires_login)
-                            : getString(R.string.state_error_offline));
-                    if (getView() != null) getView().findViewById(R.id.btn_retry).setVisibility(View.VISIBLE);
+                    books.clear();
+                    adapter.submit(books);
+                    setPrivateActionsVisible(true);
+                    showState(R.string.personal_load_error_title,
+                            R.string.personal_load_error_body, R.drawable.ic_error,
+                            false, true, false);
                 }
                 if (cols.isSuccess() && cols.value != null) {
                     StringBuilder sb = new StringBuilder();
@@ -118,6 +156,31 @@ public class PersonalLibraryFragment extends Fragment {
                 }
             });
         });
+    }
+
+    private boolean requiresLogin(Outcome<?> outcome) {
+        return outcome != null && outcome.error != null
+                && "AUTH-002".equals(outcome.error.code);
+    }
+
+    private void setPrivateActionsVisible(boolean visible) {
+        int visibility = visible ? View.VISIBLE : View.GONE;
+        collectionsSection.setVisibility(visibility);
+        uploadButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    private void showState(int title, int message, int icon, boolean signIn,
+                           boolean retry, boolean addBook) {
+        stateContainer.setVisibility(View.VISIBLE);
+        stateTitle.setVisibility(View.VISIBLE);
+        stateTitle.setText(title);
+        stateText.setVisibility(View.VISIBLE);
+        stateText.setText(message);
+        ((android.widget.ImageView) stateContainer.findViewById(R.id.state_icon)).setImageResource(icon);
+        signInButton.setVisibility(signIn ? View.VISIBLE : View.GONE);
+        retryButton.setVisibility(retry ? View.VISIBLE : View.GONE);
+        stateUploadButton.setVisibility(addBook ? View.VISIBLE : View.GONE);
+        recycler.setVisibility(View.GONE);
     }
 
     private void open(ContentDtos.PersonalBookDto book) {
@@ -199,12 +262,13 @@ public class PersonalLibraryFragment extends Fragment {
                 .setView(form)
                 .setPositiveButton(R.string.action_save, (d, w) ->
                         ServiceLocator.executors().io.execute(() -> {
-                            ServiceLocator.personalLibraryRepository().patch(book.bookId,
+                            Outcome<ContentDtos.PersonalBookDto> result =
+                                    ServiceLocator.personalLibraryRepository().patch(book.bookId,
                                     title.getText().toString().trim(),
                                     author.getText().toString().trim(),
                                     description.getText().toString().trim());
                             if (!isAdded()) return;
-                            requireActivity().runOnUiThread(this::load);
+                            requireActivity().runOnUiThread(() -> finishMutation(result));
                         }))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
@@ -216,9 +280,10 @@ public class PersonalLibraryFragment extends Fragment {
                 .setMessage(getString(R.string.personal_delete_message, book.title))
                 .setPositiveButton(R.string.action_delete, (d, w) ->
                         ServiceLocator.executors().io.execute(() -> {
-                            ServiceLocator.personalLibraryRepository().delete(book.bookId);
+                            Outcome<java.util.Map<String, Object>> result =
+                                    ServiceLocator.personalLibraryRepository().delete(book.bookId);
                             if (!isAdded()) return;
-                            requireActivity().runOnUiThread(this::load);
+                            requireActivity().runOnUiThread(() -> finishMutation(result));
                         }))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
@@ -235,11 +300,16 @@ public class PersonalLibraryFragment extends Fragment {
                 .setView(form)
                 .setPositiveButton(R.string.action_save, (d, w) -> {
                     String name = title.getText().toString().trim();
-                    if (name.isEmpty()) return;
+                    if (name.isEmpty()) {
+                        Toast.makeText(requireContext(), R.string.personal_collection_name_hint,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     ServiceLocator.executors().io.execute(() -> {
-                        ServiceLocator.personalLibraryRepository().createCollection(name);
+                        Outcome<java.util.Map<String, Object>> result =
+                                ServiceLocator.personalLibraryRepository().createCollection(name);
                         if (!isAdded()) return;
-                        requireActivity().runOnUiThread(this::load);
+                        requireActivity().runOnUiThread(() -> finishMutation(result));
                     });
                 })
                 .setNegativeButton(android.R.string.cancel, null)
@@ -262,13 +332,26 @@ public class PersonalLibraryFragment extends Fragment {
                 new MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.personal_action_add_to_collection)
                         .setItems(names, (d, w) -> ServiceLocator.executors().io.execute(() -> {
-                            ServiceLocator.personalLibraryRepository()
-                                    .addBookToCollection(cols.value.get(w).collectionId, book.bookId);
+                            Outcome<java.util.Map<String, Object>> result =
+                                    ServiceLocator.personalLibraryRepository().addBookToCollection(
+                                            cols.value.get(w).collectionId, book.bookId);
+                            if (!isAdded()) return;
+                            requireActivity().runOnUiThread(() -> finishMutation(result));
                         }))
                         .setNegativeButton(android.R.string.cancel, null)
                         .show();
             });
         });
+    }
+
+    private void finishMutation(Outcome<?> result) {
+        if (result != null && result.isSuccess()) {
+            load();
+            return;
+        }
+        String key = result == null || result.error == null
+                ? "NET-UNKNOWN" : result.error.messageKey;
+        Toast.makeText(requireContext(), MessageKeys.resIdForKey(key), Toast.LENGTH_LONG).show();
     }
 
     private String suggestedName(Uri uri) {

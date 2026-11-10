@@ -1,28 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="?android:attr/colorBackground">
+    android:background="@color/bg_home_warm" android:orientation="vertical">
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="146dp"
+        android:background="@drawable/bg_quran_header">
+        <ImageButton android:id="@+id/btn_back" android:layout_width="48dp" android:layout_height="48dp"
+            android:layout_gravity="top|start" android:layout_marginStart="16dp" android:layout_marginTop="18dp"
+            android:background="@drawable/bg_qibla_back" android:contentDescription="@string/cd_back"
+            android:padding="12dp" android:src="@drawable/ic_arrow_back" app:tint="@color/white" />
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="top|start" android:layout_marginStart="78dp" android:layout_marginTop="18dp"
+            android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/duas_title" android:textColor="@color/white"
+                android:textSize="32sp" android:textStyle="bold" android:fontFamily="serif" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="2dp" android:text="@string/duas_subtitle"
+                android:maxWidth="230dp" android:maxLines="2" android:textColor="#F1F5F0" android:textSize="13sp" />
+        </LinearLayout>
+    </FrameLayout>
+
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center_vertical">
-        <ImageButton android:id="@+id/btn_back" android:layout_width="@dimen/touch_target_min"
-            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_back" android:src="@drawable/ic_arrow_back" />
-        <TextView android:id="@+id/title" android:layout_width="0dp" android:layout_weight="1"
-            android:layout_height="wrap_content" android:text="@string/duas_title"
-            android:textAppearance="@style/TextAppearance.IKP.TitleMedium" />
+        android:layout_marginStart="16dp" android:layout_marginTop="10dp" android:layout_marginEnd="16dp"
+        android:gravity="center_vertical" android:orientation="horizontal">
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="0dp"
+            android:layout_height="52dp" android:layout_weight="1" app:boxBackgroundMode="none"
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/ic_search">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_search"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:background="@drawable/bg_search_field" android:hint="@string/duas_search_hint"
+                android:imeOptions="actionSearch" android:inputType="text" android:maxLines="1"
+                android:paddingStart="48dp" android:paddingEnd="12dp" android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <ImageButton android:id="@+id/btn_filter" android:layout_width="48dp" android:layout_height="48dp"
+            android:layout_marginStart="8dp" android:background="@drawable/bg_green_filter_btn"
+            android:contentDescription="@string/duas_filter" android:padding="12dp"
+            android:src="@drawable/ic_filter_sliders" app:tint="@color/white" />
     </LinearLayout>
-    <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:scrollbars="none">
-        <com.google.android.material.chip.ChipGroup android:id="@+id/chips_categories"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:singleLine="true" xmlns:app="http://schemas.android.com/apk/res-auto" />
-    </HorizontalScrollView>
+
     <TextView android:id="@+id/state_text" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="@dimen/space_md"
-        android:textAppearance="@style/TextAppearance.IKP.BodyMedium" />
+        android:layout_height="wrap_content" android:gravity="center" android:padding="12dp"
+        android:textAppearance="@style/TextAppearance.IKP.BodyMedium" android:visibility="gone" />
     <Button android:id="@+id/btn_retry" style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/retry" />
+        android:layout_gravity="center_horizontal" android:text="@string/retry" android:visibility="gone" />
     <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler"
-        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:clipToPadding="false" android:paddingBottom="14dp" />
 </LinearLayout>

@@ -190,7 +190,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingEnd="6dp"
+            android:paddingEnd="16dp"
             android:clickable="true"
             android:focusable="true">
 
@@ -210,18 +210,6 @@
                 android:textSize="14sp"
                 android:textColor="#8A968F" />
 
-            <FrameLayout
-                android:id="@+id/btn_search_filter"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="@drawable/bg_green_filter_btn">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_filter_sliders"
-                    android:importantForAccessibility="no" />
-            </FrameLayout>
         </LinearLayout>
 
         <!-- 3. 8-Grid Feature Shortcuts Card -->
@@ -241,8 +229,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="*"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp">
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
 
                 <!-- Row 1: Quran, Hadith, Duas, Prayer Times -->
                 <TableRow>
@@ -253,28 +241,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_quran" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_quran_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Quran"
                             android:textSize="12sp"
                             android:textStyle="bold"
@@ -288,28 +276,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_hadith" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_hadith_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Hadith"
                             android:textSize="12sp"
                             android:textStyle="bold"
@@ -323,28 +311,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_duas" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_duas_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Duas"
                             android:textSize="12sp"
                             android:textStyle="bold"
@@ -358,28 +346,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_prayer" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_prayer_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Prayer\nTimes"
                             android:gravity="center"
                             android:textSize="11sp"
@@ -394,8 +382,8 @@
                     android:layout_height="1dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
                     android:background="#F0ECE4" />
 
                 <!-- Row 2: Qibla, Tasbih, Hijri Calendar, Islamic Books -->
@@ -407,28 +395,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_qibla" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_qibla_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Qibla"
                             android:textSize="12sp"
                             android:textStyle="bold"
@@ -442,28 +430,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_tasbih" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_tasbih_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Tasbih"
                             android:textSize="12sp"
                             android:textStyle="bold"
@@ -477,28 +465,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_calendar" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_calendar_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Hijri\nCalendar"
                             android:gravity="center"
                             android:textSize="11sp"
@@ -513,28 +501,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="4dp"
                         android:clickable="true"
                         android:focusable="true">
                         <androidx.cardview.widget.CardView
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:cardCornerRadius="13dp"
-                            app:cardElevation="2dp"
-                            app:cardBackgroundColor="#0D3B2E"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
                             android:clickable="false"
                             android:focusable="false">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_3d_books" />
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_3d_books_cutout" />
                         </androidx.cardview.widget.CardView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="3dp"
                             android:text="Islamic\nBooks"
                             android:gravity="center"
                             android:textSize="11sp"

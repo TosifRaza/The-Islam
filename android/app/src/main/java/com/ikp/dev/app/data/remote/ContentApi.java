@@ -188,6 +188,9 @@ public interface ContentApi {
     @PUT("api/v1/user-content/notes")
     Call<ApiResponse<Map<String, Object>>> putNote(@Body Map<String, String> body);
 
+    @DELETE("api/v1/user-content/notes")
+    Call<ApiResponse<Map<String, Object>>> deleteNote(@Query("refKey") String refKey);
+
     @GET("api/v1/user-content/favourites")
     Call<ApiResponse<List<ContentDtos.FavouriteDto>>> favourites();
 
