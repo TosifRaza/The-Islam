@@ -121,7 +121,7 @@ public final class EncryptedTokenStore implements TokenStore {
                 .putString(K_EMAIL, email)
                 .putString(K_ROLES, rolesJson)
                 .putString(K_DEVICE, deviceName)
-                .apply();
+                .commit();
     }
 
     @Override
@@ -129,12 +129,12 @@ public final class EncryptedTokenStore implements TokenStore {
         prefs.edit()
                 .putString(K_ACCESS, accessToken)
                 .putString(K_REFRESH, refreshToken)
-                .apply();
+                .commit();
     }
 
     @Override
     public void clear() {
-        prefs.edit().clear().apply();
+        prefs.edit().clear().commit();
     }
 
     @Override

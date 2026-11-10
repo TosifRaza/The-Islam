@@ -193,9 +193,12 @@ public final class AcademyRepository {
     }
 
     public Outcome<List<AcademyDtos.ContinueDto>> continueLearning(int limit) {
-        Outcome<List<AcademyDtos.ContinueDto>> apiRes = run(api.continueLearning(limit));
-        if (apiRes.isSuccess() && apiRes.value != null && !apiRes.value.isEmpty()) {
-            return apiRes;
+        try {
+            Outcome<List<AcademyDtos.ContinueDto>> apiRes = run(api.continueLearning(limit));
+            if (apiRes.isSuccess() && apiRes.value != null && !apiRes.value.isEmpty()) {
+                return apiRes;
+            }
+        } catch (Exception ignored) {
         }
         return Outcome.ok(new ArrayList<>());
     }
@@ -234,9 +237,12 @@ public final class AcademyRepository {
     }
 
     public Outcome<List<AcademyDtos.WeakTopicDto>> weakTopics() {
-        Outcome<List<AcademyDtos.WeakTopicDto>> apiRes = run(api.weakTopics());
-        if (apiRes.isSuccess() && apiRes.value != null) {
-            return apiRes;
+        try {
+            Outcome<List<AcademyDtos.WeakTopicDto>> apiRes = run(api.weakTopics());
+            if (apiRes.isSuccess() && apiRes.value != null) {
+                return apiRes;
+            }
+        } catch (Exception ignored) {
         }
         return Outcome.ok(new ArrayList<>());
     }

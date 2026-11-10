@@ -52,6 +52,11 @@ public final class TokenAuthenticator implements okhttp3.Authenticator {
             return null;
         }
 
+        // Avoid infinite retry loops if we already retried once
+        if (response.priorResponse() != null) {
+            return null;
+        }
+
         synchronized (refreshLock) {
             String currentAccess = tokenStore.accessToken();
             String requestToken = response.request().header("Authorization");
@@ -71,7 +76,40 @@ public final class TokenAuthenticator implements okhttp3.Authenticator {
                 return null;
             }
 
-            // Single-flight refresh (synchronous, once).
+            // Supabase session handling:
+            if (isSupabaseToken(currentAccess)) {
+                com.ikp.dev.app.core.supabase.SupabaseClient sb =
+                        com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+                if (sb != null) {
+                    try {
+                        java.util.Map<String, String> body = new java.util.HashMap<>();
+                        body.put("refresh_token", refresh);
+                        retrofit2.Response<com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse> refreshRes =
+                                sb.auth().refreshToken("refresh_token", body).execute();
+                        if (refreshRes.isSuccessful() && refreshRes.body() != null
+                                && refreshRes.body().accessToken != null) {
+                            String newAccess = refreshRes.body().accessToken;
+                            String newRefresh = refreshRes.body().refreshToken != null
+                                    ? refreshRes.body().refreshToken : refresh;
+                            tokenStore.updateTokens(newAccess, newRefresh);
+                            sb.setSessionToken(newAccess);
+                            return retryWith(response.request(), newAccess);
+                        } else if (refreshRes.code() == 400 || refreshRes.code() == 401) {
+                            // Supabase explicitly rejected the refresh token — session is revoked!
+                            if (tokenStore.hasSession()) {
+                                sessionManager.onSessionExpired();
+                            }
+                            return null;
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+                // An auxiliary API endpoint rejecting a Supabase token must never invalidate
+                // the active Supabase session. Abort the individual request safely.
+                return null;
+            }
+
+            // Single-flight refresh (synchronous, once) for backend identity:
             Dtos.TokenResponseDto tokens = refreshSync(refresh);
             if (tokens == null || tokens.accessToken == null || tokens.refreshToken == null) {
                 if (tokenStore.hasSession()) {
@@ -82,6 +120,24 @@ public final class TokenAuthenticator implements okhttp3.Authenticator {
             tokenStore.updateTokens(tokens.accessToken, tokens.refreshToken);
             return retryWith(response.request(), tokens.accessToken);
         }
+    }
+
+    public static boolean isSupabaseToken(String token) {
+        if (token == null || token.isEmpty()) {
+            return false;
+        }
+        try {
+            String[] parts = token.split("\\.");
+            if (parts.length >= 2) {
+                int pad = 4 - (parts[1].length() % 4);
+                String padded = pad == 4 ? parts[1] : parts[1] + "====".substring(0, pad);
+                byte[] bytes = java.util.Base64.getUrlDecoder().decode(padded);
+                String json = new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
+                return json.contains("supabase.co") || json.contains("\"aud\":\"authenticated\"");
+            }
+        } catch (Exception ignored) {
+        }
+        return false;
     }
 
     /** Blocking refresh; returns null on any failure (never throws). */

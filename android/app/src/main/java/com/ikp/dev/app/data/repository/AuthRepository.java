@@ -251,49 +251,58 @@ public final class AuthRepository {
         }
 
         // Try Supabase restore
-        try {
-            com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
-            if (sb != null && tokenStore.accessToken() != null) {
-                sb.setSessionToken(tokenStore.accessToken());
-                Response<com.ikp.dev.app.core.supabase.SupabaseModels.User> res = sb.auth().getUser().execute();
-                if (res.isSuccessful() && res.body() != null) {
-                    com.ikp.dev.app.core.supabase.SupabaseModels.User sbUser = res.body();
-                    String email = sbUser.email != null ? sbUser.email : tokenStore.email();
-                    String name = email != null && email.contains("@") ? email.substring(0, email.indexOf('@')) : tokenStore.displayName();
-                    if (sbUser.userMetadata != null && sbUser.userMetadata.containsKey("full_name")) {
-                        Object fn = sbUser.userMetadata.get("full_name");
-                        if (fn != null && !fn.toString().isEmpty()) {
-                            name = fn.toString();
+        if (tokenStore.accessToken() != null
+                && com.ikp.dev.app.core.network.TokenAuthenticator.isSupabaseToken(tokenStore.accessToken())) {
+            try {
+                com.ikp.dev.app.core.supabase.SupabaseClient sb = com.ikp.dev.app.di.ServiceLocator.supabaseClient();
+                if (sb != null) {
+                    sb.setSessionToken(tokenStore.accessToken());
+                    Response<com.ikp.dev.app.core.supabase.SupabaseModels.User> res = sb.auth().getUser().execute();
+                    if (res.isSuccessful() && res.body() != null) {
+                        com.ikp.dev.app.core.supabase.SupabaseModels.User sbUser = res.body();
+                        String email = sbUser.email != null ? sbUser.email : tokenStore.email();
+                        String name = email != null && email.contains("@") ? email.substring(0, email.indexOf('@')) : tokenStore.displayName();
+                        if (sbUser.userMetadata != null && sbUser.userMetadata.containsKey("full_name")) {
+                            Object fn = sbUser.userMetadata.get("full_name");
+                            if (fn != null && !fn.toString().isEmpty()) {
+                                name = fn.toString();
+                            }
                         }
-                    }
-                    Models.User user = new Models.User(sbUser.id != null ? sbUser.id : tokenStore.userId(),
-                            email, name, "en", "active",
-                            java.util.Collections.singletonList("USER"), java.util.Collections.emptyList(), sbUser.createdAt);
-                    sessionManager.onSignedIn(user.userId, user.displayName, user.email);
-                    return RestoreResult.signedIn(user);
-                } else if (res.code() == 401) {
-                    String refresh = tokenStore.refreshToken();
-                    if (refresh != null && !refresh.isEmpty()) {
-                        java.util.Map<String, String> body = new java.util.HashMap<>();
-                        body.put("refresh_token", refresh);
-                        Response<com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse> refreshRes =
-                                sb.auth().refreshToken("refresh_token", body).execute();
-                        if (refreshRes.isSuccessful() && refreshRes.body() != null && refreshRes.body().accessToken != null) {
-                            tokenStore.updateTokens(refreshRes.body().accessToken,
-                                    refreshRes.body().refreshToken != null ? refreshRes.body().refreshToken : refresh);
-                            sb.setSessionToken(refreshRes.body().accessToken);
-                            return restore();
+                        Models.User user = new Models.User(sbUser.id != null ? sbUser.id : tokenStore.userId(),
+                                email, name, "en", "active",
+                                java.util.Collections.singletonList("USER"), java.util.Collections.emptyList(), sbUser.createdAt);
+                        sessionManager.onSignedIn(user.userId, user.displayName, user.email);
+                        cacheProfile(user);
+                        return RestoreResult.signedIn(user);
+                    } else if (res.code() == 401) {
+                        String refresh = tokenStore.refreshToken();
+                        if (refresh != null && !refresh.isEmpty()) {
+                            java.util.Map<String, String> body = new java.util.HashMap<>();
+                            body.put("refresh_token", refresh);
+                            Response<com.ikp.dev.app.core.supabase.SupabaseModels.AuthResponse> refreshRes =
+                                    sb.auth().refreshToken("refresh_token", body).execute();
+                            if (refreshRes.isSuccessful() && refreshRes.body() != null && refreshRes.body().accessToken != null) {
+                                tokenStore.updateTokens(refreshRes.body().accessToken,
+                                        refreshRes.body().refreshToken != null ? refreshRes.body().refreshToken : refresh);
+                                sb.setSessionToken(refreshRes.body().accessToken);
+                                return restore();
+                            }
                         }
+                        tokenStore.clear();
+                        sessionManager.onSignedOut();
+                        return RestoreResult.signedOut();
                     }
-                    tokenStore.clear();
-                    sessionManager.onSignedOut();
-                    return RestoreResult.signedOut();
                 }
+            } catch (IOException offline) {
+                sessionManager.onUnvalidatedSession();
+                return RestoreResult.offlineSavedSession();
+            } catch (Exception e) {
+                Models.User fallback = userFromTokenStore();
+                sessionManager.onSignedIn(fallback.userId, fallback.displayName, fallback.email);
+                return RestoreResult.signedIn(fallback);
             }
-        } catch (IOException offline) {
             sessionManager.onUnvalidatedSession();
             return RestoreResult.offlineSavedSession();
-        } catch (RuntimeException ignored) {
         }
 
         try {
@@ -367,6 +376,11 @@ public final class AuthRepository {
         } catch (Exception ignored) {
         }
 
+        // If this is a Supabase session, never call backend auth.me() on Render:
+        if (tokenStore.hasSession() && com.ikp.dev.app.core.network.TokenAuthenticator.isSupabaseToken(tokenStore.accessToken())) {
+            return Outcome.ok(userFromTokenStore());
+        }
+
         try {
             Response<ApiResponse<Dtos.MeResponseDto>> res = auth.me().execute();
             if (res.isSuccessful() && res.body() != null && res.body().data != null) {
@@ -432,6 +446,16 @@ public final class AuthRepository {
             // fall through
         }
         return null;
+    }
+
+    private Models.User userFromTokenStore() {
+        String uid = tokenStore.userId() != null ? tokenStore.userId() : "sb-user";
+        String email = tokenStore.email() != null ? tokenStore.email() : "";
+        String name = tokenStore.displayName() != null && !tokenStore.displayName().isEmpty()
+                ? tokenStore.displayName()
+                : (email.contains("@") ? email.substring(0, email.indexOf('@')) : "User");
+        return new Models.User(uid, email, name, "en", "active",
+                java.util.Collections.singletonList("USER"), java.util.Collections.emptyList(), "");
     }
 
     /** Cache the validated profile for offline display (Room, no credentials). */
