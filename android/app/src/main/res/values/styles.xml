@@ -3,7 +3,7 @@
     <!-- ============ IKP component styles (reusable, XML design system) ============ -->
 
     <!-- Buttons -->
-    <style name="Widget.IKP.Button.Primary" parent="Widget.Material3.Button">
+     <style name="Widget.IKP.Button.Primary" parent="Widget.Material3.Button">
         <item name="android:textAppearance">@style/TextAppearance.IKP.LabelLarge</item>
         <item name="backgroundTint">@color/emerald_deep</item>
         <item name="android:textColor">@color/text_on_emerald</item>

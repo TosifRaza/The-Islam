@@ -57,7 +57,8 @@ public final class BooksFragment extends Fragment {
         String name = args == null ? null : args.getString("subjectName");
         String initialQuery = args == null ? null : args.getString("query");
         viewModel.init(slug, initialQuery);
-        title.setText(name == null ? getString(R.string.books_title_generic) : name);
+        String displayTitle = name == null ? getString(R.string.books_title_generic) : name.replace('\n', ' ').trim();
+        title.setText(displayTitle);
 
         ImageButton back = view.findViewById(R.id.btn_back);
         back.setOnClickListener(v -> NavHostFragment.findNavController(this).popBackStack());

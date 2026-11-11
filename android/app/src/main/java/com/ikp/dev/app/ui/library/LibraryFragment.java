@@ -62,11 +62,11 @@ public final class LibraryFragment extends Fragment {
         recent.setVisibility(View.GONE); // populated by local history (below)
 
         bindFeatured(view, R.id.featured_essential, R.string.library_featured_essential,
-                R.drawable.ic_shortcut_books);
+                R.drawable.ic_shortcut_books, "coll_essential", "Essential Books");
         bindFeatured(view, R.id.featured_scholarly, R.string.library_featured_scholarly,
-                R.drawable.ic_chip_layers);
+                R.drawable.ic_chip_layers, "coll_scholarly", "Scholarly Series");
         bindFeatured(view, R.id.featured_beginner, R.string.library_featured_beginner,
-                R.drawable.ic_chip_ribbon);
+                R.drawable.ic_chip_ribbon, "coll_beginner", "Beginner Guides");
 
         view.findViewById(R.id.library_search_entry).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_library_to_books));
@@ -109,12 +109,17 @@ public final class LibraryFragment extends Fragment {
         viewModel.load(false);
     }
 
-    private void bindFeatured(@NonNull View root, int containerId, int labelId, int iconId) {
+    private void bindFeatured(@NonNull View root, int containerId, int labelId, int iconId,
+                              @NonNull String slug, @NonNull String title) {
         View card = root.findViewById(containerId);
         ((android.widget.TextView) card.findViewById(R.id.featured_label)).setText(labelId);
         ((android.widget.ImageView) card.findViewById(R.id.featured_icon)).setImageResource(iconId);
-        card.setOnClickListener(v ->
-                NavHostFragment.findNavController(this).navigate(R.id.action_library_to_books));
+        card.setOnClickListener(v -> {
+            android.os.Bundle args = new android.os.Bundle();
+            args.putString("subjectSlug", slug);
+            args.putString("subjectName", title);
+            NavHostFragment.findNavController(this).navigate(R.id.action_library_to_books, args);
+        });
     }
 
     private void openSubject(Models.Subject subject) {
