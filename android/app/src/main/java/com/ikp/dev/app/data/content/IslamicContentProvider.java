@@ -934,12 +934,24 @@ public final class IslamicContentProvider {
                 matchSub = "b_hisn_muslim".equals(b.bookId) || "b_arbaeen_nawawi".equals(b.bookId)
                         || "b_raheeq_makhtum".equals(b.bookId) || "b_kitab_tawhid".equals(b.bookId)
                         || "b_riyadh_salihin".equals(b.bookId);
+            } else if (subjectSlug.contains("classical")) {
+                matchSub = "b_tafsir_ibn_kathir".equals(b.bookId) || "b_tafsir_jalalayn".equals(b.bookId)
+                        || "b_sahih_bukhari".equals(b.bookId) || "b_sahih_muslim".equals(b.bookId)
+                        || "b_riyadh_salihin".equals(b.bookId) || "b_bidayah_nihayah".equals(b.bookId)
+                        || "b_bulugh_maram".equals(b.bookId) || "b_umdat_ahkam".equals(b.bookId)
+                        || "b_adab_mufrad".equals(b.bookId);
+            } else if (subjectSlug.contains("arabic")) {
+                matchSub = "ar".equalsIgnoreCase(b.language);
+            } else if (subjectSlug.contains("fatwa") || subjectSlug.contains("scholar")) {
+                matchSub = "b_bulugh_maram".equals(b.bookId) || "b_umdat_ahkam".equals(b.bookId)
+                        || "b_aqeedah_wasitiyyah".equals(b.bookId);
             } else {
                 matchSub = subjectSlug.equalsIgnoreCase(b.subjectSlug)
                         || (b.subjectName != null && b.subjectName.equalsIgnoreCase(subjectSlug))
                         || (subjectSlug.contains("quran") && b.subjectSlug != null && b.subjectSlug.contains("quran"))
                         || (subjectSlug.contains("hadith") && b.subjectSlug != null && b.subjectSlug.contains("hadith"))
                         || (subjectSlug.contains("seerah") && b.subjectSlug != null && b.subjectSlug.contains("seerah"))
+                        || (subjectSlug.contains("history") && b.subjectSlug != null && b.subjectSlug.contains("history"))
                         || (subjectSlug.contains("aqeedah") && b.subjectSlug != null && b.subjectSlug.contains("aqeedah"))
                         || (subjectSlug.contains("fiqh") && b.subjectSlug != null && b.subjectSlug.contains("fiqh"))
                         || (subjectSlug.contains("dua") && b.subjectSlug != null && b.subjectSlug.contains("dua"))
