@@ -97,7 +97,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="14dp"
-        android:paddingEnd="6dp">
+        android:paddingEnd="14dp">
 
         <ImageView
             android:layout_width="20dp"
@@ -121,21 +121,6 @@
             android:imeOptions="actionSearch"
             android:maxLines="1"
             android:singleLine="true" />
-
-        <FrameLayout
-            android:id="@+id/btn_filter"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/bg_chip_book_selected">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_filter_sliders"
-                app:tint="#FFFFFF"
-                android:contentDescription="@string/cd_filter" />
-        </FrameLayout>
     </LinearLayout>
 
     <!-- Horizontal Language Filter Chips -->

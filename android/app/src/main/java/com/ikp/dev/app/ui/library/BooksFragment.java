@@ -86,11 +86,7 @@ public final class BooksFragment extends Fragment {
             return true;
         });
 
-        View btnFilter = view.findViewById(R.id.btn_filter);
-        if (btnFilter != null) {
-            btnFilter.setOnClickListener(v ->
-                    Toast.makeText(requireContext(), "Filter Options", Toast.LENGTH_SHORT).show());
-        }
+
 
         setupChips(view);
 
