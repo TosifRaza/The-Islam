@@ -227,8 +227,17 @@ public final class BookRowAdapter extends RecyclerView.Adapter<BookRowAdapter.Ho
         if (lower.contains("jalalayn")) return R.drawable.ic_book_cover_jalalayn;
         if (lower.contains("bukhari")) return R.drawable.ic_book_cover_bukhari;
         if (lower.contains("muslim")) return R.drawable.ic_book_cover_muslim;
-        if (lower.contains("salihin")) return R.drawable.ic_book_cover_riyadh;
-        return R.drawable.ic_book_cover_bukhari;
+        if (lower.contains("salihin") || lower.contains("riyadh")) return R.drawable.ic_book_cover_riyadh;
+
+        int[] covers = {
+            R.drawable.ic_book_cover_ibn_kathir,
+            R.drawable.ic_book_cover_jalalayn,
+            R.drawable.ic_book_cover_bukhari,
+            R.drawable.ic_book_cover_muslim,
+            R.drawable.ic_book_cover_riyadh
+        };
+        int hash = Math.abs((bookId != null ? bookId : engTitle).hashCode());
+        return covers[hash % covers.length];
     }
 
     @Override

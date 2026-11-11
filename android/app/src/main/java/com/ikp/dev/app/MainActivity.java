@@ -125,10 +125,11 @@ public final class MainActivity extends AppCompatActivity {
     private void observeDestinations() {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
-            boolean topLevel = tabByDestination.containsKey(id);
-            bottomBar.setVisibility(topLevel ? android.view.View.VISIBLE : android.view.View.GONE);
+            int activeTabId = (id == R.id.booksFragment) ? R.id.libraryFragment : id;
+            boolean showBottomBar = tabByDestination.containsKey(activeTabId);
+            bottomBar.setVisibility(showBottomBar ? android.view.View.VISIBLE : android.view.View.GONE);
             for (Map.Entry<Integer, android.view.View> e : tabByDestination.entrySet()) {
-                boolean selected = e.getKey() == id;
+                boolean selected = e.getKey() == activeTabId;
                 android.view.View tab = e.getValue();
                 tab.setSelected(selected);
                 tab.setActivated(selected);
