@@ -113,7 +113,7 @@
             android:layout_weight="1"
             android:layout_marginStart="10dp"
             android:background="@null"
-            android:hint="Search books by title or author"
+            android:hint="@string/library_search_hint"
             android:textColorHint="#72827A"
             android:textColor="#17211C"
             android:textSize="14sp"

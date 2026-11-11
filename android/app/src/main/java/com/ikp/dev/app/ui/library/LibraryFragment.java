@@ -68,8 +68,12 @@ public final class LibraryFragment extends Fragment {
         bindFeatured(view, R.id.featured_beginner, R.string.library_featured_beginner,
                 R.drawable.ic_chip_ribbon, "coll_beginner", "Beginner Guides");
 
-        view.findViewById(R.id.library_search_entry).setOnClickListener(v ->
-                NavHostFragment.findNavController(this).navigate(R.id.action_library_to_books));
+        view.findViewById(R.id.library_search_entry).setOnClickListener(v -> {
+            Bundle searchArgs = new Bundle();
+            searchArgs.putBoolean("focusSearch", true);
+            NavHostFragment.findNavController(this).navigate(
+                    R.id.action_library_to_books, searchArgs);
+        });
         view.findViewById(R.id.btn_browse_all).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_library_to_books));
 

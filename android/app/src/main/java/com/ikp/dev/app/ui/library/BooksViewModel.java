@@ -81,6 +81,15 @@ public final class BooksViewModel extends ViewModel {
         debounce.postDelayed(pendingSearch, SEARCH_DEBOUNCE_MS);
     }
 
+    /** Runs the current search immediately, cancelling any pending debounce. */
+    public void searchNow() {
+        if (pendingSearch != null) {
+            debounce.removeCallbacks(pendingSearch);
+            pendingSearch = null;
+        }
+        reload();
+    }
+
     /** TextWatcher wiring for the search box (UI attaches). */
     public TextWatcher queryWatcher() {
         return new TextWatcher() {

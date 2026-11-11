@@ -947,8 +947,16 @@ public final class IslamicContentProvider {
             }
 
             boolean matchLang = language == null || language.isEmpty() || language.equalsIgnoreCase(b.language);
+            boolean matchAuthor = false;
+            for (String author : b.authors) {
+                if (author != null && author.toLowerCase(Locale.ROOT).contains(needle)) {
+                    matchAuthor = true;
+                    break;
+                }
+            }
             boolean matchQ = needle.isEmpty() || b.title.toLowerCase(Locale.ROOT).contains(needle)
-                    || (b.subtitle != null && b.subtitle.toLowerCase(Locale.ROOT).contains(needle));
+                    || (b.subtitle != null && b.subtitle.toLowerCase(Locale.ROOT).contains(needle))
+                    || matchAuthor;
             if (matchSub && matchLang && matchQ) {
                 filtered.add(b);
             }

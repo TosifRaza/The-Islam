@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,6 +58,7 @@ public final class BooksFragment extends Fragment {
         String slug = args == null ? null : args.getString("subjectSlug");
         String name = args == null ? null : args.getString("subjectName");
         String initialQuery = args == null ? null : args.getString("query");
+        boolean focusSearch = args != null && args.getBoolean("focusSearch", false);
         viewModel.init(slug, initialQuery);
         String displayTitle = name == null ? getString(R.string.books_title_generic) : name.replace('\n', ' ').trim();
         title.setText(displayTitle);
@@ -65,6 +68,23 @@ public final class BooksFragment extends Fragment {
 
         EditText etQuery = view.findViewById(R.id.et_query);
         etQuery.addTextChangedListener(viewModel.queryWatcher());
+        etQuery.setOnEditorActionListener((textView, actionId, event) -> {
+            boolean submit = actionId == EditorInfo.IME_ACTION_SEARCH
+                    || actionId == EditorInfo.IME_ACTION_DONE
+                    || (event != null && event.getKeyCode() == android.view.KeyEvent.KEYCODE_ENTER
+                    && event.getAction() == android.view.KeyEvent.ACTION_DOWN);
+            if (!submit) {
+                return false;
+            }
+            viewModel.searchNow();
+            InputMethodManager keyboard = (InputMethodManager) requireContext()
+                    .getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+            if (keyboard != null) {
+                keyboard.hideSoftInputFromWindow(etQuery.getWindowToken(), 0);
+            }
+            etQuery.clearFocus();
+            return true;
+        });
 
         View btnFilter = view.findViewById(R.id.btn_filter);
         if (btnFilter != null) {
@@ -112,6 +132,19 @@ public final class BooksFragment extends Fragment {
             etQuery.setText(initialQuery);
         }
         viewModel.reload();
+        if (focusSearch) {
+            etQuery.requestFocus();
+            etQuery.post(() -> {
+                if (!isAdded()) {
+                    return;
+                }
+                InputMethodManager keyboard = (InputMethodManager) requireContext()
+                        .getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+                if (keyboard != null) {
+                    keyboard.showSoftInput(etQuery, InputMethodManager.SHOW_IMPLICIT);
+                }
+            });
+        }
     }
 
     private void setupChips(@NonNull View root) {
